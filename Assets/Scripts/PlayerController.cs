@@ -63,10 +63,18 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             move *= runSpeed;
+            //Code for running animation
         }
         else
         {
             move *= speed;
+            //Code for stop running animation
+        }
+
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            Debug.Log("Crouching");
+            //Code for crouching animation
         }
 
         controller.Move(move * Time.deltaTime);
