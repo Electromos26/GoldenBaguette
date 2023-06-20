@@ -5,15 +5,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public CharacterController controller;
+    [SerializeField]
+    private CharacterController controller;
 
-    public float speed = 12f;
-    public float gravity = -9.81f;
-    public float jumpHeight = 3f;
+    [SerializeField]
+    private float speed = 12f;
+    [SerializeField]
+    private float runSpeed;
+    [SerializeField]
+    private float gravity = -9.81f;
+    [SerializeField]
+    private float jumpHeight = 3f;
 
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    [SerializeField]
+    private Transform groundCheck;
+    [SerializeField]
+    private float groundDistance = 0.4f;
+    [SerializeField]
+    private LayerMask groundMask;
 
     [SerializeField]
     GameManager gameManager;
@@ -24,8 +33,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
     }
+
     void Update()
     {
 
@@ -50,7 +59,18 @@ public class PlayerController : MonoBehaviour
         //}
         
         Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            move *= runSpeed;
+        }
+        else
+        {
+            move *= speed;
+        }
+
+        controller.Move(move * Time.deltaTime);
+
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
