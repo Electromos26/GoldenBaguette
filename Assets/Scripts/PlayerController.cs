@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Unit
 {
     [SerializeField]
     private CharacterController controller;
@@ -29,10 +29,12 @@ public class PlayerController : MonoBehaviour
 
     Vector3 velocity;
     bool isGrounded;
-   
+
+
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        respawnPos = this.transform.position; //Change this to the checkpoint mechanic
     }
 
     void Update()
