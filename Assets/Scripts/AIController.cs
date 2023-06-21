@@ -75,11 +75,16 @@ public class AIController : Unit
     private IEnumerator OnPatrolling()
     {
         agent.SetDestination(currentSpot.transform.position);
+        if (currentSpot.currentValue == 1)
+        {
+            LookForSpots();
+            yield return null;
+
+        }
         //while (!(currentSpot.team == Team && currentSpot.currentValue == 1))
         //{
         //    //look for enemies
         //    LookForEnemies();
-            yield return null;
         //}//we move towards an outpost as long as we are not the team possessing it
         //currentSpot = null;
         //SetState(State.Idle);
@@ -150,8 +155,11 @@ public class AIController : Unit
 
     private void LookForSpots()
     {
-        //int r = Random.Range(0, GameManager.Instance.outposts.Length);//find a random outpost
-        //currentSpot = GameManager.Instance.outposts[r];
+        int r = Random.Range(0, GameManager.Instance.currentSpot.Length);//find a random spot for the AI to look for
+        if (team == GameManager.Instance.currentSpot[r].team && GameManager.Instance.currentSpot[r].currentValue != 1)
+        {
+            currentSpot = GameManager.Instance.currentSpot[r];
+        }
     }
 
 
@@ -159,6 +167,6 @@ public class AIController : Unit
     // Update is called once per frame
     void Update()
     {
-        agent.destination = goalObject.transform.position;
+       //agent.destination = goalObject.transform.position;
     }
 }

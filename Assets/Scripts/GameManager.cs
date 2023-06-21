@@ -1,21 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager _instance;
+
     public int scoreTotal = 0;//player score
  
     public bool gameOver = false;
 
     public string TimerText;
     private float Timer;
-   
 
-    void Start()
+    internal AISpot[] currentSpot;
+
+    public static GameManager Instance
     {
-      
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = GameObject.FindObjectOfType<GameManager>();
+                _instance.OnCreateInstance();
+
+            }
+            return _instance;
+        }
+    }
+
+
+    void OnCreateInstance()
+    {
+
+        currentSpot = GetComponentsInChildren<AISpot>();
 
     }
    

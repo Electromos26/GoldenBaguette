@@ -12,7 +12,7 @@ public class Unit : MonoBehaviour
     int health; //the current health value of our unit 
 
     [SerializeField]
-    int team; //Variable to determine if the unit is AI or player
+    protected int team; //Variable to determine if the unit is AI or player
 
     [SerializeField]
     int damage;
