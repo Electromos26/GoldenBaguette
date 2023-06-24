@@ -1,6 +1,7 @@
 using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,8 +20,17 @@ public class AIController : Unit
     private State currentState; //this keeps track of the current state
     private NavMeshAgent agent; //this is our navmesh agent
     private Unit currentEnemy; //current enemy
-    private AISpot currentSpot; //the current outpost we are focused on
-    [SerializeField] GameObject goalObject;
+    private AISpot currentSpot; //the current spot we are focused on
+    private AISpot newSpot; //the new spot selected by the AI
+
+    private int arrayNum = 0;
+
+
+    [SerializeField]
+    private float timer; //this will keep track of the time within the outpost
+
+
+    //[SerializeField] GameObject goalObject;
 
 
     // Start is called before the first frame update
@@ -62,31 +72,33 @@ public class AIController : Unit
     private IEnumerator OnIdle() //handles our idle state
     {
         //when idling, we should probably do some work and look for an outpost
-        currentSpot = null;
-        while (currentSpot == null)
-        {
+        //currentSpot = null;
+        //while (currentSpot == null)
+        //{
             if (isAlive)
                 LookForSpots(); //if we ever find an outpost, and the currentSpot changes, we will leave this loop
             yield return null;
-        }
+        //}
         SetState(State.Patrolling); //we found an outpost, we now need to move
         //this will change
     }
     private IEnumerator OnPatrolling()
     {
         agent.SetDestination(currentSpot.transform.position);
-        if (currentSpot.currentValue == 1)
+        while (currentSpot.currentValue != 1)
         {
-            LookForSpots();
+            LookForEnemies(); //Needs to be setup
             yield return null;
-
         }
+
+        //After Value turns 1, he is going to search for a new spot
+        SetState(State.Idle);
+
         //while (!(currentSpot.team == Team && currentSpot.currentValue == 1))
         //{
         //    //look for enemies
         //    LookForEnemies();
         //}//we move towards an outpost as long as we are not the team possessing it
-        //currentSpot = null;
         //SetState(State.Idle);
     }
     private IEnumerator OnChasing()
@@ -155,11 +167,15 @@ public class AIController : Unit
 
     private void LookForSpots()
     {
-        int r = Random.Range(0, GameManager.Instance.currentSpot.Length);//find a random spot for the AI to look for
-        if (team == GameManager.Instance.currentSpot[r].team && GameManager.Instance.currentSpot[r].currentValue != 1)
+        arrayNum = Random.Range(0, GameManager.Instance.currentSpot.Length);//finds a random spot for the AI to look for
+
+        while (team != GameManager.Instance.currentSpot[arrayNum].team && GameManager.Instance.currentSpot[arrayNum] != currentSpot)
         {
-            currentSpot = GameManager.Instance.currentSpot[r];
+            arrayNum = Random.Range(0, GameManager.Instance.currentSpot.Length);//finds a random spot for the AI to look for
         }
+
+        currentSpot = GameManager.Instance.currentSpot[arrayNum];
+
     }
 
 

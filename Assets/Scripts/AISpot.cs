@@ -13,8 +13,8 @@ public class AISpot : MonoBehaviour
     internal int team;//this keeps track of the current team (-1 being no one). internal is public to the project
 
 
-    float waitingTimeMax = 5.0f;//how long for them to increase a value
-    float waitingTimeMin = 2.0f;//how long for them to increase a value
+    [SerializeField] float waitingTimeMax = 5.0f;//how long for them to increase a value
+    [SerializeField] float waitingTimeMin = 2.0f;//how long for them to increase a value
 
     internal float currentValue = 0;
     // Start is called before the first frame update
@@ -32,13 +32,29 @@ public class AISpot : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        timer += Time.deltaTime;
-        if (timer >= Random.Range(waitingTimeMin, waitingTimeMax))
-        {
-            currentValue = 1;
-            timer = 0;
-        }
+        AIController AI = other.GetComponent<AIController>();
 
+        if (AI != null)
+        {
+            Debug.Log("Triggered");
+            timer += Time.deltaTime;
+            if (timer >= Random.Range(waitingTimeMin, waitingTimeMax))
+            {
+                currentValue = 1;
+                timer = 0;
+            }
+        }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        AIController AI = other.GetComponent<AIController>();
+
+        if (AI != null)
+        {
+            currentValue = 0;
+        }
+    }
+
 }
 
