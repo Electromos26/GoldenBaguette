@@ -25,13 +25,8 @@ public class AIController : Unit
 
     private int arrayNum = 0;
 
-<<<<<<< HEAD
-    int test = 1;
-=======
     private Vector3 aimOffset;
-
->>>>>>> PlayerMoveStart
-
+    int testing = 1;
     [SerializeField]
     private float timer; //this will keep track of the time within the outpost
 
