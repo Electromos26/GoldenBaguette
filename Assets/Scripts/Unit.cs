@@ -23,7 +23,7 @@ public class Unit : MonoBehaviour
     public float viewAngle; //the angle in which the AI can see other objects, changes for different AI. Default 80
 
     internal bool isAlive = true;
-    protected Vector3 respawnPos;
+    protected Vector3 respawnPos;//set pos based on the players check point
     public float respawnTime = 5.0f;
 
 
@@ -53,7 +53,7 @@ public class Unit : MonoBehaviour
             return false;
 
         Ray ray = new Ray(startPos, dir);
-        LayerMask mask = ~LayerMask.GetMask("AISpot");//make sure that we don't care about our AISpot when looking foe enemies
+        LayerMask mask = ~LayerMask.GetMask("AISpot");//make sure that we don't care about our AISpot when looking for enemies
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
         {
@@ -91,7 +91,7 @@ public class Unit : MonoBehaviour
     {
         if (!isAlive)
             return; //this is a mistake clearly because we are already dead
-        gameObject.layer = LayerMask.NameToLayer("DeadTeddy");
+        gameObject.layer = LayerMask.NameToLayer("Dead");
 
         isAlive = false;
         Debug.Log("Die");
@@ -103,7 +103,7 @@ public class Unit : MonoBehaviour
     protected virtual void Respawn()
     {
         isAlive = true;
-        gameObject.layer = LayerMask.NameToLayer("LiveTeddy");
+        gameObject.layer = LayerMask.NameToLayer("Alive");
         health = fullHealth;
         this.transform.position = respawnPos; //change startPos to checkpoints positions
         //animator.SetBool("Dead", false);

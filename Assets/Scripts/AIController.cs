@@ -26,7 +26,7 @@ public class AIController : Unit
     private int arrayNum = 0;
 
     int test6 = 1;
-    private Vector3 aimOffset;
+    public Vector3 aimOffset = new Vector3(0, 1.5f, 0);
 
     [SerializeField]
     private float timer; //this will keep track of the time within the outpost
