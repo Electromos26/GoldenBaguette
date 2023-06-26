@@ -53,7 +53,7 @@ public class Unit : MonoBehaviour
             return false;
 
         Ray ray = new Ray(startPos, dir);
-        LayerMask mask = ~LayerMask.GetMask("Outpost");//make sure that we don't care about our Outposts when looking for things
+        LayerMask mask = ~LayerMask.GetMask("AISpot");//make sure that we don't care about our AISpot when looking foe enemies
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
         {

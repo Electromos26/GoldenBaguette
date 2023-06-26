@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5767754207920226741}
   - component: {fileID: -5170170886625631137}
   - component: {fileID: -7654662621753172416}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AISpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

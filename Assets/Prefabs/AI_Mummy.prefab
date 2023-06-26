@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 843422195929993624}
   - component: {fileID: 8204345679946276202}
   - component: {fileID: 7809228562502481175}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AI_Mummy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
