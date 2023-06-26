@@ -25,7 +25,12 @@ public class AIController : Unit
 
     private int arrayNum = 0;
 
+<<<<<<< HEAD
     int test = 1;
+=======
+    private Vector3 aimOffset;
+
+>>>>>>> PlayerMoveStart
 
     [SerializeField]
     private float timer; //this will keep track of the time within the outpost
@@ -147,23 +152,23 @@ public class AIController : Unit
     }
     private void LookForEnemies()
     {
-        //Collider[] surroundingColliders = Physics.OverlapSphere(this.transform.position, lookDistance);
-        //foreach (Collider coll in surroundingColliders)
-        //{
-        //    //how do we know if the element we are colliding with is an enemy?
-        //    //Not on our team.
-        //    Unit unit = coll.GetComponent<Unit>();
-        //    if (unit != null)
-        //    {
-        //        //we also want to check a couplemore things:
-        //        if (unit.Team != Team && CanSee(unit.transform, unit.transform.position + aimOffset) && unit.isAlive)
-        //        {
-        //            currentEnemy = unit;
-        //            SetState(State.Chasing);
-        //            return; //remember: you can return anywhere in a void function and it immediately exits
-        //        }
-        //    }
-        //}
+        Collider[] surroundingColliders = Physics.OverlapSphere(this.transform.position, lookDistance);
+        foreach (Collider coll in surroundingColliders)
+        {
+            //how do we know if the element we are colliding with is an enemy?
+            //Not on our team.
+            Unit unit = coll.GetComponent<Unit>();
+            if (unit != null)
+            {
+                //we also want to check a couplemore things:
+                if (unit.tag == "Player" && CanSee(unit.transform, unit.transform.position + aimOffset) && unit.isAlive)
+                {
+                    currentEnemy = unit;
+                    SetState(State.Chasing);
+                    return; //remember: you can return anywhere in a void function and it immediately exits
+                }
+            }
+        }
     }
 
     private void LookForSpots()
