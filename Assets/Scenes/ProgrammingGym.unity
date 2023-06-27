@@ -714,10 +714,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fullHealth: 100
-  health: 0
+  health: 100
   team: 0
-  damage: 0
-  viewAngle: 0
+  damage: 20
+  viewAngle: 80
   respawnTime: 5
   controller: {fileID: 399196720}
   speed: 12

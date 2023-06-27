@@ -15,7 +15,7 @@ public class AIController : Unit
         Chasing
     }
 
-    public float attackInterval = 0.5f;
+    public float attackInterval = 1f;
     public float lookDistance = 10;//our AI can see 10 units away
     private State currentState; //this keeps track of the current state
     private NavMeshAgent agent; //this is our navmesh agent
@@ -25,20 +25,23 @@ public class AIController : Unit
 
     private int arrayNum = 0;
 
-    int test6 = 1;
     public Vector3 aimOffset = new Vector3(0, 1.5f, 0);
 
     [SerializeField]
     private float timer; //this will keep track of the time within the outpost
+
+    [SerializeField]
+    private float attackDis; //this will keep track of the time within the outpost
+
 
 
     //[SerializeField] GameObject goalObject;
 
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        //base.Start();
+        base.Start();
         agent = GetComponent<NavMeshAgent>();
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
         SetState(State.Idle);
@@ -106,45 +109,44 @@ public class AIController : Unit
     private IEnumerator OnChasing()
     {
         ////we have to reset the path of our agent
-        //agent.ResetPath();
-        //float shootTimer = 0;
-        //while (currentEnemy.isAlive)
-        //{
-        //    shootTimer += Time.deltaTime; //increment our shoot timer each time
-        //    float distanceToEnemy = Vector3.Distance(currentEnemy.transform.position, this.transform.position);
-        //    //if we are too far away or we can't see our enemy, let's move towards them
-        //    //otherwise, if our shoot timer is up, shoot them
-        //    if (distanceToEnemy > lookDistance || !CanSee(currentEnemy.transform, currentEnemy.transform.position + aimOffset))
-        //    {
-        //        agent.SetDestination(currentEnemy.transform.position);
-        //    }
-        //    else if (shootTimer > shootInterval)
-        //    {
-        //        agent.ResetPath();
-        //        shootTimer = 0;
-        //        Vector3 dir = currentEnemy.transform.position - this.transform.position;
-        //        dir.Normalize();
+        agent.ResetPath();
+        float shootTimer = 0;
+        while (currentEnemy.isAlive)
+        {
+            shootTimer += Time.deltaTime; //increment our shoot timer each time
+            float distanceToEnemy = Vector3.Distance(currentEnemy.transform.position, this.transform.position);
+            //if we are too far away or we can't see our enemy, let's move towards them
+            //otherwise, if our shoot timer is up, shoot them
+            if (distanceToEnemy > attackDis || !CanSee(currentEnemy.transform, currentEnemy.transform.position + aimOffset))
+            {
+                agent.SetDestination(currentEnemy.transform.position);
+            }
+            else if (shootTimer > attackInterval)
+            {
+                agent.ResetPath();
+                shootTimer = 0;
+                Vector3 dir = currentEnemy.transform.position - this.transform.position;
+                dir.Normalize();
 
-        //        LayerMask mask = ~LayerMask.GetMask("Outpost", "Terrain");
-        //        Ray ray = new Ray(GetEyesPosition(), dir); //aim our ray in the direction that we are looking
-        //        RaycastHit hit; //our hit is going to be used as an output of a Raycast
-        //                        //so we need to use a layermask and a layermask is 
-        //        if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
-        //        {
-        //            //if this is true, we hit something
-        //            ShootAt(hit);
-        //        }
-        //        else
-        //        {
-        //            Vector3 targetPos = GetEyesPosition() +
-        //                dir * DISTANCE_LASER_IF_NO_HIT; // go a distance forward from the camera direction
+                LayerMask mask = ~LayerMask.GetMask("Outpost", "Terrain");
+                Ray ray = new Ray(GetEyesPosition(), dir); //aim our ray in the direction that we are looking
+                RaycastHit hit; //our hit is going to be used as an output of a Raycast
+                                //so we need to use a layermask and a layermask is 
+                if (Physics.Raycast(ray, out hit, attackDis, mask))
+                {
+                    //if this is true, we hit something
+                    Attack(hit);
+                }
+                else
+                {
+                    Vector3 targetPos = GetEyesPosition() + dir; // go a distance forward from the camera direction
         //            ShowLasers(targetPos);
-        //        }
-        //    }
+                }
+            }
             yield return null;
-        //}
-        //currentEnemy = null;
-        //SetState(State.Idle);
+        }
+        currentEnemy = null;
+        SetState(State.Idle);
     }
     private void LookForEnemies()
     {
@@ -180,6 +182,15 @@ public class AIController : Unit
 
     }
 
+    protected override void Die()
+    {
+        StopAllCoroutines();
+        agent.ResetPath();
+        base.Die();
+        currentEnemy = null;
+
+
+    }
 
 
     // Update is called once per frame

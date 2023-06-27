@@ -99,7 +99,7 @@ public class Unit : MonoBehaviour
         Debug.Log("Die");
 
         //animator.SetBool("Dead", true); //Set up later
-        Invoke("Respawn", respawnTime);
+        //Invoke("Respawn", respawnTime);
     }
 
     protected virtual void Respawn()
