@@ -20,6 +20,7 @@ public class Unit : MonoBehaviour
     protected const float DISTANCE_SHOT_IF_NO_HIT = 500.0f;
 
     private Eye[] eyes = new Eye[2]; //Add the Eye script to the AI and we can get the Eyes from the player
+
     public float viewAngle; //the angle in which the AI can see other objects, changes for different AI. Default 80
 
     internal bool isAlive = true;
@@ -28,9 +29,10 @@ public class Unit : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        
+        eyes = GetComponentsInChildren<Eye>();
+
     }
 
     protected virtual void OnHit(Unit attacker)
