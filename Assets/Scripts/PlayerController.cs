@@ -30,6 +30,12 @@ public class PlayerController : Unit
     private LayerMask groundMask;
 
     [SerializeField]
+    private float turnSmoothVelocity;
+
+    [SerializeField]
+    private float turnSmoothTime = 0.2f;
+
+    [SerializeField]
     GameManager gameManager;
 
     Vector3 velocity;
@@ -63,6 +69,8 @@ public class PlayerController : Unit
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
+        Vector2 input = new Vector2(x, z);
+        Vector2 inputDir = input.normalized;
 
         // dont jumpo when paused and dies 
 
@@ -72,6 +80,15 @@ public class PlayerController : Unit
         //}
 
         Vector3 move = transform.right * x + transform.forward * z;
+
+        if (inputDir != Vector2.zero)
+        {
+            float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) + playerCam.transform.eulerAngles.y;
+            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+
+        }
+
+
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -90,6 +107,7 @@ public class PlayerController : Unit
             //Code for crouching animation
         }
 
+
         controller.Move(move * Time.deltaTime);
 
         if (Input.GetButtonDown("Jump") && isGrounded)
@@ -101,6 +119,10 @@ public class PlayerController : Unit
 
         controller.Move(velocity * Time.deltaTime);
 
+
+
+
+        //Shooting Script
         if (Input.GetButtonDown("Fire1"))
         {
             //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something

@@ -2759,6 +2759,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1880084280}
     m_Modifications:
+    - target: {fileID: 5728827840949513263, guid: 007f20151d0f2144b821b265d4082677, type: 3}
+      propertyPath: mouseSensitivity
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914761113958754395, guid: 007f20151d0f2144b821b265d4082677, type: 3}
+      propertyPath: camDistanceToPlayer
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7873517708216756960, guid: 007f20151d0f2144b821b265d4082677, type: 3}
       propertyPath: m_Name
       value: Player
