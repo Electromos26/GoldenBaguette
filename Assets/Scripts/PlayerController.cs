@@ -41,6 +41,11 @@ public class PlayerController : Unit
     Vector3 velocity;
     bool isGrounded;
 
+    private float defaultView;
+
+    [SerializeField]
+    private float zoomIn = 3f;
+
 
     protected override void Start()
     {
@@ -49,6 +54,7 @@ public class PlayerController : Unit
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
         gun = GetComponentsInChildren<Gun>();
+        defaultView = playerCam.fieldOfView;
     }
     private Vector3 GetGunPosition()
     {
@@ -81,6 +87,7 @@ public class PlayerController : Unit
 
         Vector3 move = transform.right * x + transform.forward * z;
 
+        //Adjusting player movement considering camera position
         if (inputDir != Vector2.zero)
         {
             float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) + playerCam.transform.eulerAngles.y;
@@ -88,6 +95,16 @@ public class PlayerController : Unit
 
         }
 
+        if (Input.GetButton("Fire2")) //Right mouse click
+        {
+            playerCam.fieldOfView = defaultView / zoomIn;
+            transform.eulerAngles = playerCam.transform.eulerAngles;
+        }
+        else
+        { 
+            playerCam.fieldOfView = defaultView;
+
+        }
 
 
         if (Input.GetKey(KeyCode.LeftShift))
