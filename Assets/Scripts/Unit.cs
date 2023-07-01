@@ -6,7 +6,7 @@ using UnityEngine.XR;
 public class Unit : MonoBehaviour
 {
 
-    [SerializeField]
+
     int fullHealth = 100;
     [SerializeField]
     int health; //the current health value of our unit 

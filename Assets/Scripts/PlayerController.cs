@@ -24,12 +24,11 @@ public class PlayerController : Unit
 
     [SerializeField]
     private Transform groundCheck;
-    [SerializeField]
+    
     private float groundDistance = 0.4f;
     [SerializeField]
     private LayerMask groundMask;
-
-    [SerializeField]
+  
     private float turnSmoothVelocity;
 
     [SerializeField]
@@ -45,7 +44,6 @@ public class PlayerController : Unit
 
     [SerializeField]
     private float zoomIn = 3f;
-
 
     protected override void Start()
     {
@@ -95,16 +93,8 @@ public class PlayerController : Unit
 
         }
 
-        if (Input.GetButton("Fire2")) //Right mouse click
-        {
-            playerCam.fieldOfView = defaultView / zoomIn;
-            transform.eulerAngles = playerCam.transform.eulerAngles;
-        }
-        else
-        { 
-            playerCam.fieldOfView = defaultView;
-
-        }
+       
+        
 
 
         if (Input.GetKey(KeyCode.LeftShift))
@@ -140,32 +130,45 @@ public class PlayerController : Unit
 
 
         //Shooting Script
-        if (Input.GetButtonDown("Fire1"))
-        {
-            //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
-            LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
-
-
-            //we are having to do some ray casting
-            Ray ray = new Ray(GetGunPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
-            RaycastHit hit; //our hit is going to be used as an output of a Raycast
-            //so we need to use a layermask and a layermask is 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
-            {
-                //if this is true, we hit something
-                Attack(hit);
-                Debug.Log("Got them");
-            }
-            else
-            {
-                //we now need to figure out a position we are firing
-                Vector3 targetPos = GetGunPosition() +
-                    playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
-                Debug.Log("pew");
-
-            }
+        
            
+            if (Input.GetButtonDown("Fire1"))
+            {
+                //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
+                LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
+
+
+                //we are having to do some ray casting
+                Ray ray = new Ray(GetGunPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
+                RaycastHit hit; //our hit is going to be used as an output of a Raycast
+                                //so we need to use a layermask and a layermask is 
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+                {
+                    //if this is true, we hit something
+                    Attack(hit);
+                    Debug.Log("Got them");
+                }
+                else
+                {
+                    //we now need to figure out a position we are firing
+                    Vector3 targetPos = GetGunPosition() +  playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
+                    Debug.DrawRay(GetGunPosition(),Vector3.forward ,Color.red,5f,false) ;
+                    Debug.Log("pew"+ GetGunPosition()+ targetPos);
+
+                }
+
+            }
+        if (Input.GetButton("Fire2")) //Right mouse click
+        {
+            playerCam.fieldOfView = defaultView / zoomIn;
+            transform.eulerAngles = playerCam.transform.eulerAngles;
         }
+        else
+        {
+            playerCam.fieldOfView = defaultView;
+
+        }
+
 
 
         //private void OnTriggerEnter(Collider other) // collectables

@@ -2764,8 +2764,24 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5914761113958754395, guid: 007f20151d0f2144b821b265d4082677, type: 3}
+      propertyPath: clampAngle
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914761113958754395, guid: 007f20151d0f2144b821b265d4082677, type: 3}
+      propertyPath: mouseSensitivity
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914761113958754395, guid: 007f20151d0f2144b821b265d4082677, type: 3}
       propertyPath: camDistanceToPlayer
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873517707256073830, guid: 007f20151d0f2144b821b265d4082677, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873517708093204728, guid: 007f20151d0f2144b821b265d4082677, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.635
       objectReference: {fileID: 0}
     - target: {fileID: 7873517708216756960, guid: 007f20151d0f2144b821b265d4082677, type: 3}
       propertyPath: m_Name
@@ -2775,6 +2791,10 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1880084279}
+    - target: {fileID: 7873517708216756961, guid: 007f20151d0f2144b821b265d4082677, type: 3}
+      propertyPath: turnSmoothTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7873517708216756991, guid: 007f20151d0f2144b821b265d4082677, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2785,7 +2805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7873517708216756991, guid: 007f20151d0f2144b821b265d4082677, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.357378
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 7873517708216756991, guid: 007f20151d0f2144b821b265d4082677, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2818,6 +2838,14 @@ PrefabInstance:
     - target: {fileID: 7873517708216756991, guid: 007f20151d0f2144b821b265d4082677, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7936649986645739371, guid: 007f20151d0f2144b821b265d4082677, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.159
+      objectReference: {fileID: 0}
+    - target: {fileID: 7936649986645739371, guid: 007f20151d0f2144b821b265d4082677, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.483
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 007f20151d0f2144b821b265d4082677, type: 3}

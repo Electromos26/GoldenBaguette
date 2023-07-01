@@ -6,24 +6,33 @@ using static UnityEngine.GraphicsBuffer;
 public class CameraFollow : MonoBehaviour
 {
 
-    Vector3 FollowPOS;
-    public float clampAngle = 80.0f;
-    public float mouseSensitivity = 150.0f;
-    public Transform PlayerObj;
-    public float camDistanceToPlayer;
-    public float rotationSmoothTime = 1.2f;
-    Vector3 rotationSmoothVelocity;
-    Vector3 currentRotation;
+    [SerializeField]
+    private float clampAngle = 80.0f;
+    [SerializeField]
+    private float mouseSensitivity = 150.0f;
+    [SerializeField]
+    private Transform PlayerObj;
 
-    public float mouseX;
-    public float mouseY;
-    public float finalInputX;
-    public float finalInputZ;
-    public float smoothX;
-    public float smoothY;
-    private float rotY = 0.0f;
-    private float rotX = 0.0f;
 
+    private float camDistanceToPlayer;
+    [SerializeField]
+    private float rotationSmoothTime = 1.2f;
+
+
+  /*  Vector3 rotationSmoothVelocity;
+    Vector3 currentRotation;*/
+
+    private float mouseX;
+     float mouseY;
+     float finalInputX;
+     float finalInputZ;
+     float smoothX;
+     float smoothY;
+     float rotY = 0.0f;
+     float rotX = 0.0f;
+
+    [SerializeField]
+    private float Invert = -1f;
     // Use this for initialization
     void Start()
     {
@@ -38,13 +47,14 @@ public class CameraFollow : MonoBehaviour
         // We setup the rotation of the sticks here
         //float inputX = Input.GetAxis("RightStickHorizontal");
         //float inputZ = Input.GetAxis("RightStickVertical");
+
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
         finalInputX = mouseX;
         finalInputZ = mouseY;
 
         rotY += finalInputX * mouseSensitivity * Time.deltaTime;
-        rotX += finalInputZ * mouseSensitivity * Time.deltaTime;
+        rotX += finalInputZ * mouseSensitivity * Time.deltaTime * Invert;
 
         rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
 
