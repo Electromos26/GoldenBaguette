@@ -104,7 +104,7 @@ public class PlayerController : Unit
         if (Input.GetButtonDown("Fire1"))
         {
             //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
-            LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground");
+            LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
 
 
             //we are having to do some ray casting

@@ -36,7 +36,7 @@ public class AISpot : MonoBehaviour
 
         if (AI != null)
         {
-            Debug.Log("Triggered");
+            Debug.Log("AI reached AI Spot");
             timer += Time.deltaTime;
             if (timer >= Random.Range(waitingTimeMin, waitingTimeMax))
             {
