@@ -6,7 +6,6 @@ using UnityEngine.XR;
 public class Unit : MonoBehaviour
 {
 
-
     int fullHealth = 100;
     [SerializeField]
     int health; //the current health value of our unit 
@@ -25,14 +24,16 @@ public class Unit : MonoBehaviour
 
     internal bool isAlive = true;
     protected Vector3 respawnPos;//set pos based on the players check point
-    public float respawnTime = 5.0f;
+    
+    [SerializeField]
+    private float respawnTime = 2.0f;
 
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         eyes = GetComponentsInChildren<Eye>();
-
+        respawnPos = this.transform.position; //At the start this should be the respawn position
     }
 
     protected virtual void OnHit(Unit attacker)
@@ -99,15 +100,17 @@ public class Unit : MonoBehaviour
         Debug.Log("Die");
 
         //animator.SetBool("Dead", true); //Set up later
-        //Invoke("Respawn", respawnTime);
+        Invoke("Respawn", respawnTime);
     }
 
     protected virtual void Respawn()
     {
+        Debug.Log("Respawning!");
+        Debug.Log(respawnPos);
         isAlive = true;
         gameObject.layer = LayerMask.NameToLayer("Alive");
         health = fullHealth;
-        this.transform.position = respawnPos; //change startPos to checkpoints positions
+        this.transform.position = respawnPos; //set player position to the respawn position
         //animator.SetBool("Dead", false);
         //when we respawn, what do we need to do?
         //1) Change the layer

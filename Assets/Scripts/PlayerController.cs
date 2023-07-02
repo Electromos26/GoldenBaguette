@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -12,7 +13,6 @@ public class PlayerController : Unit
     private Camera playerCam; //this is the camera in our game
     private Gun[] gun = new Gun[1];
 
-
     [SerializeField]
     private float speed = 12f;
     [SerializeField]
@@ -22,10 +22,14 @@ public class PlayerController : Unit
     [SerializeField]
     private float jumpHeight = 3f;
 
+    Vector3 velocity;
+    bool isGrounded;
+
     [SerializeField]
     private Transform groundCheck;
     
     private float groundDistance = 0.4f;
+
     [SerializeField]
     private LayerMask groundMask;
   
@@ -37,9 +41,6 @@ public class PlayerController : Unit
     [SerializeField]
     GameManager gameManager;
 
-    Vector3 velocity;
-    bool isGrounded;
-
     private float defaultView;
 
     [SerializeField]
@@ -47,13 +48,13 @@ public class PlayerController : Unit
 
     protected override void Start()
     {
-        
+        base.Start();
         playerCam = GetComponentInChildren<Camera>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        respawnPos = this.transform.position; //Change this to the checkpoint mechanic
         gun = GetComponentsInChildren<Gun>();
         defaultView = playerCam.fieldOfView;
     }
+
     private Vector3 GetGunPosition()
     {
         return (gun[0].transform.position);//change from an array later line 12
@@ -93,10 +94,6 @@ public class PlayerController : Unit
 
         }
 
-       
-        
-
-
         if (Input.GetKey(KeyCode.LeftShift))
         {
             move *= runSpeed;
@@ -126,38 +123,34 @@ public class PlayerController : Unit
 
         controller.Move(velocity * Time.deltaTime);
 
-
-
-
         //Shooting Script
-        
-           
-            if (Input.GetButtonDown("Fire1"))
+
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
+            LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
+
+
+            //we are having to do some ray casting
+            Ray ray = new Ray(GetGunPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
+            RaycastHit hit; //our hit is going to be used as an output of a Raycast
+                            //so we need to use a layermask and a layermask is 
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
             {
-                //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
-                LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
-
-
-                //we are having to do some ray casting
-                Ray ray = new Ray(GetGunPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
-                RaycastHit hit; //our hit is going to be used as an output of a Raycast
-                                //so we need to use a layermask and a layermask is 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
-                {
-                    //if this is true, we hit something
-                    Attack(hit);
-                    Debug.Log("Got them");
-                }
-                else
-                {
-                    //we now need to figure out a position we are firing
-                    Vector3 targetPos = GetGunPosition() +  playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
-                    Debug.DrawRay(GetGunPosition(),Vector3.forward ,Color.red,5f,false) ;
-                    Debug.Log("pew"+ GetGunPosition()+ targetPos);
-
-                }
+                //if this is true, we hit something
+                Attack(hit);
+            }
+            else
+            {
+                //we now need to figure out a position we are firing
+                Vector3 targetPos = GetGunPosition() + playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
+                Debug.DrawRay(GetGunPosition(), Vector3.forward, Color.red, 5f, false);
 
             }
+
+        }
+
         if (Input.GetButton("Fire2")) //Right mouse click
         {
             playerCam.fieldOfView = defaultView / zoomIn;
@@ -166,10 +159,22 @@ public class PlayerController : Unit
         else
         {
             playerCam.fieldOfView = defaultView;
-
         }
 
 
+        Debug.Log(respawnPos);
+
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Checkpoint")
+        {
+            respawnPos = other.transform.position; //Setting the respawnPos to the position of the checkpoint
+            //Destroy(other.gameObject);
+        }
+    }
 
         //private void OnTriggerEnter(Collider other) // collectables
         //{
@@ -189,22 +194,5 @@ public class PlayerController : Unit
 
         //}
 
-
-
-        //public void HandColorer()//get both player hands an change the colors 
-        //{
-        //    GameObject handL = GameObject.Find("hand");
-        //    GameObject handR = GameObject.Find("hand1");
-
-        //    MeshRenderer rendererL = handL.GetComponent<MeshRenderer>();
-        //    MeshRenderer rendererR = handR.GetComponent<MeshRenderer>();
-
-        //    rendererL.material.color = Color.red;
-        //    rendererR.material.color = Color.blue;
-        //}
-
-
-
-    }
 }
 

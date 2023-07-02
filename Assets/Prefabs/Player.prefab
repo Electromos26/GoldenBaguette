@@ -79,14 +79,8 @@ MonoBehaviour:
   clampAngle: 40
   mouseSensitivity: 100
   PlayerObj: {fileID: 7136285905296537497}
-  camDistanceToPlayer: 0.5
   rotationSmoothTime: 1.2
-  mouseX: 0
-  mouseY: 0
-  finalInputX: 0
-  finalInputZ: 0
-  smoothX: 0
-  smoothY: 0
+  Invert: -1
 --- !u!1 &6865464427680096526
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +472,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb8165e3fdfb2a40b10ed06b0944609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullHealth: 100
   health: 100
   team: 0
   damage: 20
@@ -490,13 +483,17 @@ MonoBehaviour:
   gravity: -15
   jumpHeight: 3
   groundCheck: {fileID: 7873517706891807212}
-  groundDistance: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  turnSmoothVelocity: 0
   turnSmoothTime: 0.2
   gameManager: {fileID: 0}
+  zoomIn: 3
+  checkPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &7873517708466245416
 GameObject:
   m_ObjectHideFlags: 0
