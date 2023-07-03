@@ -11,7 +11,6 @@ public class PlayerController : Unit
     private CharacterController controller;
 
     private Camera playerCam; //this is the camera in our game
-    private Gun[] gun = new Gun[1];
 
     [SerializeField]
     private float speed = 12f;
@@ -41,6 +40,12 @@ public class PlayerController : Unit
     [SerializeField]
     GameManager gameManager;
 
+    [SerializeField]
+    private GameObject gun;
+
+    [SerializeField]
+    Laser laserPrefab;
+
     private float defaultView;
 
     [SerializeField]
@@ -49,18 +54,32 @@ public class PlayerController : Unit
     [SerializeField]
     private float smoothZoom = 2.0f;
 
+    [SerializeField]
+    private float zoomSmooth;
+
+    Traps traps;
+
     protected override void Start()
     {
         base.Start();
         playerCam = GetComponentInChildren<Camera>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gun = GetComponentsInChildren<Gun>();
+        respawnPos = this.transform.position; //Change this to the checkpoint mechanic
+
         defaultView = playerCam.fieldOfView;
+        zoomSmooth = zoomIn / 2f;
+    }
+    private void ShowLasers(Vector3 targetPosition) //the target position is what we are aiming for
+    {
+
+        Laser laser = Instantiate(laserPrefab) as Laser; //the "as Laser" casts the game object to a laser; this is a technique we can use if we know we are creating a game object of a specific type (in this case, we know the laserPrefab is going to be a Laser)
+        laser.Init(Color.red, gun.transform.position, targetPosition);
+
     }
 
     private Vector3 GetGunPosition()
     {
-        return (gun[0].transform.position);//change from an array later line 12
+        return (gun.transform.position);//change from an array later line 12
         
     }
     void Update()
@@ -72,6 +91,11 @@ public class PlayerController : Unit
         {
             velocity.y = -2f;
         }
+
+        //if (traps.playerDead)
+        //{
+        //    isAlive = false;
+        //}
 
         if (isAlive)
         {
@@ -128,43 +152,48 @@ public class PlayerController : Unit
 
             //Shooting Script
 
-
-            if (Input.GetButtonDown("Fire1"))
-            {
-                //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
-                LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
-
-
-                //we are having to do some ray casting
-                Ray ray = new Ray(GetGunPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
-                RaycastHit hit; //our hit is going to be used as an output of a Raycast
-                                //so we need to use a layermask and a layermask is 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
-                {
-                    //if this is true, we hit something
-                    Attack(hit);
-                }
-                else
-                {
-                    //we now need to figure out a position we are firing
-                    Vector3 targetPos = GetGunPosition() + playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
-                    Debug.DrawRay(GetGunPosition(), Vector3.forward, Color.red, 5f, false);
-
-                }
-
-            }
-
             if (Input.GetButton("Fire2")) //Right mouse click
             {
-                playerCam.fieldOfView = defaultView / zoomIn; 
+                playerCam.fieldOfView = Mathf.Lerp(defaultView, defaultView / zoomIn, defaultView / zoomSmooth);
                 transform.eulerAngles = playerCam.transform.eulerAngles;
+
+
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
+                    LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
+
+
+                    //we are having to do some ray casting
+                    Ray ray = new Ray(GetGunPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
+                    RaycastHit hit; //our hit is going to be used as an output of a Raycast
+                                    //so we need to use a layermask and a layermask is 
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+                    {
+                        //if this is true, we hit something
+                        Attack(hit);
+                        Debug.Log("Got them");
+                        ShowLasers(hit.point);
+                    }
+                    else
+                    {
+                        //we now need to figure out a position we are firing
+                        Vector3 targetPos = GetGunPosition() + playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
+                        Debug.Log("pew");
+                        ShowLasers(targetPos);
+                    }
+
+                }
+
             }
             else
             {
                 playerCam.fieldOfView = defaultView;
             }
-
-
+        }
+        else //If player not alive call die function
+        {
+            Die();
         }
 
         Debug.Log(respawnPos);
@@ -172,7 +201,7 @@ public class PlayerController : Unit
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)//Checkpoint script
     {
         if (other.tag == "Checkpoint")
         {

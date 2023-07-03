@@ -28,6 +28,8 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private float respawnTime = 2.0f;
 
+    Traps Traps;
+
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -90,7 +92,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    protected virtual void Die() //even for teddy bears, the Grim Reaper comes
+    protected virtual void Die()
     {
         if (!isAlive)
             return; //this is a mistake clearly because we are already dead
@@ -123,6 +125,6 @@ public class Unit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
