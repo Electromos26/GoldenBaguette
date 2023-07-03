@@ -79,7 +79,6 @@ MonoBehaviour:
   clampAngle: 40
   mouseSensitivity: 100
   PlayerObj: {fileID: 7136285905296537497}
-  rotationSmoothTime: 1.2
   Invert: -1
 --- !u!1 &6865464427680096526
 GameObject:
@@ -481,7 +480,7 @@ MonoBehaviour:
   speed: 12
   runSpeed: 24
   gravity: -15
-  jumpHeight: 3
+  jumpHeight: 2
   groundCheck: {fileID: 7873517706891807212}
   groundMask:
     serializedVersion: 2
@@ -489,11 +488,7 @@ MonoBehaviour:
   turnSmoothTime: 0.2
   gameManager: {fileID: 0}
   zoomIn: 3
-  checkPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  smoothZoom: 2
 --- !u!1 &7873517708466245416
 GameObject:
   m_ObjectHideFlags: 0

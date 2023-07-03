@@ -21,7 +21,7 @@ public class AIController : Unit
     private NavMeshAgent agent; //this is our navmesh agent
     private Unit currentEnemy; //current enemy
     private AISpot currentSpot; //the current spot we are focused on
-    private AISpot newSpot; //the new spot selected by the AI
+    private AISpot lastSpot; //the new spot selected by the AI
 
     private int arrayNum = 0;
 
@@ -77,13 +77,14 @@ public class AIController : Unit
     private IEnumerator OnIdle() //handles our idle state
     {
         //when idling, we should probably do some work and look for an outpost
-        //currentSpot = null;
-        //while (currentSpot == null)
-        //{
+        currentSpot = lastSpot;
+        currentSpot = null;
+        while (currentSpot == null)
+        {
             if (isAlive)
                 LookForSpots(); //if we ever find an outpost, and the currentSpot changes, we will leave this loop
             yield return null;
-        //}
+        }
         SetState(State.Patrolling); //we found an outpost, we now need to move
         //this will change
     }
@@ -99,12 +100,6 @@ public class AIController : Unit
         //After Value turns 1, he is going to search for a new spot
         SetState(State.Idle);
 
-        //while (!(currentSpot.team == Team && currentSpot.currentValue == 1))
-        //{
-        //    //look for enemies
-        //    LookForEnemies();
-        //}//we move towards an outpost as long as we are not the team possessing it
-        //SetState(State.Idle);
     }
     private IEnumerator OnChasing()
     {
@@ -140,12 +135,13 @@ public class AIController : Unit
                 else
                 {
                     Vector3 targetPos = GetEyesPosition() + dir; // go a distance forward from the camera direction
-        //            ShowLasers(targetPos);
+                    //ShowLasers(targetPos);
                 }
             }
             yield return null;
         }
         currentEnemy = null;
+        agent.ResetPath();
         SetState(State.Idle);
     }
     private void LookForEnemies()
@@ -173,13 +169,12 @@ public class AIController : Unit
     {
         arrayNum = Random.Range(0, GameManager.Instance.currentSpot.Length);//finds a random spot for the AI to look for
 
-        while (team != GameManager.Instance.currentSpot[arrayNum].team && GameManager.Instance.currentSpot[arrayNum] != currentSpot)
+        while (team != GameManager.Instance.currentSpot[arrayNum].team && GameManager.Instance.currentSpot[arrayNum] != lastSpot)
         {
             arrayNum = Random.Range(0, GameManager.Instance.currentSpot.Length);//finds a random spot for the AI to look for
         }
 
         currentSpot = GameManager.Instance.currentSpot[arrayNum];
-
     }
 
     protected override void Die()
@@ -188,7 +183,6 @@ public class AIController : Unit
         agent.ResetPath();
         base.Die();
         currentEnemy = null;
-
 
     }
 

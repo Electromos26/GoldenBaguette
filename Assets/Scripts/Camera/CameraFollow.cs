@@ -15,9 +15,6 @@ public class CameraFollow : MonoBehaviour
 
 
     private float camDistanceToPlayer;
-    [SerializeField]
-    private float rotationSmoothTime = 1.2f;
-
 
   /*  Vector3 rotationSmoothVelocity;
     Vector3 currentRotation;*/
@@ -26,8 +23,6 @@ public class CameraFollow : MonoBehaviour
      float mouseY;
      float finalInputX;
      float finalInputZ;
-     float smoothX;
-     float smoothY;
      float rotY = 0.0f;
      float rotX = 0.0f;
 
