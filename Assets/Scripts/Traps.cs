@@ -14,12 +14,13 @@ public class Traps : MonoBehaviour
 
     private bool playerInCollider = false;
     
-    public bool playerDead = false;
+    private PlayerController player;
 
     // Start is called before the first frame update
     void Start()
     {
         trapPosition = endOfTrap.transform.position;
+        player = GameObject.FindObjectOfType<PlayerController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,7 +65,8 @@ public class Traps : MonoBehaviour
                 yield return null;
             }
         }
-        playerDead = true;
+       
+        player.PublicDie();
         Debug.Log("You died.");
 
     }

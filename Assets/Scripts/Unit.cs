@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
+
 
 public class Unit : MonoBehaviour
 {
@@ -108,7 +108,10 @@ public class Unit : MonoBehaviour
         //animator.SetBool("Dead", true); //Set up later
         Invoke("Respawn", respawnTime);
     }
-
+    public void PublicDie()
+    {
+        Die();
+    }
     protected virtual void Respawn()
     {
         Debug.Log("Respawning!");
