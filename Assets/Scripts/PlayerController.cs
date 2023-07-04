@@ -16,6 +16,12 @@ public class PlayerController : Unit
     [SerializeField]
     private float crouchCenterController;
 
+    [SerializeField]
+    private float crouchHeightController = 1.4f;
+
+    [SerializeField]
+    private float defaultHeightController = 1.9f;
+
     private Vector3 defaultCenterVector;
     private Vector3 crouchCenterVector;
 
@@ -68,6 +74,9 @@ public class PlayerController : Unit
     private const float ANIMATOR_SMOOTHING = 0.4f;
 
     private Vector2 animatorInput;
+
+    [SerializeField]
+    private GameObject crossHair;
 
     Traps traps;
 
@@ -134,34 +143,75 @@ public class PlayerController : Unit
                 transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
             }
 
+            controller.center = defaultCenterVector; //Centering the controller on the playyer to adjust collision
+
             animatorInput = Vector2.Lerp(animatorInput, inputDir, ANIMATOR_SMOOTHING);
             animator.SetFloat("HorizontalSpeed", animatorInput.x);
             animator.SetFloat("VerticalSpeed", animatorInput.y);
 
-            if (Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && !Input.GetButton("Fire2")) //Logic for the player to run
             {
                 move *= runSpeed;
                 //Code for running animation
                 animator.SetBool("Crouching", false);
+                animator.SetBool("AimCrouching", false);
                 animator.SetBool("Running", true);
+                animator.SetBool("Aiming", false);
+
                 controller.center = defaultCenterVector;
+                controller.height = defaultHeightController;
+                crossHair.SetActive(false);
+                playerCam.fieldOfView = defaultView;
+
+
             }
-            else if (!Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl))
+            else if (Input.GetKey(KeyCode.LeftControl) && !Input.GetButton("Fire2")) //Logic for the player to crouch and walk around
             {
                 move *= crouchSpeed;
                 animator.SetBool("Crouching", true);
+                animator.SetBool("AimCrouching", false);
                 animator.SetBool("Running", false);
-                controller.center = crouchCenterVector;
+                animator.SetBool("Aiming", false);
 
+                controller.center = crouchCenterVector;
+                controller.height = crouchHeightController;
+                crossHair.SetActive(false);
+                playerCam.fieldOfView = defaultView;
             }
-            else if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
+            else if (Input.GetKey(KeyCode.LeftControl) && Input.GetButton("Fire2")) //Logic for crouching and shooting, player cant move around
+            {
+                move *= 0;
+                animator.SetBool("Crouching", false);
+                animator.SetBool("AimCrouching", true);
+                animator.SetBool("Running", false);
+                animator.SetBool("Aiming", false);
+
+                controller.center = crouchCenterVector;
+                controller.height = crouchHeightController;
+                AimingAndShooting();
+            }
+            else if (Input.GetButton("Fire2"))//Logic for the aim on while walking
             {
                 move *= speed;
                 animator.SetBool("Crouching", false);
+                animator.SetBool("AimCrouching", false);
                 animator.SetBool("Running", false);
-                controller.center = defaultCenterVector;
+                animator.SetBool("Aiming", true);
+                AimingAndShooting();
             }
+            else if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl)) //Logic for the player to walk without the aim on
+            {
+                move *= speed;
+                animator.SetBool("Crouching", false);
+                animator.SetBool("AimCrouching", false);
+                animator.SetBool("Running", false);
+                animator.SetBool("Aiming", false);
 
+                controller.center = defaultCenterVector;
+                controller.height = defaultHeightController;
+                crossHair.SetActive(false);
+                playerCam.fieldOfView = defaultView;
+            }
 
             controller.Move(move * Time.deltaTime);
 
@@ -177,46 +227,11 @@ public class PlayerController : Unit
 
             //Shooting Script
 
-            if (Input.GetButton("Fire2")) //Right mouse click
-            {
-                playerCam.fieldOfView = Mathf.Lerp(defaultView, defaultView / zoomIn, defaultView / zoomSmooth);
-                transform.eulerAngles = playerCam.transform.eulerAngles;
-                animator.SetBool("Aiming", true);
 
-
-                if (Input.GetButtonDown("Fire1"))
-                {
-                    //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
-                    LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
-
-
-                    //we are having to do some ray casting
-                    Ray ray = new Ray(GetGunPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
-                    RaycastHit hit; //our hit is going to be used as an output of a Raycast
-                                    //so we need to use a layermask and a layermask is 
-                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
-                    {
-                        //if this is true, we hit something
-                        Attack(hit);
-                        Debug.Log("Got them");
-                        ShowLasers(hit.point);
-                    }
-                    else
-                    {
-                        //we now need to figure out a position we are firing
-                        Vector3 targetPos = GetGunPosition() + playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
-                        Debug.Log("pew");
-                        ShowLasers(targetPos);
-                    }
-
-                }
-
-            }
-            else
-            {
-                animator.SetBool("Aiming", false);
-                playerCam.fieldOfView = defaultView;
-            }
+        }
+        else
+        {
+            playerCam.fieldOfView = defaultView; //Return camera to deafult view if the player dies
         }
 
         Debug.Log(respawnPos);
@@ -233,23 +248,58 @@ public class PlayerController : Unit
         }
     }
 
-        //private void OnTriggerEnter(Collider other) // collectables
-        //{
-        //    if (other.gameObject.GetComponent<GoldCoin>())//special collectible with goldCoin script  
-        //    {
-        //        //GoldCoin collectableObject = other.gameObject.GetComponent<GoldCoin>();
-        //        gameManager.IncreaseScore(collectableObject.GetNumPoints());
-        //        Destroy(other.gameObject);
-        //        HandColorer();
-        //    }
-        //    else if (other.gameObject.GetComponent<Collectible>()) // every other collectable
-        //    {
-        //        Collectible collectableObject = other.gameObject.GetComponent<Collectible>();
-        //        gameManager.IncreaseScore(collectableObject.GetNumPoints());
-        //        Destroy(other.gameObject);
-        //    }
+    private void AimingAndShooting()
+    {
+        playerCam.fieldOfView = Mathf.Lerp(defaultView, defaultView / zoomIn, defaultView / zoomSmooth);
+        transform.eulerAngles = playerCam.transform.eulerAngles;
+        crossHair.SetActive(true); //Activate crosshair
 
-        //}
+        if (Input.GetButtonDown("Fire1"))
+        {
+            //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
+            LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
+
+
+            //we are having to do some ray casting
+            Ray ray = new Ray(GetGunPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
+            RaycastHit hit; //our hit is going to be used as an output of a Raycast
+                            //so we need to use a layermask and a layermask is 
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+            {
+                //if this is true, we hit something
+                Attack(hit);
+                Debug.Log("Got them");
+                ShowLasers(hit.point);
+            }
+            else
+            {
+                //we now need to figure out a position we are firing
+                Vector3 targetPos = GetGunPosition() + playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
+                Debug.Log("pew");
+                ShowLasers(targetPos);
+            }
+
+        }
+
+    }
+
+    //private void OnTriggerEnter(Collider other) // collectables
+    //{
+    //    if (other.gameObject.GetComponent<GoldCoin>())//special collectible with goldCoin script  
+    //    {
+    //        //GoldCoin collectableObject = other.gameObject.GetComponent<GoldCoin>();
+    //        gameManager.IncreaseScore(collectableObject.GetNumPoints());
+    //        Destroy(other.gameObject);
+    //        HandColorer();
+    //    }
+    //    else if (other.gameObject.GetComponent<Collectible>()) // every other collectable
+    //    {
+    //        Collectible collectableObject = other.gameObject.GetComponent<Collectible>();
+    //        gameManager.IncreaseScore(collectableObject.GetNumPoints());
+    //        Destroy(other.gameObject);
+    //    }
+
+    //}
 
 }
 

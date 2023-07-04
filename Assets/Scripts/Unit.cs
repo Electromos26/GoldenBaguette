@@ -105,6 +105,7 @@ public class Unit : MonoBehaviour
         isAlive = false;
         Debug.Log("Die");
 
+        animator.SetBool("Aiming", false);
         animator.SetBool("Dead", true);
         Invoke("Respawn", respawnTime);
     }
@@ -112,14 +113,15 @@ public class Unit : MonoBehaviour
     {
         Die();
     }
+
     protected virtual void Respawn()
     {
         Debug.Log("Respawning!");
         Debug.Log(respawnPos);
+        animator.SetBool("Dead", false);
         isAlive = true;
         gameObject.layer = LayerMask.NameToLayer("Alive");
         health = fullHealth;
-        animator.SetBool("Dead", false);
         this.transform.position = respawnPos; //set player position to the respawn position
         //when we respawn, what do we need to do?
         //1) Change the layer
