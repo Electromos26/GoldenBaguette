@@ -6,6 +6,8 @@ using UnityEngine.XR;
 public class Unit : MonoBehaviour
 {
 
+    protected Animator animator;
+
     int fullHealth = 100;
     [SerializeField]
     int health; //the current health value of our unit 
@@ -34,6 +36,8 @@ public class Unit : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        animator = GetComponent<Animator>();
+
         eyes = GetComponentsInChildren<Eye>();
         respawnPos = this.transform.position; //At the start this should be the respawn position
     }
