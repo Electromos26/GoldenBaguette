@@ -39,6 +39,7 @@ public class Unit : MonoBehaviour
         animator = GetComponent<Animator>();
 
         eyes = GetComponentsInChildren<Eye>();
+        
         respawnPos = this.transform.position; //At the start this should be the respawn position
     }
 
@@ -49,7 +50,6 @@ public class Unit : MonoBehaviour
         if (health <= 0)
         {
             Die();
-            //we will do death code later
         }
     }
 
@@ -105,7 +105,7 @@ public class Unit : MonoBehaviour
         isAlive = false;
         Debug.Log("Die");
 
-        //animator.SetBool("Dead", true); //Set up later
+        animator.SetBool("Dead", true);
         Invoke("Respawn", respawnTime);
     }
     public void PublicDie()
@@ -119,8 +119,8 @@ public class Unit : MonoBehaviour
         isAlive = true;
         gameObject.layer = LayerMask.NameToLayer("Alive");
         health = fullHealth;
+        animator.SetBool("Dead", false);
         this.transform.position = respawnPos; //set player position to the respawn position
-        //animator.SetBool("Dead", false);
         //when we respawn, what do we need to do?
         //1) Change the layer
         //2) Health back to max

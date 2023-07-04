@@ -402,13 +402,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.9
+  m_Height: 1.8
   m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 0.95, z: 0}
 --- !u!114 &7873517708216756961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,8 +427,11 @@ MonoBehaviour:
   viewAngle: 80
   respawnTime: 5
   controller: {fileID: 7873517708216756990}
+  controllerHeight: 1.8
+  crouchControllerHeight: 1.8
   speed: 8
   runSpeed: 12
+  crouchSpeed: 4
   gravity: -15
   jumpHeight: 2
   groundCheck: {fileID: 7873517706891807212}
@@ -440,7 +443,7 @@ MonoBehaviour:
   gun: {fileID: 7031058085607981941}
   laserPrefab: {fileID: 1134949319946392262, guid: fa1a14234d85df048be4edf85d996aff, type: 3}
   zoomIn: 3
-  zoomSmooth: 0
+  zoomSmooth: 1
 --- !u!95 &9029037128753843392
 Animator:
   serializedVersion: 5

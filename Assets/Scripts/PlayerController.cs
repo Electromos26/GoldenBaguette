@@ -10,6 +10,15 @@ public class PlayerController : Unit
     [SerializeField]
     private CharacterController controller;
 
+    [SerializeField]
+    private float controllerCenter = 0.95f;
+
+    [SerializeField]
+    private float crouchCenterController;
+
+    private Vector3 defaultCenterVector;
+    private Vector3 crouchCenterVector;
+
     private Camera playerCam; //this is the camera in our game
 
     [SerializeField]
@@ -71,6 +80,8 @@ public class PlayerController : Unit
 
         defaultView = playerCam.fieldOfView;
         zoomSmooth = zoomIn / 2f;
+        crouchCenterVector = new Vector3(0, crouchCenterController);
+        defaultCenterVector = new Vector3(0, controllerCenter);
     }
     private void ShowLasers(Vector3 targetPosition) //the target position is what we are aiming for
     {
@@ -130,16 +141,17 @@ public class PlayerController : Unit
             if (Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
             {
                 move *= runSpeed;
+                //Code for running animation
                 animator.SetBool("Crouching", false);
                 animator.SetBool("Running", true);
-
-                //Code for running animation
+                controller.center = defaultCenterVector;
             }
             else if (!Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl))
             {
                 move *= crouchSpeed;
                 animator.SetBool("Crouching", true);
                 animator.SetBool("Running", false);
+                controller.center = crouchCenterVector;
 
             }
             else if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
@@ -147,6 +159,7 @@ public class PlayerController : Unit
                 move *= speed;
                 animator.SetBool("Crouching", false);
                 animator.SetBool("Running", false);
+                controller.center = defaultCenterVector;
             }
 
 
@@ -168,6 +181,7 @@ public class PlayerController : Unit
             {
                 playerCam.fieldOfView = Mathf.Lerp(defaultView, defaultView / zoomIn, defaultView / zoomSmooth);
                 transform.eulerAngles = playerCam.transform.eulerAngles;
+                animator.SetBool("Aiming", true);
 
 
                 if (Input.GetButtonDown("Fire1"))
@@ -200,12 +214,9 @@ public class PlayerController : Unit
             }
             else
             {
+                animator.SetBool("Aiming", false);
                 playerCam.fieldOfView = defaultView;
             }
-        }
-        else //If player not alive call die function
-        {
-            Die();
         }
 
         Debug.Log(respawnPos);
