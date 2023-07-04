@@ -17,6 +17,8 @@ public class PlayerController : Unit
     [SerializeField]
     private float runSpeed;
     [SerializeField]
+    private float crouchSpeed;
+    [SerializeField]
     private float gravity = -9.81f;
     [SerializeField]
     private float jumpHeight = 3f;
@@ -52,10 +54,11 @@ public class PlayerController : Unit
     private float zoomIn = 3f;
 
     [SerializeField]
-    private float smoothZoom = 2.0f;
-
-    [SerializeField]
     private float zoomSmooth;
+
+    private const float ANIMATOR_SMOOTHING = 0.4f;
+
+    private Vector2 animatorInput;
 
     Traps traps;
 
@@ -118,24 +121,32 @@ public class PlayerController : Unit
             {
                 float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) + playerCam.transform.eulerAngles.y;
                 transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
-
             }
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            animatorInput = Vector2.Lerp(animatorInput, inputDir, ANIMATOR_SMOOTHING);
+            animator.SetFloat("HorizontalSpeed", animatorInput.x);
+            animator.SetFloat("VerticalSpeed", animatorInput.y);
+
+            if (Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
             {
                 move *= runSpeed;
+                animator.SetBool("Crouching", false);
+                animator.SetBool("Running", true);
+
                 //Code for running animation
             }
-            else
+            else if (!Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftControl))
+            {
+                move *= crouchSpeed;
+                animator.SetBool("Crouching", true);
+                animator.SetBool("Running", false);
+
+            }
+            else if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
             {
                 move *= speed;
-                //Code for stop running animation
-            }
-
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                Debug.Log("Crouching");
-                //Code for crouching animation
+                animator.SetBool("Crouching", false);
+                animator.SetBool("Running", false);
             }
 
 
@@ -144,6 +155,7 @@ public class PlayerController : Unit
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                animator.SetTrigger("Jumping");
             }
 
             velocity.y += gravity * Time.deltaTime;
