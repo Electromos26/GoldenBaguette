@@ -243,7 +243,7 @@ public class PlayerController : Unit
     {
         if (other.tag == "Checkpoint")
         {
-            respawnPos = other.transform.position; //Setting the respawnPos to the position of the checkpoint
+            respawnPos = transform.position; //Setting the respawnPos to the position of the checkpoint
             Destroy(other.gameObject);
         }
     }
