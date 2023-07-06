@@ -1,22 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Interactable : MonoBehaviour
 {
     [SerializeField]
     private GameObject button;//for animations
     [SerializeField]
-    private GameObject[] doors;
-    [SerializeField]
-    private GameObject[] traps;
-    [SerializeField]
     private GameObject endOfPress;//insert button location
+    private Vector3 pressPosition;
+
+    [SerializeField]
+    private GameObject[] doors;
     [SerializeField]
     private float openPositionY;
     [SerializeField]
     private float doorSpeed = 1f;
-    private Vector3 pressPosition;
+
+    [SerializeField]
+    private GameObject[] traps;
+    [SerializeField]
+    private float trapOutY;
+    [SerializeField]
+    private float trapSpeed = 20f;
+    private Vector3 trapPosition;
+
+
     private void Start()
     {
 
@@ -34,12 +44,11 @@ public class Interactable : MonoBehaviour
             {
                 pressPosition = endOfPress.transform.position;
                 // Trigger the traps
-                foreach (var trap in traps)
-                {
-                    trap.SetActive(true);//spawn all the traps connected to the button
-                }
+
+                
                 StartCoroutine(PressedAnimation());
                 StartCoroutine(OpenDoors());
+                StartCoroutine(TriggerTrapAnimation());
             }
         }
     }
@@ -47,7 +56,7 @@ public class Interactable : MonoBehaviour
     {
         Vector3 initialPosition = button.transform.position;
         float distance = Vector3.Distance(initialPosition, pressPosition);
-        float duration = distance / (doorSpeed / 2f) ;
+        float duration = distance / (doorSpeed / 2f);
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -63,6 +72,9 @@ public class Interactable : MonoBehaviour
         // Button animation complete
         Debug.Log("Button animation complete");
     }
+
+
+
     private IEnumerator OpenDoors()
     {
         foreach (var door in doors)
@@ -93,16 +105,34 @@ public class Interactable : MonoBehaviour
             Debug.Log("The door is fully open");
         }
     }
-
-
-    /*    private void OnTriggerExit(Collider other)
+    private IEnumerator TriggerTrapAnimation()
+    {
+       
+        foreach (var trap in traps)
         {
-            if (other.CompareTag("Player"))
+            trap.SetActive(true);
+            Vector3 initialPosition = trap.transform.position;
+            Vector3 targetPosition = new Vector3(initialPosition.x, trapOutY, initialPosition.z);
+
+            float distance = Vector3.Distance(initialPosition, targetPosition);
+            float duration = distance / trapSpeed;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
             {
+                elapsedTime += Time.deltaTime;
+                float normalizedTime = Mathf.Clamp01(elapsedTime / duration);
 
+                trap.transform.position = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
+
+                yield return null;
             }
-        }*/
 
+            Debug.Log("You died.");
+
+        }
+    }
+   
 }
 
 

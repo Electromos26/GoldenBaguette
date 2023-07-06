@@ -30,9 +30,6 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private float respawnTime = 2.0f;
 
-    Traps Traps;
-
-
     // Start is called before the first frame update
     protected virtual void Start()
     {
