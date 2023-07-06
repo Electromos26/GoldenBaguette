@@ -30,7 +30,7 @@ public class Interactable : MonoBehaviour
     {
         if (other.CompareTag("Player"))//make sure its the player
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && endOfPress != null)
             {
                 pressPosition = endOfPress.transform.position;
                 // Trigger the traps
@@ -59,7 +59,7 @@ public class Interactable : MonoBehaviour
 
             yield return null;
         }
-
+        Destroy(endOfPress);
         // Button animation complete
         Debug.Log("Button animation complete");
     }
