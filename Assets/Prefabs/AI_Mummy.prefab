@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 843422195929993624}
   - component: {fileID: 8204345679946276202}
   - component: {fileID: 7809228562502481175}
+  - component: {fileID: 6721296515860720784}
   m_Layer: 7
   m_Name: AI_Mummy
   m_TagString: Untagged
@@ -67,12 +68,12 @@ MonoBehaviour:
   damage: 20
   viewAngle: 80
   respawnTime: 5
-  attackInterval: 0.5
+  attackInterval: 1
   lookDistance: 10
   aimOffset: {x: 0, y: 1.5, z: 0}
   timer: 0
   attackDis: 2
-  speedMultiplierChasing: 0
+  speedMultiplierChasing: 2
 --- !u!195 &8204345679946276202
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -89,7 +90,7 @@ NavMeshAgent:
   m_AngularSpeed: 120
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 0
   m_Height: 1.8
   m_BaseOffset: 1
@@ -107,10 +108,31 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &6721296515860720784
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172506275889722517}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 804d52c8c71a4af4f8ba2890aa644b2f, type: 3}
+  m_Controller: {fileID: 9100000, guid: 340318d50ed89764d813cf95488329d2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3071617513293386196
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +380,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Y Bot
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 804d52c8c71a4af4f8ba2890aa644b2f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 804d52c8c71a4af4f8ba2890aa644b2f, type: 3}
 --- !u!4 &2856599787034793283 stripped
 Transform:
