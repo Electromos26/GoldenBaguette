@@ -33,7 +33,10 @@ public class AIController : Unit
     [SerializeField]
     private float attackDis; //this will keep track of the time within the outpost
 
+    [SerializeField]
+    private float speedMultiplierChasing;
 
+    private float defaultSpeed;
 
     //[SerializeField] GameObject goalObject;
 
@@ -45,6 +48,7 @@ public class AIController : Unit
         agent = GetComponent<NavMeshAgent>();
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
         SetState(State.Idle);
+        defaultSpeed = agent.speed;
 
     }
 
@@ -77,6 +81,7 @@ public class AIController : Unit
     private IEnumerator OnIdle() //handles our idle state
     {
         //when idling, we should probably do some work and look for an outpost
+        animator.SetBool("Running", false);
         currentSpot = lastSpot;
         currentSpot = null;
         while (currentSpot == null)
@@ -90,10 +95,11 @@ public class AIController : Unit
     }
     private IEnumerator OnPatrolling()
     {
+        animator.SetBool("Running", false);
         agent.SetDestination(currentSpot.transform.position);
         while (currentSpot.currentValue != 1)
         {
-            LookForEnemies(); //Needs to be setup
+            LookForEnemies();
             yield return null;
         }
 
@@ -115,6 +121,8 @@ public class AIController : Unit
             if (distanceToEnemy > attackDis || !CanSee(currentEnemy.transform, currentEnemy.transform.position + aimOffset))
             {
                 agent.SetDestination(currentEnemy.transform.position);
+                agent.speed = defaultSpeed * speedMultiplierChasing;
+                animator.SetBool("Running", true);
             }
             else if (shootTimer > attackInterval)
             {
@@ -130,6 +138,8 @@ public class AIController : Unit
                 if (Physics.Raycast(ray, out hit, attackDis, mask))
                 {
                     //if this is true, we hit something
+                    animator.SetBool("Running", false);
+                    animator.SetTrigger("Attack");
                     Attack(hit);
                 }
                 else
@@ -142,6 +152,7 @@ public class AIController : Unit
         }
         currentEnemy = null;
         agent.ResetPath();
+        agent.speed = defaultSpeed;
         SetState(State.Idle);
     }
     private void LookForEnemies()
@@ -177,6 +188,12 @@ public class AIController : Unit
         currentSpot = GameManager.Instance.currentSpot[arrayNum];
     }
 
+    protected override void Respawn()
+    {
+        base.Respawn();
+        SetState(State.Idle);
+    }
+
     protected override void Die()
     {
         StopAllCoroutines();
@@ -186,10 +203,9 @@ public class AIController : Unit
 
     }
 
-
     // Update is called once per frame
     void Update()
     {
-       //agent.destination = goalObject.transform.position;
+        animator.SetFloat("VerticalSpeed", agent.velocity.magnitude);
     }
 }
