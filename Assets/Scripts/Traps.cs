@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Traps : MonoBehaviour
@@ -12,6 +13,13 @@ public class Traps : MonoBehaviour
     private float trapSpeed = 20f;
     private Vector3 trapPosition;
 
+    public int trapDamage;
+
+    private float timer;
+
+    [SerializeField]
+    private float damageTimer;
+
     private bool playerInCollider = false;
     
     private PlayerController player;
@@ -21,6 +29,7 @@ public class Traps : MonoBehaviour
     {
         trapPosition = endOfTrap.transform.position;
         player = GameObject.FindObjectOfType<PlayerController>();
+        timer = damageTimer;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,6 +50,14 @@ public class Traps : MonoBehaviour
             // Perform any necessary actions for player death
         }
 
+        timer += Time.deltaTime;
+        if (timer > damageTimer)
+        {
+            player.OnTrapHit(trapDamage);
+            //player.PublicDie();
+            Debug.Log("You died.");
+            timer = 0;
+        }
 
     }
 
@@ -65,10 +82,6 @@ public class Traps : MonoBehaviour
                 yield return null;
             }
         }
-       
-        player.PublicDie();
-        Debug.Log("You died.");
-
     }
 
 

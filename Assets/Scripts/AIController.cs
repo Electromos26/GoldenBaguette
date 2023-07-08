@@ -207,5 +207,6 @@ public class AIController : Unit
     void Update()
     {
         animator.SetFloat("VerticalSpeed", agent.velocity.magnitude);
+        Debug.Log(agent.velocity.magnitude);
     }
 }

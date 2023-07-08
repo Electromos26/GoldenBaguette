@@ -805,7 +805,8 @@ MonoBehaviour:
   trap: {fileID: 6048982606604944513}
   endOfTrap: {fileID: 6048982606074863372}
   trapSpeed: 20
-  playerInCollider: 0
+  trapDamage: 10
+  damageTimer: 2
 --- !u!65 &5072395873686798483
 BoxCollider:
   m_ObjectHideFlags: 0

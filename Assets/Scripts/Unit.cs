@@ -111,6 +111,17 @@ public class Unit : MonoBehaviour
         Die();
     }
 
+    public void OnTrapHit(int trapDamage)
+    {
+        Debug.Log("Ow");
+        health -= trapDamage; //take some damage from the attacker
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+
     protected virtual void Respawn()
     {
         Debug.Log("Respawning!");
