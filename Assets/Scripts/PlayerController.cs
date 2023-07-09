@@ -80,6 +80,13 @@ public class PlayerController : Unit
 
     Traps traps;
 
+    private bool lightIsOn = false;
+
+    [SerializeField]
+    private GameObject flashlight;
+
+
+
     protected override void Start()
     {
         base.Start();
@@ -88,9 +95,9 @@ public class PlayerController : Unit
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
 
         defaultView = playerCam.fieldOfView;
-        zoomSmooth = zoomIn / 2f;
         crouchCenterVector = new Vector3(0, crouchCenterController);
         defaultCenterVector = new Vector3(0, controllerCenter);
+        flashlight.gameObject.SetActive(false);
     }
     private void ShowLasers(Vector3 targetPosition) //the target position is what we are aiming for
     {
@@ -115,11 +122,6 @@ public class PlayerController : Unit
             velocity.y = -2f;
         }
 
-        //if (traps.playerDead)
-        //{
-        //    isAlive = false;
-        //}
-
         if (isAlive)
         {
             float x = Input.GetAxis("Horizontal");
@@ -127,13 +129,14 @@ public class PlayerController : Unit
             Vector2 input = new Vector2(x, z);
             Vector2 inputDir = input.normalized;
 
-            // dont jumpo when paused and dies 
+            // dont move when paused
 
             //if (gameManager.gameOver == false)//stop moving if the game ends
             //{
 
             //}
 
+            //Movement
             Vector3 move = transform.right * x + transform.forward * z;
 
             //Adjusting player movement considering camera position
@@ -149,6 +152,7 @@ public class PlayerController : Unit
             animator.SetFloat("HorizontalSpeed", animatorInput.x);
             animator.SetFloat("VerticalSpeed", animatorInput.y);
 
+            //Every movement and animation the player does
             if (Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && !Input.GetButton("Fire2")) //Logic for the player to run
             {
                 move *= runSpeed;
@@ -161,7 +165,7 @@ public class PlayerController : Unit
                 controller.center = defaultCenterVector;
                 controller.height = defaultHeightController;
                 crossHair.SetActive(false);
-                playerCam.fieldOfView = defaultView;
+                playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
 
 
             }
@@ -176,7 +180,7 @@ public class PlayerController : Unit
                 controller.center = crouchCenterVector;
                 controller.height = crouchHeightController;
                 crossHair.SetActive(false);
-                playerCam.fieldOfView = defaultView;
+                playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
             }
             else if (Input.GetKey(KeyCode.LeftControl) && Input.GetButton("Fire2")) //Logic for crouching and shooting, player cant move around
             {
@@ -210,12 +214,12 @@ public class PlayerController : Unit
                 controller.center = defaultCenterVector;
                 controller.height = defaultHeightController;
                 crossHair.SetActive(false);
-                playerCam.fieldOfView = defaultView;
+                playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
             }
 
             controller.Move(move * Time.deltaTime);
 
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            if (Input.GetButtonDown("Jump") && isGrounded) //Jumping
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 animator.SetTrigger("Jumping");
@@ -225,13 +229,23 @@ public class PlayerController : Unit
 
             controller.Move(velocity * Time.deltaTime);
 
-            //Shooting Script
-
-
+            if (Input.GetKeyDown(KeyCode.F)) //Turn flashlight on and off
+            {
+                if (!lightIsOn)
+                {
+                    lightIsOn = true;
+                    flashlight.gameObject.SetActive(true);
+                }
+                else if (lightIsOn)
+                {
+                    lightIsOn = false;
+                    flashlight.gameObject.SetActive(false);
+                }
+            }
         }
         else
         {
-            playerCam.fieldOfView = defaultView; //Return camera to deafult view if the player dies
+            playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
         }
 
         Debug.Log(respawnPos);
@@ -248,9 +262,9 @@ public class PlayerController : Unit
         }
     }
 
-    private void AimingAndShooting()
+    private void AimingAndShooting() //Function to maike the player aim and be able to shoot
     {
-        playerCam.fieldOfView = Mathf.Lerp(defaultView, defaultView / zoomIn, defaultView / zoomSmooth);
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView / zoomIn, Time.deltaTime * zoomSmooth); //Reduces field of view for zoom
         transform.eulerAngles = playerCam.transform.eulerAngles;
         crossHair.SetActive(true); //Activate crosshair
 
