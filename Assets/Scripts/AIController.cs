@@ -119,7 +119,7 @@ public class AIController : Unit
             float distanceToEnemy = Vector3.Distance(currentEnemy.transform.position, this.transform.position);
             //if we are too far away or we can't see our enemy, let's move towards them
             //otherwise, if our shoot timer is up, shoot them
-            transform.LookAt(currentEnemy.transform);
+            //transform.LookAt(currentEnemy.transform);
 
             if (distanceToEnemy > attackDis || !CanSee(currentEnemy.transform, currentEnemy.transform.position + aimOffset))
             {
