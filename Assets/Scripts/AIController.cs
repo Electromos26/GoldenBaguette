@@ -116,6 +116,7 @@ public class AIController : Unit
         {
             shootTimer += Time.deltaTime; //increment our shoot timer each time
             float distanceToEnemy = Vector3.Distance(currentEnemy.transform.position, this.transform.position);
+            transform.LookAt(currentEnemy.transform);
             //if we are too far away or we can't see our enemy, let's move towards them
             //otherwise, if our shoot timer is up, shoot them
             if (distanceToEnemy > attackDis || !CanSee(currentEnemy.transform, currentEnemy.transform.position + aimOffset))
@@ -137,7 +138,7 @@ public class AIController : Unit
                                 //so we need to use a layermask and a layermask is 
                 if (Physics.Raycast(ray, out hit, attackDis, mask))
                 {
-                    //if this is true, we hit something
+                    //if this is true, we attack the player
                     animator.SetBool("Running", false);
                     animator.SetTrigger("Attack");
                     Attack(hit);
@@ -207,6 +208,5 @@ public class AIController : Unit
     void Update()
     {
         animator.SetFloat("VerticalSpeed", agent.velocity.magnitude);
-        Debug.Log(agent.velocity.magnitude);
     }
 }
