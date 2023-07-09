@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4407020719993579134}
   - component: {fileID: 843422195929993624}
   - component: {fileID: 8204345679946276202}
-  - component: {fileID: 7809228562502481175}
+  - component: {fileID: -968271234044763333}
   - component: {fileID: 6721296515860720784}
   m_Layer: 7
   m_Name: AI_Mummy
@@ -47,7 +47,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -70,7 +70,7 @@ MonoBehaviour:
   respawnTime: 5
   attackInterval: 1
   lookDistance: 10
-  aimOffset: {x: 0, y: 1.5, z: 0}
+  aimOffset: {x: 0, y: 2.5, z: 0}
   timer: 0
   attackDis: 2
   speedMultiplierChasing: 2
@@ -85,10 +85,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.3
   m_Speed: 2
-  m_Acceleration: 1
+  m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 0
@@ -96,7 +96,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!54 &7809228562502481175
+--- !u!54 &-968271234044763333
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,11 +105,11 @@ Rigidbody:
   m_GameObject: {fileID: 172506275889722517}
   serializedVersion: 2
   m_Mass: 80
-  m_Drag: 0.05
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!95 &6721296515860720784

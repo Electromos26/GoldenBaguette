@@ -1,6 +1,7 @@
 using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
@@ -116,9 +117,10 @@ public class AIController : Unit
         {
             shootTimer += Time.deltaTime; //increment our shoot timer each time
             float distanceToEnemy = Vector3.Distance(currentEnemy.transform.position, this.transform.position);
-            transform.LookAt(currentEnemy.transform);
             //if we are too far away or we can't see our enemy, let's move towards them
             //otherwise, if our shoot timer is up, shoot them
+            transform.LookAt(currentEnemy.transform);
+
             if (distanceToEnemy > attackDis || !CanSee(currentEnemy.transform, currentEnemy.transform.position + aimOffset))
             {
                 agent.SetDestination(currentEnemy.transform.position);
@@ -148,6 +150,7 @@ public class AIController : Unit
                     Vector3 targetPos = GetEyesPosition() + dir; // go a distance forward from the camera direction
                     //ShowLasers(targetPos);
                 }
+
             }
             yield return null;
         }
@@ -201,12 +204,12 @@ public class AIController : Unit
         agent.ResetPath();
         base.Die();
         currentEnemy = null;
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(lookDistance);
         animator.SetFloat("VerticalSpeed", agent.velocity.magnitude);
     }
 }

@@ -85,6 +85,9 @@ public class PlayerController : Unit
     [SerializeField]
     private GameObject flashlight;
 
+    private AIController AIScript;
+
+    private float AILookDistanceDefault;
 
 
     protected override void Start()
@@ -94,10 +97,14 @@ public class PlayerController : Unit
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
 
+        AIScript = GameObject.FindObjectOfType<AIController>();
+
         defaultView = playerCam.fieldOfView;
         crouchCenterVector = new Vector3(0, crouchCenterController);
         defaultCenterVector = new Vector3(0, controllerCenter);
         flashlight.gameObject.SetActive(false);
+        AILookDistanceDefault = AIScript.lookDistance;
+
     }
     private void ShowLasers(Vector3 targetPosition) //the target position is what we are aiming for
     {
@@ -162,6 +169,8 @@ public class PlayerController : Unit
                 animator.SetBool("Running", true);
                 animator.SetBool("Aiming", false);
 
+                AIScript.lookDistance = AILookDistanceDefault;
+
                 controller.center = defaultCenterVector;
                 controller.height = defaultHeightController;
                 crossHair.SetActive(false);
@@ -172,10 +181,13 @@ public class PlayerController : Unit
             else if (Input.GetKey(KeyCode.LeftControl) && !Input.GetButton("Fire2")) //Logic for the player to crouch and walk around
             {
                 move *= crouchSpeed;
+
                 animator.SetBool("Crouching", true);
                 animator.SetBool("AimCrouching", false);
                 animator.SetBool("Running", false);
                 animator.SetBool("Aiming", false);
+
+                AIScript.lookDistance = AILookDistanceDefault / 2;
 
                 controller.center = crouchCenterVector;
                 controller.height = crouchHeightController;
@@ -190,6 +202,8 @@ public class PlayerController : Unit
                 animator.SetBool("Running", false);
                 animator.SetBool("Aiming", false);
 
+                AIScript.lookDistance = AILookDistanceDefault/2;
+
                 controller.center = crouchCenterVector;
                 controller.height = crouchHeightController;
                 AimingAndShooting();
@@ -201,6 +215,8 @@ public class PlayerController : Unit
                 animator.SetBool("AimCrouching", false);
                 animator.SetBool("Running", false);
                 animator.SetBool("Aiming", true);
+                AIScript.lookDistance = AILookDistanceDefault;
+
                 AimingAndShooting();
             }
             else if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl)) //Logic for the player to walk without the aim on
@@ -210,6 +226,8 @@ public class PlayerController : Unit
                 animator.SetBool("AimCrouching", false);
                 animator.SetBool("Running", false);
                 animator.SetBool("Aiming", false);
+
+                AIScript.lookDistance = AILookDistanceDefault;
 
                 controller.center = defaultCenterVector;
                 controller.height = defaultHeightController;
