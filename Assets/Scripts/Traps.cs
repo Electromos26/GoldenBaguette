@@ -21,8 +21,12 @@ public class Traps : MonoBehaviour
     private float damageTimer;
 
     private bool playerInCollider = false;
-    
     private PlayerController player;
+
+    public bool TrapActive;
+
+    [SerializeField]
+    private bool floorTrap;
 
     // Start is called before the first frame update
     void Start()
@@ -34,54 +38,63 @@ public class Traps : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && floorTrap)
         {
             playerInCollider = true;
+            TrapActive = true;
 
         }
     }
-    private void OnTriggerStay(Collider other)
+    private void Update()
     {
 
-        if (playerInCollider)
+        if (playerInCollider || TrapActive)
         {
             // Trigger the traps
             StartCoroutine(TriggerTrapAnimation());
             // Perform any necessary actions for player death
+
         }
 
-        timer += Time.deltaTime;
-        if (timer > damageTimer)
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (TrapActive)
         {
-            player.OnTrapHit(trapDamage);
-            //player.PublicDie();
-            Debug.Log("You died.");
-            timer = 0;
+            timer += Time.deltaTime;
+            if (timer > damageTimer)
+            {
+                player.OnTrapHit(trapDamage);
+                //player.PublicDie();
+                Debug.Log("You died.");
+                timer = 0;
+            }
         }
+
 
     }
 
     private IEnumerator TriggerTrapAnimation()
     {
-        if (playerInCollider)
+
+        trap.SetActive(true);
+
+        Vector3 initialPosition = trap.transform.position;
+        float distance = Vector3.Distance(initialPosition, trapPosition);
+        float duration = distance / trapSpeed;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
         {
-            trap.SetActive(true);
+            elapsedTime += Time.deltaTime;
+            float normalizedTime = elapsedTime / duration;
 
-            Vector3 initialPosition = trap.transform.position;
-            float distance = Vector3.Distance(initialPosition, trapPosition);
-            float duration = distance / trapSpeed;
-            float elapsedTime = 0f;
+            trap.transform.position = Vector3.Lerp(initialPosition, trapPosition, normalizedTime);
 
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                float normalizedTime = elapsedTime / duration;
-
-                trap.transform.position = Vector3.Lerp(initialPosition, trapPosition, normalizedTime);
-
-                yield return null;
-            }
+            yield return null;
         }
+
     }
 
 

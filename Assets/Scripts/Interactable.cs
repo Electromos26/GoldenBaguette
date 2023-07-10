@@ -20,13 +20,7 @@ public class Interactable : MonoBehaviour
 
     [SerializeField]
     private GameObject[] traps;
-    [SerializeField]
-    private float trapOutY;
-    [SerializeField]
-    private float trapSpeed = 20f;
-    private Vector3 trapPosition;
 
-    private PlayerController player;
 
     private void Start()
     {
@@ -45,13 +39,17 @@ public class Interactable : MonoBehaviour
             {
                 pressPosition = endOfPress.transform.position;
                 // Trigger the traps
-
-                
                 StartCoroutine(PressedAnimation());
                 StartCoroutine(OpenDoors());
-                StartCoroutine(TriggerTrapAnimation());
+                // StartCoroutine(TriggerTrapAnimation());
+                foreach (var trap in traps)
+                {
+                    trap.GetComponent<Traps>().TrapActive = true;
+                }
             }
         }
+
+        
     }
     private IEnumerator PressedAnimation()
     {
@@ -106,7 +104,7 @@ public class Interactable : MonoBehaviour
             Debug.Log("The door is fully open");
         }
     }
-    private IEnumerator TriggerTrapAnimation()
+   /* private IEnumerator TriggerTrapAnimation()
     {
        
         foreach (var trap in traps)
@@ -129,10 +127,10 @@ public class Interactable : MonoBehaviour
                 yield return null;
             }
 
-            Debug.Log("You died.");
+            
 
         }
-    }
+    }*/
    
 }
 
