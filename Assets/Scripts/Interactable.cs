@@ -26,6 +26,7 @@ public class Interactable : MonoBehaviour
     private float trapSpeed = 20f;
     private Vector3 trapPosition;
 
+    private PlayerController player;
 
     private void Start()
     {
