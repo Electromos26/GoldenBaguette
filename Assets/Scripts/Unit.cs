@@ -42,7 +42,7 @@ public class Unit : MonoBehaviour
 
     protected virtual void OnHit(Unit attacker)
     {
-        Debug.Log("Ow");
+        //Add take hit animation
         health -= attacker.damage; //take some damage from the attacker
         if (health <= 0)
         {
@@ -100,7 +100,6 @@ public class Unit : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Dead");
 
         isAlive = false;
-        Debug.Log("Die");
 
         animator.SetBool("Aiming", false);
         animator.SetBool("Dead", true);
@@ -113,7 +112,7 @@ public class Unit : MonoBehaviour
 
     public void OnTrapHit(int trapDamage)
     {
-        Debug.Log("Ow");
+        //Add Take hit animation
         health -= trapDamage; //take some damage from the attacker
         if (health <= 0)
         {
@@ -124,8 +123,6 @@ public class Unit : MonoBehaviour
 
     protected virtual void Respawn()
     {
-        Debug.Log("Respawning!");
-        Debug.Log(respawnPos);
         animator.SetBool("Dead", false);
         isAlive = true;
         gameObject.layer = LayerMask.NameToLayer("Alive");

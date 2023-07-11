@@ -69,7 +69,6 @@ public class Interactable : MonoBehaviour
         }
         Destroy(endOfPress);
         // Button animation complete
-        Debug.Log("Button animation complete");
     }
 
 
@@ -101,7 +100,6 @@ public class Interactable : MonoBehaviour
                 doorCollider.enabled = false;
 
             // Door transition complete
-            Debug.Log("The door is fully open");
         }
     }
    /* private IEnumerator TriggerTrapAnimation()

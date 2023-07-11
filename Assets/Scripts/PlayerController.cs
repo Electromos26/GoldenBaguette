@@ -266,9 +266,6 @@ public class PlayerController : Unit
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
         }
 
-        Debug.Log(respawnPos);
-
-
     }
 
     private void OnTriggerEnter(Collider other)//Checkpoint script
@@ -307,7 +304,6 @@ public class PlayerController : Unit
             {
                 //we now need to figure out a position we are firing
                 Vector3 targetPos = GetGunPosition() + playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
-                Debug.Log("pew");
                 ShowLasers(targetPos);
             }
 

@@ -39,6 +39,8 @@ public class AIController : Unit
 
     private float defaultSpeed;
 
+    private bool checkTeam = false;
+
     //[SerializeField] GameObject goalObject;
 
 
@@ -83,7 +85,11 @@ public class AIController : Unit
     {
         //when idling, we should probably do some work and look for an outpost
         animator.SetBool("Running", false);
-        currentSpot = lastSpot;
+
+        if (currentSpot != null)
+        {
+            currentSpot = lastSpot;
+        }
         currentSpot = null;
         while (currentSpot == null)
         {
@@ -172,6 +178,7 @@ public class AIController : Unit
                 //we also want to check a couplemore things:
                 if (unit.tag == "Player" && CanSee(unit.transform, unit.transform.position + aimOffset) && unit.isAlive)
                 {
+                    Debug.Log("Sees Player");
                     currentEnemy = unit;
                     SetState(State.Chasing);
                     return; //remember: you can return anywhere in a void function and it immediately exits
@@ -184,12 +191,31 @@ public class AIController : Unit
     {
         arrayNum = Random.Range(0, GameManager.Instance.currentSpot.Length);//finds a random spot for the AI to look for
 
-        while (team != GameManager.Instance.currentSpot[arrayNum].team && GameManager.Instance.currentSpot[arrayNum] != lastSpot)
+        foreach (AISpot aISpot in GameManager.Instance.currentSpot) //Check if there are any AI Spots with the same team as the AI
         {
-            arrayNum = Random.Range(0, GameManager.Instance.currentSpot.Length);//finds a random spot for the AI to look for
+            if (aISpot.team == team)
+            {
+                checkTeam = true;
+                break;
+            }
         }
 
-        currentSpot = GameManager.Instance.currentSpot[arrayNum];
+        if (checkTeam)
+        {
+            while (team != GameManager.Instance.currentSpot[arrayNum].team && GameManager.Instance.currentSpot[arrayNum] != lastSpot) //Check if the arrayNum picked is the same team as the AISpot
+            {
+                arrayNum = Random.Range(0, GameManager.Instance.currentSpot.Length);//finds a random spot for the AI to look for
+            }
+
+            currentSpot = GameManager.Instance.currentSpot[arrayNum];
+        }
+        else
+        {
+            Debug.Log("No AISpots Found!");
+        }
+
+
+
     }
 
     protected override void Respawn()
@@ -209,7 +235,6 @@ public class AIController : Unit
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(lookDistance);
         animator.SetFloat("VerticalSpeed", agent.velocity.magnitude);
     }
 }

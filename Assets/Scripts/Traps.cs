@@ -67,7 +67,6 @@ public class Traps : MonoBehaviour
             {
                 player.OnTrapHit(trapDamage);
                 //player.PublicDie();
-                Debug.Log("You died.");
                 timer = 0;
             }
         }
