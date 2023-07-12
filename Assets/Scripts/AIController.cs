@@ -214,8 +214,6 @@ public class AIController : Unit
             Debug.Log("No AISpots Found!");
         }
 
-
-
     }
 
     protected override void Respawn()

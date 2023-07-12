@@ -5128,7 +5128,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-20384
+  m_Name: pb_Mesh24588
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5832,6 +5832,11 @@ Mesh:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6048982606898728021, guid: 017b3301847efc744a7e24e6aeef0872, type: 3}
   m_PrefabInstance: {fileID: 1834573703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &802711260 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3237227532391206671, guid: da202d8935b68214682c6bb250ca1a94, type: 3}
+  m_PrefabInstance: {fileID: 2063610414}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &817739408
 GameObject:
@@ -7485,7 +7490,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137964420}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -64.01, y: 4.26, z: -38.36}
+  m_LocalPosition: {x: -64.01, y: 4.59, z: -38.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9007,13 +9012,21 @@ PrefabInstance:
       propertyPath: team
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: aimOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: lookDistance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5105125551537891175, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: m_RootOrder
       value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5105125551537891175, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -77.24411
+      value: -76.5
       objectReference: {fileID: 0}
     - target: {fileID: 5105125551537891175, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9021,7 +9034,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5105125551537891175, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -35.25053
+      value: -32.7
       objectReference: {fileID: 0}
     - target: {fileID: 5105125551537891175, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14148,7 +14161,7 @@ PrefabInstance:
     - target: {fileID: 2707406788813493009, guid: a5b84ce1d72661645ba1e7c453dc7ba8, type: 3}
       propertyPath: doors.Array.data[0]
       value: 
-      objectReference: {fileID: 607991287}
+      objectReference: {fileID: 802711260}
     - target: {fileID: 2707406788813493012, guid: a5b84ce1d72661645ba1e7c453dc7ba8, type: 3}
       propertyPath: m_RootOrder
       value: 29
@@ -16156,6 +16169,14 @@ PrefabInstance:
     - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: team
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: aimOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: lookDistance
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5105125551537891175, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: m_RootOrder

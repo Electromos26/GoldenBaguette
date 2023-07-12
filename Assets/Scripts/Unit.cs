@@ -101,7 +101,11 @@ public class Unit : MonoBehaviour
 
         isAlive = false;
 
+
+
+        animator.SetBool("Running", false);
         animator.SetBool("Aiming", false);
+
         animator.SetBool("Dead", true);
         Invoke("Respawn", respawnTime);
     }
@@ -134,7 +138,6 @@ public class Unit : MonoBehaviour
         //3) Move back to spawn location
         //4) Set them back to being alive
     }
-
 
     // Update is called once per frame
     void Update()

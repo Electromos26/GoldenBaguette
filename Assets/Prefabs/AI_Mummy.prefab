@@ -69,7 +69,7 @@ MonoBehaviour:
   respawnTime: 5
   attackInterval: 1
   lookDistance: 10
-  aimOffset: {x: 0, y: 2.5, z: 0}
+  aimOffset: {x: 0, y: 1, z: 0}
   timer: 0
   attackDis: 2
   speedMultiplierChasing: 2
