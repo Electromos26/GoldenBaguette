@@ -310,6 +310,18 @@ public class PlayerController : Unit
         }
 
     }
+    protected override void Die()
+    {
+
+        animator.SetBool("Crouching", false);
+        animator.SetBool("AimCrouching", false);
+        animator.SetBool("Running", false);
+        animator.SetBool("Aiming", false);
+
+        base.Die();
+    }
+
+
 
     //private void OnTriggerEnter(Collider other) // collectables
     //{

@@ -102,10 +102,6 @@ public class Unit : MonoBehaviour
         isAlive = false;
 
 
-
-        animator.SetBool("Running", false);
-        animator.SetBool("Aiming", false);
-
         animator.SetBool("Dead", true);
         Invoke("Respawn", respawnTime);
     }

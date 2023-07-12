@@ -1,10 +1,12 @@
 using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations;
 
 public class AIController : Unit
 {
@@ -13,7 +15,8 @@ public class AIController : Unit
     {
         Idle,
         Patrolling,
-        Chasing
+        Chasing,
+        Hurt
     }
 
     public float attackInterval = 1f;
@@ -37,12 +40,13 @@ public class AIController : Unit
     [SerializeField]
     private float speedMultiplierChasing;
 
+    [SerializeField]
+    private float stunInterval = 1;
+
+
     private float defaultSpeed;
 
     private bool checkTeam = false;
-
-    //[SerializeField] GameObject goalObject;
-
 
     // Start is called before the first frame update
     protected override void Start()
@@ -74,6 +78,9 @@ public class AIController : Unit
             case State.Chasing:
                 StartCoroutine(OnChasing());
                 //do some work
+                break;
+            case State.Hurt:
+                StartCoroutine(OnHurt());
                 break;
             default:
                 break;
@@ -118,10 +125,10 @@ public class AIController : Unit
     {
         ////we have to reset the path of our agent
         agent.ResetPath();
-        float shootTimer = 0;
+        float attackTimer = 0;
         while (currentEnemy.isAlive)
         {
-            shootTimer += Time.deltaTime; //increment our shoot timer each time
+            attackTimer += Time.deltaTime; //increment our shoot timer each time
             float distanceToEnemy = Vector3.Distance(currentEnemy.transform.position, this.transform.position);
             //if we are too far away or we can't see our enemy, let's move towards them
             //otherwise, if our shoot timer is up, shoot them
@@ -133,10 +140,10 @@ public class AIController : Unit
                 agent.speed = defaultSpeed * speedMultiplierChasing;
                 animator.SetBool("Running", true);
             }
-            else if (shootTimer > attackInterval)
+            else if (attackTimer > attackInterval)
             {
                 agent.ResetPath();
-                shootTimer = 0;
+                attackTimer = 0;
                 Vector3 dir = currentEnemy.transform.position - this.transform.position;
                 dir.Normalize();
 
@@ -165,6 +172,25 @@ public class AIController : Unit
         agent.speed = defaultSpeed;
         SetState(State.Idle);
     }
+
+    private IEnumerator OnHurt()
+    {
+        ////Stop moving from the agent until the animation stops playing
+        ///
+        float stunTimer = 0;
+       
+        while (stunTimer < stunInterval)
+        {
+            stunTimer += Time.deltaTime;
+            agent.speed = 0;
+            yield return null;
+
+        }
+
+        SetState(State.Chasing);
+
+    }
+
     private void LookForEnemies()
     {
         Collider[] surroundingColliders = Physics.OverlapSphere(this.transform.position, lookDistance);
@@ -216,6 +242,22 @@ public class AIController : Unit
 
     }
 
+    protected override void OnHit(Unit attacker)
+    {
+        base.OnHit(attacker);
+
+        if (currentEnemy == null && isAlive)
+        {
+            currentEnemy = attacker;
+        }
+        if (isAlive)
+        {
+            animator.SetTrigger("GotHit");//Animation for getting hit
+            SetState(State.Hurt);
+        }
+
+    }
+
     protected override void Respawn()
     {
         base.Respawn();
@@ -226,6 +268,7 @@ public class AIController : Unit
     {
         StopAllCoroutines();
         agent.ResetPath();
+        animator.SetBool("Running", false);
         base.Die();
         currentEnemy = null;
     }
