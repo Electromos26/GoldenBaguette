@@ -268,13 +268,22 @@ public class PlayerController : Unit
 
     }
 
-    private void OnTriggerEnter(Collider other)//Checkpoint script
+    private void OnTriggerEnter(Collider other)//Checking triggers on player
     {
-        if (other.tag == "Checkpoint")
+        if (other.tag == "Checkpoint") //Checkpoint collision
         {
             respawnPos = transform.position; //Setting the respawnPos to the position of the checkpoint
             Destroy(other.gameObject);
         }
+
+        if (other.gameObject.GetComponent<Collectable>()) // Check if the object collided is a collectible
+        {
+            Debug.Log("Triggered");
+            Collectable collectableObject = other.gameObject.GetComponent<Collectable>();
+            //gameManager.IncreaseScore(collectableObject.GetNumPoints());
+            Destroy(other.gameObject);
+        }
+
     }
 
     private void AimingAndShooting() //Function to maike the player aim and be able to shoot
@@ -320,7 +329,6 @@ public class PlayerController : Unit
 
         base.Die();
     }
-
 
 
     //private void OnTriggerEnter(Collider other) // collectables

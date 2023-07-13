@@ -286,7 +286,7 @@ MonoBehaviour:
   controllerCenter: 1
   crouchCenterController: 0.85
   crouchHeightController: 1.4
-  defaultHeightController: 1.85
+  defaultHeightController: 1.9
   speed: 8
   runSpeed: 12
   crouchSpeed: 4
