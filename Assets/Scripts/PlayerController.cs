@@ -89,6 +89,7 @@ public class PlayerController : Unit
 
     private float AILookDistanceDefault;
 
+    private bool pickedUp = false;
 
     protected override void Start()
     {
@@ -282,6 +283,7 @@ public class PlayerController : Unit
             Collectable collectableObject = other.gameObject.GetComponent<Collectable>();
             //gameManager.IncreaseScore(collectableObject.GetNumPoints());
             Destroy(other.gameObject);
+            pickedUp = true;
         }
 
     }
