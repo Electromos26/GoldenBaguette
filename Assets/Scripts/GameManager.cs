@@ -1,19 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-
-    public int scoreTotal = 0;//player score
  
     public bool gameOver = false;
 
-    public string TimerText;
-    private float Timer;
+  //  public string TimerText;
+  //  private float Timer;
 
     internal AISpot[] currentSpot;
 
@@ -56,19 +53,19 @@ public class GameManager : MonoBehaviour
     }
     //resume level
 
-    //public void ResumeLevel()
-    //{
-    //    GameEnd.Paused = false;
-    //    GameEnd.pauseMenu.SetActive(false);
-    //}
+    public void ResumeLevel()
+    {
+       /* GameEnd.Paused = false;
+       GameEnd.pauseMenu.SetActive(false);*/
+   }
 
-    //public void QuitLevel()
-    //{
-    //    Application.Quit();//actual game
-    //    UnityEditor.EditorApplication.isPlaying = false;//editor playMode
-    //}
-    //public void RestartLevel()
-    //{
-    //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    //}
+    public void QuitLevel()
+    {
+        Application.Quit();//actual game
+        UnityEditor.EditorApplication.isPlaying = false;//editor playMode
+    }
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
