@@ -185,7 +185,6 @@ public class PlayerController : Unit
                 crossHair.SetActive(false);
                 playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
 
-
             }
             else if (Input.GetKey(KeyCode.LeftControl) && !Input.GetButton("Fire2")) //Logic for the player to crouch and walk around
             {
@@ -255,6 +254,23 @@ public class PlayerController : Unit
             velocity.y += gravity * Time.deltaTime;
 
             controller.Move(velocity * Time.deltaTime);
+
+            if (isGrounded && (move.z > 0 || move.x > 0)) //Play walking sound when player is moving
+            {
+
+                if (_audioSource != null && !_audioSource.isPlaying)
+                {
+                    _audioSource.clip = _walkClip;
+                    _audioSource.loop = true;
+                    _audioSource.Play();
+                }
+
+            }
+            else
+            {
+                _audioSource.loop = false;
+                //_audioSource.Stop();
+            }
 
             if (Input.GetKeyDown(KeyCode.F)) //Turn flashlight on and off
             {
