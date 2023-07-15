@@ -30,23 +30,36 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private float respawnTime = 2.0f;
 
+    #region AudioSettings
+    [SerializeField]
+    protected AudioClip _gotHitClip;
+    protected AudioSource _audioSource;
+    #endregion
+
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
 
         eyes = GetComponentsInChildren<Eye>();
-        
+
+        _audioSource = GetComponent<AudioSource>();
+
         respawnPos = this.transform.position; //At the start this should be the respawn position
     }
 
     protected virtual void OnHit(Unit attacker)
     {
-        //Add take hit animation
         health -= attacker.damage; //take some damage from the attacker
         if (health <= 0)
         {
             Die();
+        }
+        if (_audioSource != null)
+        {
+            _audioSource.clip = _gotHitClip;
+            _audioSource.PlayDelayed(0.5f);
         }
     }
 
@@ -86,8 +99,6 @@ public class Unit : MonoBehaviour
             if (unit.team != team)
             {
                 unit.OnHit(this);//we are telling a unit that we have done some damage to it
-
-                //Call attacking animation from AI or player
             }
 
         }

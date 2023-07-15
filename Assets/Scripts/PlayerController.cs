@@ -8,6 +8,10 @@ using UnityEngine.XR;
 public class PlayerController : Unit
 {
     [SerializeField]
+    GameManager gameManager;
+
+    #region CharacterControllerSettings
+    [SerializeField]
     private CharacterController controller;
 
     [SerializeField]
@@ -24,9 +28,9 @@ public class PlayerController : Unit
 
     private Vector3 defaultCenterVector;
     private Vector3 crouchCenterVector;
+    #endregion
 
-    private Camera playerCam; //this is the camera in our game
-
+    #region PlayerMovement
     [SerializeField]
     private float speed = 12f;
     [SerializeField]
@@ -53,16 +57,16 @@ public class PlayerController : Unit
 
     [SerializeField]
     private float turnSmoothTime = 0.2f;
+    #endregion
 
+    #region Flashlight
     [SerializeField]
-    GameManager gameManager;
+    private GameObject flashlight;
 
-    [SerializeField]
-    private GameObject gun;
+    private bool lightIsOn = false;
+    #endregion
 
-    [SerializeField]
-    Laser laserPrefab;
-
+    #region ZoomAim
     private float defaultView;
 
     [SerializeField]
@@ -71,19 +75,20 @@ public class PlayerController : Unit
     [SerializeField]
     private float zoomSmooth;
 
+    [SerializeField]
+    Laser laserPrefab;
+
+    [SerializeField]
+    private GameObject crossHair;
+
+    #endregion
+
     private const float ANIMATOR_SMOOTHING = 0.4f;
 
     private Vector2 animatorInput;
 
     [SerializeField]
-    private GameObject crossHair;
-
-    Traps traps;
-
-    private bool lightIsOn = false;
-
-    [SerializeField]
-    private GameObject flashlight;
+    private GameObject gun;
 
     private AIController AIScript;
 
@@ -91,12 +96,15 @@ public class PlayerController : Unit
 
     private bool pickedUp = false;
 
+    private Camera playerCam; //this is the camera in our game
+
     protected override void Start()
     {
         base.Start();
         playerCam = GetComponentInChildren<Camera>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
+
 
         AIScript = GameObject.FindObjectOfType<AIController>();
 
@@ -321,6 +329,14 @@ public class PlayerController : Unit
         }
 
     }
+
+    protected override void OnHit(Unit attacker)
+    {
+        base.OnHit(attacker);
+
+
+    }
+
     protected override void Die()
     {
 

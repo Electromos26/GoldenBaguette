@@ -1401,6 +1401,10 @@ PrefabInstance:
       propertyPath: team
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: attackInterval
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5105125551537891175, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -3782,6 +3786,10 @@ PrefabInstance:
     - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: damage
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: attackInterval
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5105125551537891175, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: m_RootOrder
