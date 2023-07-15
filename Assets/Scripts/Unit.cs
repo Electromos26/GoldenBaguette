@@ -38,10 +38,6 @@ public class Unit : MonoBehaviour
     [SerializeField]
     protected AudioClip _attackClip;
     [SerializeField]
-    protected AudioClip _idleClip;
-    [SerializeField]
-    protected AudioClip _walkClip;
-    [SerializeField]
     protected AudioClip _runClip;
 
     protected AudioSource _audioSource;
@@ -67,10 +63,11 @@ public class Unit : MonoBehaviour
         {
             Die();
         }
-        if (_audioSource != null)
+        if (_audioSource != null && isAlive)
         {
             _audioSource.clip = _gotHitClip;
-            _audioSource.PlayDelayed(0.5f);
+            _audioSource.loop = false;
+            _audioSource.PlayDelayed(0.1f);
         }
     }
 
@@ -126,6 +123,13 @@ public class Unit : MonoBehaviour
 
 
         animator.SetBool("Dead", true);
+
+        if (_audioSource != null)
+        {
+            _audioSource.clip = _dieClip;
+            _audioSource.PlayDelayed(0.5f);
+        }
+
         Invoke("Respawn", respawnTime);
     }
     public void PublicDie()

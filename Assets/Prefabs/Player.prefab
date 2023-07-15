@@ -284,9 +284,8 @@ MonoBehaviour:
   viewAngle: 80
   respawnTime: 5
   _gotHitClip: {fileID: 8300000, guid: ea972c3b384219a48afd9dbe41fc090d, type: 3}
-  _dieClip: {fileID: 0}
+  _dieClip: {fileID: 8300000, guid: 404e844261cf8ef449af1fd9ca4cc01b, type: 3}
   _attackClip: {fileID: 8300000, guid: 66b61a67c1b398a48a1207dada32a6d4, type: 3}
-  _idleClip: {fileID: 0}
   _walkClip: {fileID: 8300000, guid: 3672835786443e84990c24ee4af1a645, type: 3}
   _runClip: {fileID: 0}
   gameManager: {fileID: 0}
@@ -311,6 +310,8 @@ MonoBehaviour:
   laserPrefab: {fileID: 1134949319946392262, guid: fa1a14234d85df048be4edf85d996aff, type: 3}
   crossHair: {fileID: 0}
   gun: {fileID: 1130768914832698018}
+  _flashlightClip: {fileID: 8300000, guid: 8a5a37cf3ed294c4484ac11f39b4f50d, type: 3}
+  _walkClip: {fileID: 8300000, guid: 3672835786443e84990c24ee4af1a645, type: 3}
 --- !u!95 &9029037128753843392
 Animator:
   serializedVersion: 5

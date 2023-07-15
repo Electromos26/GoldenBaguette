@@ -98,6 +98,14 @@ public class PlayerController : Unit
 
     private Camera playerCam; //this is the camera in our game
 
+    [SerializeField]
+    private AudioClip _flashlightClip;
+
+    [SerializeField]
+    private AudioClip _walkClip;
+
+
+
     protected override void Start()
     {
         base.Start();
@@ -255,12 +263,23 @@ public class PlayerController : Unit
 
             controller.Move(velocity * Time.deltaTime);
 
-            if (isGrounded && (move.z > 0 || move.x > 0)) //Play walking sound when player is moving
+            if (isGrounded && (move.z > 0 || move.x > 0) && !Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.LeftShift)) //Play walking sound when player is moving
             {
 
                 if (_audioSource != null && !_audioSource.isPlaying)
                 {
                     _audioSource.clip = _walkClip;
+                    _audioSource.loop = true;
+                    _audioSource.Play();
+                }
+
+            }
+            else if ((isGrounded && (move.z > 0 || move.x > 0) && !Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)))
+            {
+                _audioSource.Stop();
+                if (_audioSource != null && !_audioSource.isPlaying)
+                {
+                    _audioSource.clip = _runClip;
                     _audioSource.loop = true;
                     _audioSource.Play();
                 }
@@ -274,16 +293,25 @@ public class PlayerController : Unit
 
             if (Input.GetKeyDown(KeyCode.F)) //Turn flashlight on and off
             {
+                if (_audioSource != null)
+                {
+                    _audioSource.clip = _flashlightClip;
+                    _audioSource.loop = false;
+                    _audioSource.Play();
+                }
+
                 if (!lightIsOn)
                 {
                     lightIsOn = true;
                     flashlight.gameObject.SetActive(true);
+
                 }
                 else if (lightIsOn)
                 {
                     lightIsOn = false;
                     flashlight.gameObject.SetActive(false);
                 }
+
             }
         }
         else

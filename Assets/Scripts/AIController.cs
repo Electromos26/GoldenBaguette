@@ -48,6 +48,10 @@ public class AIController : Unit
 
     private bool checkTeam = false;
 
+    [SerializeField]
+    private AudioClip _idleClip;
+
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -96,6 +100,7 @@ public class AIController : Unit
         if (_audioSource != null) //Play idle audio
         {
             _audioSource.clip = _idleClip;
+            _audioSource.loop = true;
             _audioSource.Play();
         }
 
@@ -122,6 +127,7 @@ public class AIController : Unit
         if (_audioSource != null) //Play idle audio
         {
             _audioSource.clip = _idleClip;
+            _audioSource.loop = true;
             _audioSource.Play();
         }
 
@@ -148,6 +154,14 @@ public class AIController : Unit
             //otherwise, if our shoot timer is up, shoot them
             //transform.LookAt(currentEnemy.transform);
 
+            if (_audioSource != null && !_audioSource.isPlaying) //Play attacking audio
+            {
+                _audioSource.clip = _runClip;
+                _audioSource.loop = true;
+                _audioSource.Play();
+            }
+
+
             if (distanceToEnemy > attackDis || !CanSee(currentEnemy.transform, currentEnemy.transform.position + aimOffset))
             {
                 agent.SetDestination(currentEnemy.transform.position);
@@ -171,9 +185,12 @@ public class AIController : Unit
                     animator.SetBool("Running", false);
                     animator.SetTrigger("Attack");
                     Attack(hit);
-                    if (_audioSource != null) //PLay attacking audio
+                    
+                    if (_audioSource != null) //Play attacking audio
                     {
+                        _audioSource.Stop();
                         _audioSource.clip = _attackClip;
+                        _audioSource.loop = false;
                         _audioSource.Play();
                     }
                 }
