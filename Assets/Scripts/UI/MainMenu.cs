@@ -9,6 +9,6 @@ public class MainMenu : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene("ProgrammingGym_Backup"); // open level
+        SceneManager.LoadScene(2); // open level
     }
 }

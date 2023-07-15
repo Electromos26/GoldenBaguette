@@ -33,6 +33,17 @@ public class Unit : MonoBehaviour
     #region AudioSettings
     [SerializeField]
     protected AudioClip _gotHitClip;
+    [SerializeField]
+    protected AudioClip _dieClip;
+    [SerializeField]
+    protected AudioClip _attackClip;
+    [SerializeField]
+    protected AudioClip _idleClip;
+    [SerializeField]
+    protected AudioClip _walkClip;
+    [SerializeField]
+    protected AudioClip _runClip;
+
     protected AudioSource _audioSource;
     #endregion
 
@@ -99,6 +110,7 @@ public class Unit : MonoBehaviour
             if (unit.team != team)
             {
                 unit.OnHit(this);//we are telling a unit that we have done some damage to it
+
             }
 
         }
