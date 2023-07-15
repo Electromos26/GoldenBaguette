@@ -7,28 +7,36 @@ public class PauseMenu : MonoBehaviour
     public bool paused;
     public GameObject pauseMenu;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+     void Pause()
+     {
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+        paused = true;
+        Cursor.lockState = CursorLockMode.None;
     }
+    public void Resume()
+    {
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        paused = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
+    }
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))//get enter button
         {
-            /*if (!Paused)
+            if (!paused)
             {
-                Paused = true;
-                pauseMenu.SetActive(true);
+               Pause();
             }
             // If the pause menu is currently active, deactivate it
             else
             {
-                Paused = false;
-                pauseMenu.SetActive(false);
-            }*/
+                Resume();
+            }
         }
     }
+ 
 }

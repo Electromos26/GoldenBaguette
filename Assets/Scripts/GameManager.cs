@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
  
     public bool gameOver = false;
 
-  //  public string TimerText;
-  //  private float Timer;
+    //  public string TimerText;
+    //  private float Timer;
 
     internal AISpot[] currentSpot;
 
@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
-
     void OnCreateInstance()
     {
 
@@ -51,13 +50,6 @@ public class GameManager : MonoBehaviour
         //} 
 
     }
-    //resume level
-
-    public void ResumeLevel()
-    {
-       /* GameEnd.Paused = false;
-       GameEnd.pauseMenu.SetActive(false);*/
-   }
 
     public void QuitLevel()
     {
@@ -66,6 +58,7 @@ public class GameManager : MonoBehaviour
     }
     public void RestartLevel()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

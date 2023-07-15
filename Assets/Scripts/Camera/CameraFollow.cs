@@ -13,18 +13,17 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     private Transform PlayerObj;
 
-
     private float camDistanceToPlayer;
 
-  /*  Vector3 rotationSmoothVelocity;
-    Vector3 currentRotation;*/
+    /*  Vector3 rotationSmoothVelocity;
+      Vector3 currentRotation;*/
 
-     float mouseX;
-     float mouseY;
-     float finalInputX;
-     float finalInputZ;
-     float rotY = 0.0f;
-     float rotX = 0.0f;
+    float mouseX;
+    float mouseY;
+    float finalInputX;
+    float finalInputZ;
+    float rotY = 0.0f;
+    float rotX = 0.0f;
 
     float clampAngleDefault;
 
@@ -42,7 +41,6 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-
         // We setup the rotation of the sticks here
         //float inputX = Input.GetAxis("RightStickHorizontal");
         //float inputZ = Input.GetAxis("RightStickVertical");
@@ -68,14 +66,14 @@ public class CameraFollow : MonoBehaviour
         rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
 
 
-            //currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(rotX, rotY), ref rotationSmoothVelocity, rotationSmoothTime);
+        //currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(rotX, rotY), ref rotationSmoothVelocity, rotationSmoothTime);
 
-            Vector3 targetRotation = new Vector3(rotX, rotY);
+        Vector3 targetRotation = new Vector3(rotX, rotY);
         transform.eulerAngles = targetRotation;
 
         transform.position = PlayerObj.position - transform.forward * camDistanceToPlayer;
-
+        
 
     }
-
+   
 }
