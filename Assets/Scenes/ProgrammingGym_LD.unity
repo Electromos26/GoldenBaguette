@@ -3779,6 +3779,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: AI_Mummy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 325389583566030958, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 325389583566030958, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: MaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 325389583566030958, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: team
       value: 2
@@ -3787,6 +3799,18 @@ PrefabInstance:
       propertyPath: damage
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: _idleClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 80d849c7d10d2ab48b49e0c300a828bc, type: 3}
+    - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: _attackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b3658aef63aaa9d44bb4e24abbdf33fb, type: 3}
+    - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
+      propertyPath: _gotHitClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ba6c9e3fcf801e340a101ee8acf08491, type: 3}
     - target: {fileID: 843422195929993624, guid: e9ba89760d19d4e429abe11fcdb833d8, type: 3}
       propertyPath: attackInterval
       value: 2.5

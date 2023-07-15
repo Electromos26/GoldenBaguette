@@ -68,7 +68,12 @@ MonoBehaviour:
   damage: 20
   viewAngle: 80
   respawnTime: 5
-  _gotHitClip: {fileID: 0}
+  _gotHitClip: {fileID: 8300000, guid: ba6c9e3fcf801e340a101ee8acf08491, type: 3}
+  _dieClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: b3658aef63aaa9d44bb4e24abbdf33fb, type: 3}
+  _idleClip: {fileID: 8300000, guid: 80d849c7d10d2ab48b49e0c300a828bc, type: 3}
+  _walkClip: {fileID: 0}
+  _runClip: {fileID: 0}
   attackInterval: 1
   lookDistance: 10
   aimOffset: {x: 0, y: 1, z: 0}
@@ -140,7 +145,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 50
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -175,7 +180,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -204,7 +209,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.09870911
       value: 1
       inSlope: 0
       outSlope: 0

@@ -93,6 +93,13 @@ public class AIController : Unit
         //when idling, we should probably do some work and look for an outpost
         animator.SetBool("Running", false);
 
+        if (_audioSource != null) //Play idle audio
+        {
+            _audioSource.clip = _idleClip;
+            _audioSource.Play();
+        }
+
+
         if (currentSpot != null)
         {
             currentSpot = lastSpot;
@@ -111,6 +118,13 @@ public class AIController : Unit
     {
         animator.SetBool("Running", false);
         agent.SetDestination(currentSpot.transform.position);
+
+        if (_audioSource != null) //Play idle audio
+        {
+            _audioSource.clip = _idleClip;
+            _audioSource.Play();
+        }
+
         while (currentSpot.currentValue != 1)
         {
             LookForEnemies();
@@ -157,6 +171,11 @@ public class AIController : Unit
                     animator.SetBool("Running", false);
                     animator.SetTrigger("Attack");
                     Attack(hit);
+                    if (_audioSource != null) //PLay attacking audio
+                    {
+                        _audioSource.clip = _attackClip;
+                        _audioSource.Play();
+                    }
                 }
                 else
                 {
