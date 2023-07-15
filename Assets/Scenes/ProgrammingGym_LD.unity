@@ -14239,9 +14239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea863efc1ef9f14c99fe576ea545a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreTotal: 0
   gameOver: 0
-  TimerText: 
 --- !u!4 &1880084280
 Transform:
   m_ObjectHideFlags: 0
