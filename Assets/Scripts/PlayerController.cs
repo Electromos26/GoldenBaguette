@@ -104,6 +104,7 @@ public class PlayerController : Unit
     [SerializeField]
     private AudioClip _walkClip;
 
+    private HealthBar healthBar;
 
 
     protected override void Start()
@@ -111,8 +112,8 @@ public class PlayerController : Unit
         base.Start();
         playerCam = GetComponentInChildren<Camera>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
-
 
         AIScript = GameObject.FindObjectOfType<AIController>();
 
@@ -121,6 +122,8 @@ public class PlayerController : Unit
         defaultCenterVector = new Vector3(0, controllerCenter);
         flashlight.gameObject.SetActive(false);
         AILookDistanceDefault = AIScript.lookDistance;
+
+        healthBar.SetMaxHealth(fullHealth);
 
     }
     private void ShowLasers(Vector3 targetPosition) //the target position is what we are aiming for
@@ -138,6 +141,7 @@ public class PlayerController : Unit
     }
     void Update()
     {
+        healthBar.SetHealth(health);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -377,13 +381,6 @@ public class PlayerController : Unit
             }
 
         }
-
-    }
-
-    protected override void OnHit(Unit attacker)
-    {
-        base.OnHit(attacker);
-
 
     }
 

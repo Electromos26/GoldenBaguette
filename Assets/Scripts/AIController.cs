@@ -184,8 +184,7 @@ public class AIController : Unit
                     //if this is true, we attack the player
                     animator.SetBool("Running", false);
                     animator.SetTrigger("Attack");
-                    Attack(hit);
-                    
+
                     if (_audioSource != null) //Play attacking audio
                     {
                         _audioSource.Stop();
@@ -193,6 +192,10 @@ public class AIController : Unit
                         _audioSource.loop = false;
                         _audioSource.Play();
                     }
+
+                    yield return new WaitForSecondsRealtime(1f); //Wait for the animation to complete before actaully reducing life
+                    Attack(hit);
+                    
                 }
                 else
                 {

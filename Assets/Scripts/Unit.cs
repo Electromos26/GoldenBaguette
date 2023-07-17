@@ -8,9 +8,9 @@ public class Unit : MonoBehaviour
 
     protected Animator animator;
 
-    int fullHealth = 100;
+    protected int fullHealth = 100;
     [SerializeField]
-    int health; //the current health value of our unit 
+    protected int health; //the current health value of our unit 
 
     [SerializeField]
     protected int team; //Variable to determine if the unit is AI or player
@@ -107,7 +107,6 @@ public class Unit : MonoBehaviour
             if (unit.team != team)
             {
                 unit.OnHit(this);//we are telling a unit that we have done some damage to it
-
             }
 
         }
