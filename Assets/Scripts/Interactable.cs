@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class Interactable : MonoBehaviour
@@ -12,15 +13,7 @@ public class Interactable : MonoBehaviour
     private Vector3 pressPosition;
 
     [SerializeField]
-    private GameObject[] doors;
-    [SerializeField]
-    private float openPositionY;
-    [SerializeField]
-    private float doorSpeed = 1f;
-
-    [SerializeField]
-    private GameObject[] traps;
-
+    private UnityEvent events;
 
     private void Start()
     {
@@ -38,14 +31,10 @@ public class Interactable : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) && endOfPress != null)
             {
                 pressPosition = endOfPress.transform.position;
+                events.Invoke();
                 // Trigger the traps
                 StartCoroutine(PressedAnimation());
-                StartCoroutine(OpenDoors());
                 // StartCoroutine(TriggerTrapAnimation());
-                foreach (var trap in traps)
-                {
-                    trap.GetComponent<Traps>().TrapActive = true;
-                }
             }
         }
 
@@ -55,7 +44,7 @@ public class Interactable : MonoBehaviour
     {
         Vector3 initialPosition = button.transform.position;
         float distance = Vector3.Distance(initialPosition, pressPosition);
-        float duration = distance / (doorSpeed / 2f);
+        float duration = distance /  2f;
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -73,35 +62,6 @@ public class Interactable : MonoBehaviour
 
 
 
-    private IEnumerator OpenDoors()
-    {
-        foreach (var door in doors)
-        {
-            Vector3 initialPosition = door.transform.position;
-            Vector3 targetPosition = new Vector3(initialPosition.x, openPositionY, initialPosition.z);
-
-            float distance = Vector3.Distance(initialPosition, targetPosition);
-            float duration = distance / doorSpeed;
-            float elapsedTime = 0f;
-
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                float normalizedTime = Mathf.Clamp01(elapsedTime / duration);
-
-                door.transform.position = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
-
-                yield return null;
-            }
-
-            // Disable the collider component of the door to allow walking through
-            Collider doorCollider = door.GetComponent<Collider>();
-            if (doorCollider != null)
-                doorCollider.enabled = false;
-
-            // Door transition complete
-        }
-    }
    /* private IEnumerator TriggerTrapAnimation()
     {
        

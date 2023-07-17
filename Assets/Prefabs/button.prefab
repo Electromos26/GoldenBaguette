@@ -195,13 +195,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 2707406788813491435}
+  endOfPress: {fileID: 2707406787822823390}
   doors:
   - {fileID: 0}
   - {fileID: 0}
-  traps:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  endOfPress: {fileID: 2707406787822823390}
   openPositionY: 4
   doorSpeed: 0.5
+  events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

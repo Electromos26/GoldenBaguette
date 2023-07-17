@@ -83,6 +83,11 @@ public class Traps : MonoBehaviour
 
     }
 
+    public void ButtonPressed()
+    {
+        StartCoroutine(TriggerTrapAnimation());
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (TrapActive)
@@ -98,7 +103,7 @@ public class Traps : MonoBehaviour
 
     }
 
-    private IEnumerator TriggerTrapAnimation()
+    public IEnumerator TriggerTrapAnimation()
     {
 
         trap.SetActive(true);
@@ -141,7 +146,6 @@ public class Traps : MonoBehaviour
 
         TrapActive = false;
         trap.SetActive(false);
-
 
     }
 
