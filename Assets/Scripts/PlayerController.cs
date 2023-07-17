@@ -106,6 +106,11 @@ public class PlayerController : Unit
 
     private HealthBar healthBar;
 
+    [SerializeField]
+    private GameObject flashlightIcon;
+
+    [SerializeField]
+    private GameObject baguetteIcon;
 
     protected override void Start()
     {
@@ -113,6 +118,7 @@ public class PlayerController : Unit
         playerCam = GetComponentInChildren<Camera>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
 
         AIScript = GameObject.FindObjectOfType<AIController>();
@@ -308,12 +314,15 @@ public class PlayerController : Unit
                 {
                     lightIsOn = true;
                     flashlight.gameObject.SetActive(true);
+                    flashlightIcon.gameObject.SetActive(true);
 
                 }
                 else if (lightIsOn)
                 {
                     lightIsOn = false;
                     flashlight.gameObject.SetActive(false);
+                    flashlightIcon.gameObject.SetActive(false);
+
                 }
 
             }
@@ -340,6 +349,10 @@ public class PlayerController : Unit
             //gameManager.IncreaseScore(collectableObject.GetNumPoints());
             Destroy(other.gameObject);
             pickedUp = true;
+            if (other.gameObject.name == "Golden_Baguette")
+            {
+                baguetteIcon.SetActive(true);
+            }
         }
 
     }
