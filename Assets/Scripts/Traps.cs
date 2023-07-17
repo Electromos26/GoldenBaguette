@@ -12,6 +12,7 @@ public class Traps : MonoBehaviour
     [SerializeField]
     private float trapSpeed = 20f;
     private Vector3 trapPosition;
+    private Vector3 startPosition;
 
     public int trapDamage;
 
@@ -20,7 +21,6 @@ public class Traps : MonoBehaviour
     [SerializeField]
     private float damageTimer;
 
-    private bool playerInCollider = false;
     private PlayerController player;
 
     public bool TrapActive;
@@ -28,31 +28,56 @@ public class Traps : MonoBehaviour
     [SerializeField]
     private bool floorTrap;
 
+    [SerializeField]
+    private bool loopTrap;
+
+    [SerializeField]
+    private float loopInterval = 2f;
+
+    private float loopTimer;
+
     // Start is called before the first frame update
     void Start()
     {
+        startPosition = trap.transform.position;
         trapPosition = endOfTrap.transform.position;
         player = GameObject.FindObjectOfType<PlayerController>();
         timer = damageTimer;
+        loopTimer = loopInterval;
+
+        if (TrapActive)
+        {
+            // Set trap position to end of trap if the trap is active
+            trap.transform.position = trapPosition;
+        }
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) //Sets trap when the player is in collider and does damage to it
     {
         if (other.CompareTag("Player") && floorTrap)
         {
-            playerInCollider = true;
+            StartCoroutine(TriggerTrapAnimation());
             TrapActive = true;
-
         }
     }
     private void Update()
     {
 
-        if (playerInCollider || TrapActive)
+        if (loopTrap)
         {
-            // Trigger the traps
-            StartCoroutine(TriggerTrapAnimation());
-            // Perform any necessary actions for player death
+            loopTimer += Time.deltaTime;
+            if (loopTimer > loopInterval && !TrapActive)
+            {
+                StartCoroutine(TriggerTrapAnimation());
+                loopTimer = 0;
+            }
+
+            if (loopTimer > loopInterval && TrapActive)
+            {
+                StartCoroutine(RetractTrapAnimation());
+                loopTimer = 0;
+            }
 
         }
 
@@ -71,16 +96,36 @@ public class Traps : MonoBehaviour
             }
         }
 
-
     }
 
     private IEnumerator TriggerTrapAnimation()
     {
 
         trap.SetActive(true);
+        TrapActive = true;
 
-        Vector3 initialPosition = trap.transform.position;
-        float distance = Vector3.Distance(initialPosition, trapPosition);
+        float distance = Vector3.Distance(startPosition, trapPosition);
+        float duration = distance / trapSpeed;
+        float elapsedTime = 0f;
+
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float normalizedTime = elapsedTime / duration;
+
+            trap.transform.position = Vector3.Lerp(startPosition, trapPosition, normalizedTime);
+
+            yield return null;
+        }
+
+    }
+
+    private IEnumerator RetractTrapAnimation()
+    {
+
+
+        float distance = Vector3.Distance(startPosition, trapPosition);
         float duration = distance / trapSpeed;
         float elapsedTime = 0f;
 
@@ -89,19 +134,16 @@ public class Traps : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float normalizedTime = elapsedTime / duration;
 
-            trap.transform.position = Vector3.Lerp(initialPosition, trapPosition, normalizedTime);
+            trap.transform.position = Vector3.Lerp(trapPosition, startPosition, normalizedTime);
 
             yield return null;
         }
 
+        TrapActive = false;
+        trap.SetActive(false);
+
+
     }
 
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInCollider = false;
-        }
-    }
 }
