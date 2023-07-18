@@ -10,6 +10,7 @@ public class Interactable : MonoBehaviour
     private GameObject button;//for animations
     [SerializeField]
     private GameObject endOfPress;//insert button location
+
     private Vector3 pressPosition;
 
     [SerializeField]
@@ -28,9 +29,13 @@ public class Interactable : MonoBehaviour
     {
         if (other.CompareTag("Player"))//make sure its the player
         {
-            if (Input.GetKeyDown(KeyCode.E) && endOfPress != null)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                pressPosition = endOfPress.transform.position;
+                if(endOfPress!= null)
+                {
+                    pressPosition = endOfPress.transform.position;
+
+                }
                 events.Invoke();
                 // Trigger the traps
                 StartCoroutine(PressedAnimation());

@@ -289,11 +289,11 @@ MonoBehaviour:
   _runClip: {fileID: 0}
   gameManager: {fileID: 0}
   controller: {fileID: 7873517708216756990}
-  controllerCenter: 1
+  controllerCenter: 0.95
   crouchCenterController: 0.85
   crouchHeightController: 1.4
   defaultHeightController: 1.9
-  speed: 8
+  speed: 4
   runSpeed: 12
   crouchSpeed: 4
   gravity: -15
@@ -311,6 +311,8 @@ MonoBehaviour:
   gun: {fileID: 1130768914832698018}
   _flashlightClip: {fileID: 8300000, guid: 8a5a37cf3ed294c4484ac11f39b4f50d, type: 3}
   _walkClip: {fileID: 8300000, guid: 3672835786443e84990c24ee4af1a645, type: 3}
+  flashlightIcon: {fileID: 0}
+  baguetteIcon: {fileID: 0}
 --- !u!95 &9029037128753843392
 Animator:
   serializedVersion: 5
@@ -622,43 +624,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2714957975022588030, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.032
+      value: -0.102
       objectReference: {fileID: 0}
     - target: {fileID: 2714957975022588030, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.178
+      value: 0.1607
       objectReference: {fileID: 0}
     - target: {fileID: 2714957975022588030, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.04
+      value: 0.0354
       objectReference: {fileID: 0}
     - target: {fileID: 2714957975022588030, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.73128194
+      value: -0.72836566
       objectReference: {fileID: 0}
     - target: {fileID: 2714957975022588030, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.03811367
+      value: 0.075560875
       objectReference: {fileID: 0}
     - target: {fileID: 2714957975022588030, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6797742
+      value: -0.67792594
       objectReference: {fileID: 0}
     - target: {fileID: 2714957975022588030, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.04100178
+      value: -0.064733125
       objectReference: {fileID: 0}
     - target: {fileID: 2714957975022588030, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 6.401
+      value: -11.411
       objectReference: {fileID: 0}
     - target: {fileID: 2714957975022588030, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 85.793
+      value: 85.939
       objectReference: {fileID: 0}
     - target: {fileID: 2714957975022588030, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -0.47
+      value: -0.476
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c3f6ed632615e2449f82614776950dc, type: 3}
