@@ -7,6 +7,7 @@ using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
+using static UnityEngine.UI.CanvasScaler;
 
 public class AIController : Unit
 {
@@ -107,7 +108,7 @@ public class AIController : Unit
 
         if (currentSpot != null)
         {
-            currentSpot = lastSpot;
+            lastSpot = currentSpot;
         }
         currentSpot = null;
         while (currentSpot == null)
@@ -146,13 +147,16 @@ public class AIController : Unit
         ////we have to reset the path of our agent
         agent.ResetPath();
         float attackTimer = attackInterval;
-        while (currentEnemy.isAlive)
+        while (currentEnemy != null && currentEnemy.isAlive && isAlive)
         {
             attackTimer += Time.deltaTime; //increment our shoot timer each time
             float distanceToEnemy = Vector3.Distance(currentEnemy.transform.position, this.transform.position);
             //if we are too far away or we can't see our enemy, let's move towards them
             //otherwise, if our shoot timer is up, shoot them
-            //transform.LookAt(currentEnemy.transform);
+
+            Vector3 enemyPos = new Vector3(currentEnemy.transform.position.x, transform.position.y, currentEnemy.transform.position.z);
+
+            transform.LookAt(enemyPos);
 
             if (_audioSource != null && !_audioSource.isPlaying) //Play attacking audio
             {
@@ -223,7 +227,11 @@ public class AIController : Unit
             stunTimer += Time.deltaTime;
             agent.speed = 0;
             yield return null;
+        }
 
+        if (!isAlive)
+        {
+            currentEnemy = null;
         }
 
         SetState(State.Chasing);
@@ -299,16 +307,20 @@ public class AIController : Unit
 
     protected override void Respawn()
     {
+        
         base.Respawn();
         SetState(State.Idle);
     }
 
     protected override void Die()
     {
+        base.Die();
+        currentSpot.currentValue = 0;
+        lastSpot.currentValue = 0;
+
         StopAllCoroutines();
         agent.ResetPath();
         animator.SetBool("Running", false);
-        base.Die();
         currentEnemy = null;
     }
 

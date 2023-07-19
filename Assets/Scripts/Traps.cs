@@ -129,7 +129,6 @@ public class Traps : MonoBehaviour
     private IEnumerator RetractTrapAnimation()
     {
 
-
         float distance = Vector3.Distance(startPosition, trapPosition);
         float duration = distance / trapSpeed;
         float elapsedTime = 0f;

@@ -43,7 +43,6 @@ public class Unit : MonoBehaviour
     protected AudioSource _audioSource;
     #endregion
 
-
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -125,6 +124,7 @@ public class Unit : MonoBehaviour
 
         if (_audioSource != null)
         {
+            _audioSource.loop = false;
             _audioSource.clip = _dieClip;
             _audioSource.PlayDelayed(0.5f);
         }
@@ -154,11 +154,6 @@ public class Unit : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Alive");
         health = fullHealth;
         this.transform.position = respawnPos; //set player position to the respawn position
-        //when we respawn, what do we need to do?
-        //1) Change the layer
-        //2) Health back to max
-        //3) Move back to spawn location
-        //4) Set them back to being alive
     }
 
     // Update is called once per frame

@@ -67,34 +67,34 @@ public class Interactable : MonoBehaviour
 
 
 
-   /* private IEnumerator TriggerTrapAnimation()
-    {
-       
-        foreach (var trap in traps)
-        {
-            trap.SetActive(true);
-            Vector3 initialPosition = trap.transform.position;
-            Vector3 targetPosition = new Vector3(initialPosition.x, trapOutY, initialPosition.z);
+    /* private IEnumerator TriggerTrapAnimation()
+     {
 
-            float distance = Vector3.Distance(initialPosition, targetPosition);
-            float duration = distance / trapSpeed;
-            float elapsedTime = 0f;
+         foreach (var trap in traps)
+         {
+             trap.SetActive(true);
+             Vector3 initialPosition = trap.transform.position;
+             Vector3 targetPosition = new Vector3(initialPosition.x, trapOutY, initialPosition.z);
 
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                float normalizedTime = Mathf.Clamp01(elapsedTime / duration);
+             float distance = Vector3.Distance(initialPosition, targetPosition);
+             float duration = distance / trapSpeed;
+             float elapsedTime = 0f;
 
-                trap.transform.position = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
+             while (elapsedTime < duration)
+             {
+                 elapsedTime += Time.deltaTime;
+                 float normalizedTime = Mathf.Clamp01(elapsedTime / duration);
 
-                yield return null;
-            }
+                 trap.transform.position = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
 
-            
+                 yield return null;
+             }
 
-        }
-    }*/
-   
+
+
+         }
+     }*/
+
 }
 
 

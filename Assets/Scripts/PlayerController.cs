@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : Unit
 {
@@ -111,6 +112,7 @@ public class PlayerController : Unit
 
     [SerializeField]
     private GameObject baguetteIcon;
+
 
     protected override void Start()
     {
@@ -399,13 +401,15 @@ public class PlayerController : Unit
 
     protected override void Die()
     {
-
+        SceneManager.LoadScene("ProgrammingGym_LD");
         animator.SetBool("Crouching", false);
         animator.SetBool("AimCrouching", false);
         animator.SetBool("Running", false);
         animator.SetBool("Aiming", false);
 
         base.Die();
+       
+
     }
 
 
