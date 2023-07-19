@@ -29,7 +29,8 @@ Transform:
   m_LocalPosition: {x: 0.069, y: 0.119, z: 0.149}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1905582665256070759}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -108,3 +109,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashlight: {fileID: 783611475565798175}
+--- !u!1001 &2160395397762615692
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8060302734383251398}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.006
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0039
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1028
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6630056
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.74861443
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.000031972573
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.000024975026
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+      propertyPath: m_Name
+      value: LowPoly_HardHat_With_Torch
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+--- !u!4 &1905582665256070759 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5cb8508bc8d937f478c8dbde4796fba7, type: 3}
+  m_PrefabInstance: {fileID: 2160395397762615692}
+  m_PrefabAsset: {fileID: 0}
