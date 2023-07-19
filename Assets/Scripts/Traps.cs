@@ -23,6 +23,8 @@ public class Traps : MonoBehaviour
 
     private PlayerController player;
 
+    private Boss boss;
+
     public bool TrapActive;
 
     [SerializeField]
@@ -42,6 +44,7 @@ public class Traps : MonoBehaviour
         startPosition = trap.transform.position;
         trapPosition = endOfTrap.transform.position;
         player = GameObject.FindObjectOfType<PlayerController>();
+        boss = GameObject.FindObjectOfType<Boss>();
         timer = damageTimer;
         loopTimer = loopInterval;
 
@@ -59,6 +62,12 @@ public class Traps : MonoBehaviour
         {
             StartCoroutine(TriggerTrapAnimation());
             TrapActive = true;
+        }
+
+        if (other.CompareTag("Boss") && TrapActive)
+        {
+            boss.GotStunned();
+            Debug.Log("Stunned");
         }
     }
     private void Update()
@@ -90,7 +99,7 @@ public class Traps : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (TrapActive)
+        if (TrapActive && other.CompareTag("Player"))
         {
             timer += Time.deltaTime;
             if (timer > damageTimer)

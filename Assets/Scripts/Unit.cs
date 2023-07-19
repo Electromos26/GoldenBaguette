@@ -18,6 +18,12 @@ public class Unit : MonoBehaviour
     [SerializeField]
     int damage;
 
+    [SerializeField]
+    bool canRespawn = true;
+
+    [SerializeField]
+    protected bool beDamaged = true;
+
     protected const float DISTANCE_SHOT_IF_NO_HIT = 500.0f;
 
     private Eye[] eyes = new Eye[2]; //Add the Eye script to the AI and we can get the Eyes from the player
@@ -57,16 +63,21 @@ public class Unit : MonoBehaviour
 
     protected virtual void OnHit(Unit attacker)
     {
-        health -= attacker.damage; //take some damage from the attacker
+        if (beDamaged)
+        {
+            health -= attacker.damage; //take some damage from the attacker
+            if (_audioSource != null && isAlive)
+            {
+                _audioSource.clip = _gotHitClip;
+                _audioSource.loop = false;
+                _audioSource.PlayDelayed(0.1f);
+            }
+
+
+        }
         if (health <= 0)
         {
             Die();
-        }
-        if (_audioSource != null && isAlive)
-        {
-            _audioSource.clip = _gotHitClip;
-            _audioSource.loop = false;
-            _audioSource.PlayDelayed(0.1f);
         }
     }
 
@@ -129,7 +140,10 @@ public class Unit : MonoBehaviour
             _audioSource.PlayDelayed(0.5f);
         }
 
-        Invoke("Respawn", respawnTime);
+        if (canRespawn)
+        {
+            Invoke("Respawn", respawnTime);
+        }
     }
     public void PublicDie()
     {
