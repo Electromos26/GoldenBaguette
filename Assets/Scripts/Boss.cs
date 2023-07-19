@@ -34,6 +34,10 @@ public class Boss : Unit
     [SerializeField]
     private float stunInterval = 1;
 
+    [SerializeField]
+    private BossHealthBar bossHealthBar;
+
+    private GameObject stunSprite;
 
     private float defaultSpeed;
 
@@ -46,10 +50,15 @@ public class Boss : Unit
     {
         base.Start();
         agent = GetComponent<NavMeshAgent>();
+
+        stunSprite = GameObject.Find("StunSprite");
+
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
         SetState(State.Idle);
         defaultSpeed = agent.speed;
         beDamaged = false;
+
+        bossHealthBar.SetMaxHealth(fullHealth);
 
     }
 
@@ -99,6 +108,7 @@ public class Boss : Unit
     }
     private IEnumerator OnChasing()
     {
+        bossHealthBar.gameObject.SetActive(true);
         ////we have to reset the path of our agent
         agent.ResetPath();
         float attackTimer = attackInterval;
@@ -185,8 +195,10 @@ public class Boss : Unit
             agent.speed = 0;
             //play stunned animation
             yield return null;
+            stunSprite.SetActive(true);
         }
 
+        stunSprite.SetActive(false);
         beDamaged = false;
 
         SetState(State.Chasing);
@@ -226,7 +238,10 @@ public class Boss : Unit
         if (isAlive)
         {
             animator.SetTrigger("GotHit");//Animation for getting hit
+            SetState(State.Chasing);
+
         }
+
 
     }
 
@@ -252,11 +267,13 @@ public class Boss : Unit
         agent.ResetPath();
         animator.SetBool("Running", false);
         currentEnemy = null;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         animator.SetFloat("VerticalSpeed", agent.velocity.magnitude);
+        bossHealthBar.SetHealth(health);
     }
 }
