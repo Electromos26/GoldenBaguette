@@ -401,7 +401,6 @@ public class PlayerController : Unit
 
     protected override void Die()
     {
-        SceneManager.LoadScene("ProgrammingGym_LD");
         animator.SetBool("Crouching", false);
         animator.SetBool("AimCrouching", false);
         animator.SetBool("Running", false);

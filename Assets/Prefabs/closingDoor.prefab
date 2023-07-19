@@ -243,3 +243,6 @@ MonoBehaviour:
   door: {fileID: 7984442722108729497}
   endOfDoorClose: {fileID: 7984442721493342970}
   doorSpeed: 4
+  openPositionY: 0
+  playerDoorCloser: 0
+  closeDoor: 1
