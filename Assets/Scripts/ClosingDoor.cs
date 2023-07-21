@@ -6,8 +6,6 @@ public class ClosingDoor : MonoBehaviour
 {
     [SerializeField]
     private GameObject door;
-    [SerializeField]
-    private GameObject endOfDoorClose;
 
 
     [SerializeField]
@@ -15,24 +13,26 @@ public class ClosingDoor : MonoBehaviour
 
     [SerializeField]
     private float openPositionY;
-    private Vector3 closePositionY;
+
+    private float closePositionY;
 
     [SerializeField]
-    private bool playerDoorCloser = false;
+    private bool doorCloser = false;
 
     [SerializeField]
-    private bool closeDoor = false;
+    private bool ClosedDoor = false;
 
+    [SerializeField]
+    private bool CloseAfterOpening = false;
     BoxCollider boxCollider;
     void Start()
     {
-    
-        closePositionY = endOfDoorClose.transform.position;
+        closePositionY = door.transform.position.y;
     }
 
     public void OpenDoor()
     {
-        if (closeDoor)
+        if (ClosedDoor)
         {
             StartCoroutine(OpenDoors());
 
@@ -41,10 +41,10 @@ public class ClosingDoor : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && playerDoorCloser)//make sure its the player
+        if (other.CompareTag("Player") && doorCloser)//make sure its the player
         {
-            closeDoor = true;
-            StartCoroutine(CloseAnimation());
+            ClosedDoor = true;
+            StartCoroutine(CloseDoor());
             boxCollider = GetComponent<BoxCollider>();
             if (boxCollider != null)
             {
@@ -71,36 +71,43 @@ public class ClosingDoor : MonoBehaviour
 
             yield return null;
         }
+        if (!CloseAfterOpening)
+        {
+            // Disable the collider component of the door to allow walking through
+            Collider doorCollider = GetComponent<Collider>();
+            if (doorCollider != null)
+                doorCollider.enabled = false;
+        }
+        else
+        {
+            doorCloser = true;
+        }
 
-        // Disable the collider component of the door to allow walking through
-        Collider doorCollider = GetComponent<Collider>();
-        if (doorCollider != null)
-            doorCollider.enabled = false;
 
         // Door transition complete
     }
-    private IEnumerator CloseAnimation()
+    private IEnumerator CloseDoor()
     {
-        
 
-            Vector3 initialPosition = door.transform.position;
-            float distance = Vector3.Distance(initialPosition, closePositionY);
-            float duration = distance / (doorSpeed);
-            float elapsedTime = 0f;
+        closePositionY = -openPositionY + 1f;
+        Vector3 initialPosition = door.transform.position;
+        Vector3 targetPosition = new Vector3(initialPosition.x, closePositionY, initialPosition.z);
 
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                float normalizedTime = elapsedTime / duration;
+        float distance = Vector3.Distance(initialPosition, targetPosition);
+        float duration = distance / doorSpeed;
+        float elapsedTime = 0f;
 
-                door.transform.position = Vector3.Lerp(initialPosition, closePositionY, normalizedTime);
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float normalizedTime = Mathf.Clamp01(elapsedTime / duration);
 
-                yield return null;
-            }
-            // door animation complete
-            Debug.Log("door animation complete");
-
-       
+            transform.position = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
+            
+            yield return null;
+        }
+        ClosedDoor = true;
+        // door animation complete
     }
 
 

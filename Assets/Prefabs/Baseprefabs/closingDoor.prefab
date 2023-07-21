@@ -144,11 +144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 7647428944707678078}
-  endOfDoorClose: {fileID: 7984442721493342970}
-  doorSpeed: 4
-  openPositionY: 4
+  doorSpeed: 3
+  openPositionY: 2
   playerDoorCloser: 0
-  closeDoor: 0
+  ClosedDoor: 0
+  CloseAfterOpening: 0
 --- !u!1001 &7413006121173668399
 PrefabInstance:
   m_ObjectHideFlags: 0
