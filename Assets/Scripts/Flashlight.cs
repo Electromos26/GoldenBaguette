@@ -5,33 +5,39 @@ using UnityEngine;
 public class Flashlight : MonoBehaviour
 {
 
-    private bool isOn = false;
+    private Light flashLight;
+    private bool isOn;
 
     [SerializeField]
-    private GameObject flashlight;
+    private AudioClip _flashlightClip;
+
+    [SerializeField]
+    private GameObject flashlightIcon;
+
+    private AudioSource _audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.gameObject.SetActive(false);
-        isOn = false;
+        flashLight = GetComponent<Light>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        flashLight.enabled = isOn;
         if (Input.GetKeyDown(KeyCode.F)) 
         {
-            if (!isOn)
+            if (_audioSource != null)
             {
-                isOn = true;
-                this.gameObject.SetActive(true);
+                _audioSource.clip = _flashlightClip;
+                _audioSource.loop = false;
+                _audioSource.Play();
             }
-            else if (isOn)
-            {
-                isOn = false;
-                this.gameObject.SetActive(false);
-            }
+            isOn = !isOn;
+            flashlightIcon.gameObject.SetActive(isOn);
         }
     }
+
 }

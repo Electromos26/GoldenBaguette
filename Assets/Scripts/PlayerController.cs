@@ -60,13 +60,6 @@ public class PlayerController : Unit
     private float turnSmoothTime = 0.2f;
     #endregion
 
-    #region Flashlight
-    [SerializeField]
-    private GameObject flashlight;
-
-    private bool lightIsOn = false;
-    #endregion
-
     #region ZoomAim
     private float defaultView;
 
@@ -100,15 +93,9 @@ public class PlayerController : Unit
     private Camera playerCam; //this is the camera in our game
 
     [SerializeField]
-    private AudioClip _flashlightClip;
-
-    [SerializeField]
     private AudioClip _walkClip;
 
     private HealthBar healthBar;
-
-    [SerializeField]
-    private GameObject flashlightIcon;
 
     [SerializeField]
     private GameObject baguetteIcon;
@@ -128,7 +115,6 @@ public class PlayerController : Unit
         defaultView = playerCam.fieldOfView;
         crouchCenterVector = new Vector3(0, crouchCenterController);
         defaultCenterVector = new Vector3(0, controllerCenter);
-        flashlight.gameObject.SetActive(false);
         AILookDistanceDefault = AIScript.lookDistance;
 
         healthBar.SetMaxHealth(fullHealth);
@@ -303,31 +289,7 @@ public class PlayerController : Unit
                 //_audioSource.Stop();
             }
 
-            if (Input.GetKeyDown(KeyCode.F)) //Turn flashlight on and off
-            {
-                if (_audioSource != null)
-                {
-                    _audioSource.clip = _flashlightClip;
-                    _audioSource.loop = false;
-                    _audioSource.Play();
-                }
-
-                if (!lightIsOn)
-                {
-                    lightIsOn = true;
-                    flashlight.gameObject.SetActive(true);
-                    flashlightIcon.gameObject.SetActive(true);
-
-                }
-                else if (lightIsOn)
-                {
-                    lightIsOn = false;
-                    flashlight.gameObject.SetActive(false);
-                    flashlightIcon.gameObject.SetActive(false);
-
-                }
-
-            }
+            
         }
         else
         {
