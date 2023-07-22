@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
 
 public class PlayerController : Unit
 {
@@ -48,12 +49,12 @@ public class PlayerController : Unit
 
     [SerializeField]
     private Transform groundCheck;
-    
+
     private float groundDistance = 0.4f;
 
     [SerializeField]
     private LayerMask groundMask;
-  
+
     private float turnSmoothVelocity;
 
     [SerializeField]
@@ -88,7 +89,7 @@ public class PlayerController : Unit
 
     private float AILookDistanceDefault;
 
-    private bool pickedUp = false;
+ //   private bool pickedUp = false;
 
     private Camera playerCam; //this is the camera in our game
 
@@ -100,7 +101,7 @@ public class PlayerController : Unit
     [SerializeField]
     private GameObject baguetteIcon;
 
-
+    public DeathMenu PlayerIs;
     protected override void Start()
     {
         base.Start();
@@ -131,7 +132,7 @@ public class PlayerController : Unit
     private Vector3 GetGunPosition()
     {
         return (gun.transform.position);//change from an array later line 12
-        
+
     }
     void Update()
     {
@@ -216,7 +217,7 @@ public class PlayerController : Unit
                 animator.SetBool("Running", false);
                 animator.SetBool("Aiming", false);
 
-                AIScript.lookDistance = AILookDistanceDefault/2;
+                AIScript.lookDistance = AILookDistanceDefault / 2;
 
                 controller.center = crouchCenterVector;
                 controller.height = crouchHeightController;
@@ -289,7 +290,7 @@ public class PlayerController : Unit
                 //_audioSource.Stop();
             }
 
-            
+
         }
         else
         {
@@ -312,7 +313,7 @@ public class PlayerController : Unit
             Collectable collectableObject = other.gameObject.GetComponent<Collectable>();
             //gameManager.IncreaseScore(collectableObject.GetNumPoints());
             Destroy(other.gameObject);
-            pickedUp = true;
+          //  pickedUp = true;
             if (other.gameObject.name == "Golden_Baguette")
             {
                 baguetteIcon.SetActive(true);
@@ -369,10 +370,20 @@ public class PlayerController : Unit
         animator.SetBool("Aiming", false);
 
         base.Die();
-       
+
+        if (PlayerIs != null)
+        {
+            // Start the coroutine to wait before setting isDead to true
+            StartCoroutine(DelayBeforeDeath());
+        }
+
 
     }
-
+    private IEnumerator DelayBeforeDeath()
+    {
+        yield return new WaitForSeconds(5f); // Wait for 5 seconds
+        PlayerIs.isDead = true;
+    }
 
     //private void OnTriggerEnter(Collider other) // collectables
     //{
