@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
+using Unity.PlasticSCM.Editor;
+using Unity.VisualScripting;
 
 public class PlayerController : Unit
 {
@@ -312,12 +314,20 @@ public class PlayerController : Unit
             Debug.Log("Triggered");
             Collectable collectableObject = other.gameObject.GetComponent<Collectable>();
             //gameManager.IncreaseScore(collectableObject.GetNumPoints());
-            Destroy(other.gameObject);
           //  pickedUp = true;
             if (other.gameObject.name == "Golden_Baguette")
             {
                 baguetteIcon.SetActive(true);
             }
+
+            if (other.gameObject.name == "Tape")
+            {
+                collectableObject.PlayTrack();
+            }
+
+            other.gameObject.SetActive(false);
+
+
         }
 
     }

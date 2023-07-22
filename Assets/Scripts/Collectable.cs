@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private AudioClip _collectableClip;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _audioSource = GetComponent<AudioSource>();
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public void PlayTrack()
     {
-        
+        if (_audioSource != null && !_audioSource.isPlaying)
+        {
+            _audioSource.clip = _collectableClip;
+            _audioSource.Play();
+        }
     }
-
 }
