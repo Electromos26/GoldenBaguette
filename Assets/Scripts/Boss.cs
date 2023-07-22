@@ -37,6 +37,7 @@ public class Boss : Unit
     [SerializeField]
     private BossHealthBar bossHealthBar;
 
+    [SerializeField]
     private GameObject stunSprite;
 
     private float defaultSpeed;
@@ -44,14 +45,14 @@ public class Boss : Unit
     [SerializeField]
     private AudioClip _idleClip;
 
+    private bool stunned;
+
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         agent = GetComponent<NavMeshAgent>();
-
-        stunSprite = GameObject.Find("StunSprite");
 
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
         SetState(State.Idle);
@@ -190,6 +191,7 @@ public class Boss : Unit
 
         while (stunTimer < stunInterval)
         {
+            stunned = true;
             beDamaged = true;
             stunTimer += Time.deltaTime;
             agent.speed = 0;
@@ -198,6 +200,7 @@ public class Boss : Unit
             stunSprite.SetActive(true);
         }
 
+        stunned = false;
         stunSprite.SetActive(false);
         beDamaged = false;
 
@@ -235,7 +238,7 @@ public class Boss : Unit
         {
             currentEnemy = attacker;
         }
-        if (isAlive)
+        if (isAlive && !stunned)
         {
             animator.SetTrigger("GotHit");//Animation for getting hit
             SetState(State.Chasing);
@@ -260,8 +263,6 @@ public class Boss : Unit
     protected override void Die()
     {
         base.Die();
-        currentSpot.currentValue = 0;
-        lastSpot.currentValue = 0;
 
         StopAllCoroutines();
         agent.ResetPath();
