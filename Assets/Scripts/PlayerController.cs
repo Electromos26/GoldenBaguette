@@ -5,6 +5,9 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
+using Unity.PlasticSCM.Editor;
+using Unity.VisualScripting;
 
 public class PlayerController : Unit
 {
@@ -48,23 +51,16 @@ public class PlayerController : Unit
 
     [SerializeField]
     private Transform groundCheck;
-    
+
     private float groundDistance = 0.4f;
 
     [SerializeField]
     private LayerMask groundMask;
-  
+
     private float turnSmoothVelocity;
 
     [SerializeField]
     private float turnSmoothTime = 0.2f;
-    #endregion
-
-    #region Flashlight
-    [SerializeField]
-    private GameObject flashlight;
-
-    private bool lightIsOn = false;
     #endregion
 
     #region ZoomAim
@@ -95,12 +91,9 @@ public class PlayerController : Unit
 
     private float AILookDistanceDefault;
 
-    private bool pickedUp = false;
+ //   private bool pickedUp = false;
 
     private Camera playerCam; //this is the camera in our game
-
-    [SerializeField]
-    private AudioClip _flashlightClip;
 
     [SerializeField]
     private AudioClip _walkClip;
@@ -108,12 +101,9 @@ public class PlayerController : Unit
     private HealthBar healthBar;
 
     [SerializeField]
-    private GameObject flashlightIcon;
-
-    [SerializeField]
     private GameObject baguetteIcon;
 
-
+    public DeathMenu PlayerIs;
     protected override void Start()
     {
         base.Start();
@@ -128,7 +118,6 @@ public class PlayerController : Unit
         defaultView = playerCam.fieldOfView;
         crouchCenterVector = new Vector3(0, crouchCenterController);
         defaultCenterVector = new Vector3(0, controllerCenter);
-        flashlight.gameObject.SetActive(false);
         AILookDistanceDefault = AIScript.lookDistance;
 
         healthBar.SetMaxHealth(fullHealth);
@@ -145,7 +134,7 @@ public class PlayerController : Unit
     private Vector3 GetGunPosition()
     {
         return (gun.transform.position);//change from an array later line 12
-        
+
     }
     void Update()
     {
@@ -230,7 +219,7 @@ public class PlayerController : Unit
                 animator.SetBool("Running", false);
                 animator.SetBool("Aiming", false);
 
-                AIScript.lookDistance = AILookDistanceDefault/2;
+                AIScript.lookDistance = AILookDistanceDefault / 2;
 
                 controller.center = crouchCenterVector;
                 controller.height = crouchHeightController;
@@ -303,31 +292,7 @@ public class PlayerController : Unit
                 //_audioSource.Stop();
             }
 
-            if (Input.GetKeyDown(KeyCode.F)) //Turn flashlight on and off
-            {
-                if (_audioSource != null)
-                {
-                    _audioSource.clip = _flashlightClip;
-                    _audioSource.loop = false;
-                    _audioSource.Play();
-                }
 
-                if (!lightIsOn)
-                {
-                    lightIsOn = true;
-                    flashlight.gameObject.SetActive(true);
-                    flashlightIcon.gameObject.SetActive(true);
-
-                }
-                else if (lightIsOn)
-                {
-                    lightIsOn = false;
-                    flashlight.gameObject.SetActive(false);
-                    flashlightIcon.gameObject.SetActive(false);
-
-                }
-
-            }
         }
         else
         {
@@ -349,12 +314,20 @@ public class PlayerController : Unit
             Debug.Log("Triggered");
             Collectable collectableObject = other.gameObject.GetComponent<Collectable>();
             //gameManager.IncreaseScore(collectableObject.GetNumPoints());
-            Destroy(other.gameObject);
-            pickedUp = true;
+          //  pickedUp = true;
             if (other.gameObject.name == "Golden_Baguette")
             {
                 baguetteIcon.SetActive(true);
             }
+
+            if (other.gameObject.name == "Tape")
+            {
+                collectableObject.PlayTrack();
+            }
+
+            other.gameObject.SetActive(false);
+
+
         }
 
     }
@@ -407,10 +380,20 @@ public class PlayerController : Unit
         animator.SetBool("Aiming", false);
 
         base.Die();
-       
+
+        if (PlayerIs != null)
+        {
+            // Start the coroutine to wait before setting isDead to true
+            StartCoroutine(DelayBeforeDeath());
+        }
+
 
     }
-
+    private IEnumerator DelayBeforeDeath()
+    {
+        yield return new WaitForSeconds(5f); // Wait for 5 seconds
+        PlayerIs.isDead = true;
+    }
 
     //private void OnTriggerEnter(Collider other) // collectables
     //{

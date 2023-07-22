@@ -147,7 +147,7 @@ public class AIController : Unit
         ////we have to reset the path of our agent
         agent.ResetPath();
         float attackTimer = attackInterval;
-        while (currentEnemy != null && currentEnemy.isAlive && isAlive)
+        while (currentEnemy != null && currentEnemy.isAlive)
         {
             attackTimer += Time.deltaTime; //increment our shoot timer each time
             float distanceToEnemy = Vector3.Distance(currentEnemy.transform.position, this.transform.position);

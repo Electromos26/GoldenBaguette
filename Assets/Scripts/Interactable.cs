@@ -11,18 +11,44 @@ public class Interactable : MonoBehaviour
     [SerializeField]
     private GameObject endOfPress;//insert button location
 
+    private PlayerController player;
+
+
     private Vector3 pressPosition;
+
+    private Vector3 initialPosition;
+
+    private bool buttonPressed = false;
+
+    private float timer;
+
+    [SerializeField]
+    private float pressedInterval = 20f;
 
     [SerializeField]
     private UnityEvent events;
 
     private void Start()
     {
+        initialPosition = button.transform.position;
+        pressPosition = endOfPress.transform.position;
+        player = GameObject.FindObjectOfType<PlayerController>();
 
     }
+
     private void Update()
     {
+        if (buttonPressed)
+        {
+            timer += Time.deltaTime;
 
+            if (timer > pressedInterval || !player.isAlive)
+            {
+                StartCoroutine(RetractAnimation());
+                timer = 0;
+                buttonPressed = false;
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -31,15 +57,11 @@ public class Interactable : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if(endOfPress!= null)
-                {
-                    pressPosition = endOfPress.transform.position;
-
-                }
                 events.Invoke();
                 // Trigger the traps
                 StartCoroutine(PressedAnimation());
                 // StartCoroutine(TriggerTrapAnimation());
+                buttonPressed = true;
             }
         }
 
@@ -47,7 +69,6 @@ public class Interactable : MonoBehaviour
     }
     private IEnumerator PressedAnimation()
     {
-        Vector3 initialPosition = button.transform.position;
         float distance = Vector3.Distance(initialPosition, pressPosition);
         float duration = distance /  2f;
         float elapsedTime = 0f;
@@ -61,10 +82,26 @@ public class Interactable : MonoBehaviour
 
             yield return null;
         }
-        Destroy(endOfPress);
         // Button animation complete
     }
 
+    private IEnumerator RetractAnimation()
+    {
+        float distance = Vector3.Distance(initialPosition, pressPosition);
+        float duration = distance / 2f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float normalizedTime = elapsedTime / duration;
+
+            button.transform.position = Vector3.Lerp(pressPosition, initialPosition, normalizedTime);
+
+            yield return null;
+        }
+        // Retract animation complete
+    }
 
 
     /* private IEnumerator TriggerTrapAnimation()

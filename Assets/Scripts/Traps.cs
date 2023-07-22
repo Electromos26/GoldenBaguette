@@ -18,12 +18,16 @@ public class Traps : MonoBehaviour
 
     private float timer;
 
+    private float retractTimer;
+
     [SerializeField]
     private float damageTimer;
 
     private PlayerController player;
 
-    public bool TrapActive;
+    private Boss boss;
+
+    public bool trapActive;
 
     [SerializeField]
     private bool floorTrap;
@@ -36,16 +40,21 @@ public class Traps : MonoBehaviour
 
     private float loopTimer;
 
+    [SerializeField]
+    private float activeInterval = 20f;
+
+
     // Start is called before the first frame update
     void Start()
     {
         startPosition = trap.transform.position;
         trapPosition = endOfTrap.transform.position;
         player = GameObject.FindObjectOfType<PlayerController>();
+        boss = GameObject.FindObjectOfType<Boss>();
         timer = damageTimer;
         loopTimer = loopInterval;
 
-        if (TrapActive)
+        if (trapActive)
         {
             // Set trap position to end of trap if the trap is active
             trap.transform.position = trapPosition;
@@ -58,22 +67,39 @@ public class Traps : MonoBehaviour
         if (other.CompareTag("Player") && floorTrap)
         {
             StartCoroutine(TriggerTrapAnimation());
-            TrapActive = true;
+            trapActive = true;
+        }
+
+        if (other.CompareTag("Boss") && trapActive)
+        {
+            boss.GotStunned();
+            Debug.Log("Stunned");
         }
     }
     private void Update()
     {
+        if (trapActive)
+        {
+            retractTimer += Time.deltaTime;
+
+            if (retractTimer > activeInterval || !player.isAlive)
+            {
+                StartCoroutine(RetractTrapAnimation());
+                retractTimer = 0;
+            }
+        }
+
 
         if (loopTrap)
         {
             loopTimer += Time.deltaTime;
-            if (loopTimer > loopInterval && !TrapActive)
+            if (loopTimer > loopInterval && !trapActive)
             {
                 StartCoroutine(TriggerTrapAnimation());
                 loopTimer = 0;
             }
 
-            if (loopTimer > loopInterval && TrapActive)
+            if (loopTimer > loopInterval && trapActive)
             {
                 StartCoroutine(RetractTrapAnimation());
                 loopTimer = 0;
@@ -90,7 +116,7 @@ public class Traps : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (TrapActive)
+        if (trapActive && other.CompareTag("Player"))
         {
             timer += Time.deltaTime;
             if (timer > damageTimer)
@@ -107,7 +133,7 @@ public class Traps : MonoBehaviour
     {
 
         trap.SetActive(true);
-        TrapActive = true;
+        trapActive = true;
 
         float distance = Vector3.Distance(startPosition, trapPosition);
         float duration = distance / trapSpeed;
@@ -143,7 +169,7 @@ public class Traps : MonoBehaviour
             yield return null;
         }
 
-        TrapActive = false;
+        trapActive = false;
         trap.SetActive(false);
 
     }
