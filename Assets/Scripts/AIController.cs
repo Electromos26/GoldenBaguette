@@ -210,6 +210,7 @@ public class AIController : Unit
             }
             yield return null;
         }
+        health = fullHealth; 
         currentEnemy = null;
         agent.ResetPath();
         agent.speed = defaultSpeed;

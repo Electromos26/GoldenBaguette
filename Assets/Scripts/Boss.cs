@@ -47,13 +47,11 @@ public class Boss : Unit
 
     private bool stunned;
 
-
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         agent = GetComponent<NavMeshAgent>();
-
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
         SetState(State.Idle);
         defaultSpeed = agent.speed;
@@ -176,9 +174,20 @@ public class Boss : Unit
             }
             yield return null;
         }
+
+        health = fullHealth;
         currentEnemy = null;
         agent.ResetPath();
         agent.speed = defaultSpeed;
+
+        while (Vector3.Distance(this.transform.position, respawnPos) >= 3)
+        {
+            agent.SetDestination(respawnPos);
+
+            yield return null;
+        }
+
+        agent.ResetPath();
         SetState(State.Idle);
     }
 
