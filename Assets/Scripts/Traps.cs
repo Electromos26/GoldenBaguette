@@ -80,13 +80,15 @@ public class Traps : MonoBehaviour
     {
         if (trapActive)
         {
+           
             retractTimer += Time.deltaTime;
 
-            if (retractTimer > activeInterval || !player.isAlive)
-            {
-                StartCoroutine(RetractTrapAnimation());
-                retractTimer = 0;
-            }
+                if (retractTimer > activeInterval || !player.isAlive)
+                {
+                    StartCoroutine(RetractTrapAnimation());
+                    retractTimer = 0;
+                }
+            
         }
 
 
@@ -106,7 +108,7 @@ public class Traps : MonoBehaviour
             }
 
         }
-
+        
     }
 
     public void ButtonPressed()
@@ -116,7 +118,7 @@ public class Traps : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (trapActive && other.CompareTag("Player"))
+        if (trapActive && other.CompareTag("Player") && player.isAlive)
         {
             timer += Time.deltaTime;
             if (timer > damageTimer)
@@ -154,10 +156,15 @@ public class Traps : MonoBehaviour
 
     private IEnumerator RetractTrapAnimation()
     {
-
+       
         float distance = Vector3.Distance(startPosition, trapPosition);
         float duration = distance / trapSpeed;
         float elapsedTime = 0f;
+
+        if (!player.isAlive)
+        {
+            yield return new WaitForSeconds(2f); // Wait for 5 seconds
+        }
 
         while (elapsedTime < duration)
         {
@@ -168,10 +175,10 @@ public class Traps : MonoBehaviour
 
             yield return null;
         }
-
+       
         trapActive = false;
         trap.SetActive(false);
-
+        timer = damageTimer;
     }
 
 

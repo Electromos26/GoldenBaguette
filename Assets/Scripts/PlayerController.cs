@@ -378,15 +378,13 @@ public class PlayerController : Unit
         animator.SetBool("AimCrouching", false);
         animator.SetBool("Running", false);
         animator.SetBool("Aiming", false);
-
+        Debug.Log("wow i died");
         base.Die();
-
         if (PlayerIs != null)
         {
             // Start the coroutine to wait before setting isDead to true
             StartCoroutine(DelayBeforeDeath());
         }
-
 
     }
     private IEnumerator DelayBeforeDeath()

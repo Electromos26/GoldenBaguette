@@ -20,7 +20,7 @@ public class Boulder : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && player.isAlive)
         {
             player.PublicDie();
             playerKilled = true;

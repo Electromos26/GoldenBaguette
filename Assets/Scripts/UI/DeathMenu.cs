@@ -8,10 +8,11 @@ public class DeathMenu : MonoBehaviour
     public bool isDead = false;
     public void TryAgain()
     {
-        Time.timeScale = 1;
+        isDead = false;
+        Time.timeScale = 1f;
         deathScreen.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
-        isDead = false;
+        
     }
     public void ExitGame()
     {
@@ -25,7 +26,7 @@ public class DeathMenu : MonoBehaviour
         if (isDead)
         {
             Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0;
+            Time.timeScale = 0f;
             deathScreen.SetActive(true);
            
         }

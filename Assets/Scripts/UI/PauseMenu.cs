@@ -6,6 +6,7 @@ public class PauseMenu : MonoBehaviour
 {
     public bool paused;
     public GameObject pauseMenu;
+    public DeathMenu playerIs;
     public bool gameOver = false;
      void Pause()
      {
@@ -25,7 +26,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !gameOver)//get enter button
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameOver && !playerIs.isDead)//get enter button
         {
             if (!paused)
             {
