@@ -3,16 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class DeathMenu : MonoBehaviour
 {
-   
+
     public GameObject deathScreen;
     public bool isDead = false;
-    void DiedScreen()
-    {
-        Time.timeScale = 0;
-        deathScreen.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
-
-    }
     public void TryAgain()
     {
         Time.timeScale = 1;
@@ -22,16 +15,20 @@ public class DeathMenu : MonoBehaviour
     }
     public void ExitGame()
     {
-        SceneManager.LoadScene(0);
+        Application.Quit();//actual game
+        UnityEditor.EditorApplication.isPlaying = false;//editor playMode
     }
     // Update is called once per frame
     void Update()
     {
         Debug.Log("isDead: " + isDead);
         if (isDead)
-       {
-         DiedScreen();
-       }
-       
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0;
+            deathScreen.SetActive(true);
+           
+        }
+
     }
 }

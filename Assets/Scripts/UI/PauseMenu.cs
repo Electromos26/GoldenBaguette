@@ -6,7 +6,7 @@ public class PauseMenu : MonoBehaviour
 {
     public bool paused;
     public GameObject pauseMenu;
-
+    public bool gameOver = false;
      void Pause()
      {
         Time.timeScale = 0;
@@ -25,14 +25,14 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))//get enter button
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameOver)//get enter button
         {
             if (!paused)
             {
                Pause();
             }
             // If the pause menu is currently active, deactivate it
-            else
+            else if (paused)
             {
                 Resume();
             }

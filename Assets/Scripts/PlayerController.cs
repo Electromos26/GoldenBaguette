@@ -391,7 +391,7 @@ public class PlayerController : Unit
     }
     private IEnumerator DelayBeforeDeath()
     {
-        yield return new WaitForSeconds(5f); // Wait for 5 seconds
+        yield return new WaitForSeconds(4f); // Wait for 5 seconds
         PlayerIs.isDead = true;
     }
 
