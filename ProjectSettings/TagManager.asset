@@ -3,21 +3,27 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - AI_Mummy
+  - Checkpoint
+  - BoulderDestroyer
+  - Boulder
+  - Collectable
+  - Boss
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - AISpot
+  - Alive
+  - Dead
+  - JeanRaider
+  - Interactables
+  - Boulder
+  - Collectables
   - 
   - 
   - 
