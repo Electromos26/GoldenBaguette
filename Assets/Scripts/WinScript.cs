@@ -24,7 +24,8 @@ public class WinScript : MonoBehaviour
         {
             Time.timeScale = 0;
             Cursor.lockState = CursorLockMode.None;
-           winScreen.SetActive(true);
+            Cursor.visible = true;
+            winScreen.SetActive(true);
             gameIs.gameOver = true;
         }
     }

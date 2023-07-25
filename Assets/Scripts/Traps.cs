@@ -35,6 +35,8 @@ public class Traps : MonoBehaviour
     [SerializeField]
     private bool loopTrap;
 
+    private bool alwaysOn;
+
     [SerializeField]
     private float loopInterval = 2f;
 
@@ -58,6 +60,8 @@ public class Traps : MonoBehaviour
         {
             // Set trap position to end of trap if the trap is active
             trap.transform.position = trapPosition;
+            trap.SetActive(true);
+            alwaysOn = true;
         }
 
     }
@@ -78,7 +82,7 @@ public class Traps : MonoBehaviour
     }
     private void Update()
     {
-        if (trapActive)
+        if (trapActive && !alwaysOn)
         {
            
             retractTimer += Time.deltaTime;

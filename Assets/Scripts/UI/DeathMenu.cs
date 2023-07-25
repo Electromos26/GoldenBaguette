@@ -26,6 +26,7 @@ public class DeathMenu : MonoBehaviour
         if (isDead)
         {
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             Time.timeScale = 0f;
             deathScreen.SetActive(true);
            

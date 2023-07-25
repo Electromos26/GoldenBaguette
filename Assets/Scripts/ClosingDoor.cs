@@ -11,7 +11,6 @@ public class ClosingDoor : MonoBehaviour
     [SerializeField]
     private float doorSpeed = 1f;
 
-    [SerializeField]
     private float openPositionY;
 
     private float closePositionY;
@@ -27,7 +26,17 @@ public class ClosingDoor : MonoBehaviour
     BoxCollider boxCollider;
     void Start()
     {
-        closePositionY = door.transform.position.y;
+        openPositionY = 3f;
+        closePositionY = -0.2f;
+
+        if (ClosedDoor)
+        {
+            door.transform.localPosition = new Vector3(door.transform.localPosition.x, closePositionY, door.transform.localPosition.z);
+        }
+        else
+        {
+            door.transform.localPosition = new Vector3(door.transform.localPosition.x, openPositionY, door.transform.localPosition.z);
+        }
     }
 
     public void OpenDoor()
@@ -55,7 +64,7 @@ public class ClosingDoor : MonoBehaviour
     }
     private IEnumerator OpenDoors()
     {
-        Vector3 initialPosition = transform.position;
+        Vector3 initialPosition = door.transform.localPosition;
         Vector3 targetPosition = new Vector3(initialPosition.x, openPositionY, initialPosition.z);
 
         float distance = Vector3.Distance(initialPosition, targetPosition);
@@ -67,7 +76,7 @@ public class ClosingDoor : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float normalizedTime = Mathf.Clamp01(elapsedTime / duration);
 
-            transform.position = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
+            door.transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
 
             yield return null;
         }
@@ -89,8 +98,7 @@ public class ClosingDoor : MonoBehaviour
     private IEnumerator CloseDoor()
     {
 
-        closePositionY = -openPositionY + 1f;
-        Vector3 initialPosition = door.transform.position;
+        Vector3 initialPosition = door.transform.localPosition;
         Vector3 targetPosition = new Vector3(initialPosition.x, closePositionY, initialPosition.z);
 
         float distance = Vector3.Distance(initialPosition, targetPosition);
@@ -102,7 +110,7 @@ public class ClosingDoor : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float normalizedTime = Mathf.Clamp01(elapsedTime / duration);
 
-            transform.position = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
+            door.transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
             
             yield return null;
         }
