@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b1531f08f3ea24192591c9dbc7a0f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnLimit: 10
+  maxRespawnInterval: 10
+  minRespawnInterval: 8
   boulder: {fileID: 7892514285409947319, guid: 511e28c8b124d2c41bad78b32fc94f7c, type: 3}
 --- !u!33 &-4965633326407315154
 MeshFilter:
