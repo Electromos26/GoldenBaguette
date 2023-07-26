@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1061810468119413696}
   m_Layer: 7
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,7 +48,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3
+  m_Radius: 0.4
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -82,6 +82,8 @@ MonoBehaviour:
   attackDis: 2
   speedMultiplierChasing: 2
   stunInterval: 5
+  bossHealthBar: {fileID: 0}
+  stunSprite: {fileID: 0}
   _idleClip: {fileID: 0}
 --- !u!195 &8204345679946276202
 NavMeshAgent:

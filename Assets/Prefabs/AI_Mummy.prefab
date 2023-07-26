@@ -71,10 +71,10 @@ MonoBehaviour:
   beDamaged: 1
   viewAngle: 80
   respawnTime: 5
-  _gotHitClip: {fileID: 8300000, guid: 18aa6c57ef001ff40a3461b79daeae74, type: 3}
-  _dieClip: {fileID: 8300000, guid: b5ae2097e4997cb46a5862fd12867df1, type: 3}
-  _attackClip: {fileID: 8300000, guid: 5aec02313fc82894da6b4740ab13d996, type: 3}
-  _runClip: {fileID: 8300000, guid: 316b87d3780c992449587d14e6e1968b, type: 3}
+  _gotHitClip: {fileID: 8300000, guid: 036cbe1c7ab09d847837bf16d6b54e74, type: 3}
+  _dieClip: {fileID: 8300000, guid: 0ce0a695cb700ff4b9a5e185f7ab2420, type: 3}
+  _attackClip: {fileID: 8300000, guid: aa14ac81d3b310c448ac08def5d90edb, type: 3}
+  _runClip: {fileID: 8300000, guid: ec57772909725594985abbb1e252d0ad, type: 3}
   attackInterval: 0.5
   lookDistance: 10
   aimOffset: {x: 0, y: 1, z: 0}
@@ -82,7 +82,7 @@ MonoBehaviour:
   attackDis: 2
   speedMultiplierChasing: 2
   stunInterval: 0.5
-  _idleClip: {fileID: 8300000, guid: 80d849c7d10d2ab48b49e0c300a828bc, type: 3}
+  _idleClip: {fileID: 8300000, guid: e6d4832ed7727d944aea23494ad033ce, type: 3}
 --- !u!195 &8204345679946276202
 NavMeshAgent:
   m_ObjectHideFlags: 0

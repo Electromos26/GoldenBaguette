@@ -349,10 +349,10 @@ MonoBehaviour:
   beDamaged: 1
   viewAngle: 80
   respawnTime: 5
-  _gotHitClip: {fileID: 8300000, guid: 13bdd18b00d9d2540b9be3732fa1bdf3, type: 3}
-  _dieClip: {fileID: 8300000, guid: 0b037197aa79a9345b7076094cc63fe4, type: 3}
+  _gotHitClip: {fileID: 8300000, guid: 7e239c86e23230b4ab6357b6b0120f4d, type: 3}
+  _dieClip: {fileID: 8300000, guid: 132e489fb5ddb2b46adf12579faf8553, type: 3}
   _attackClip: {fileID: 8300000, guid: 66b61a67c1b398a48a1207dada32a6d4, type: 3}
-  _runClip: {fileID: 0}
+  _runClip: {fileID: 8300000, guid: bd2cbb9bf1df51f44829b29c8ff0f832, type: 3}
   gameManager: {fileID: 0}
   controller: {fileID: 7873517708216756990}
   controllerCenter: 0.95
@@ -374,7 +374,7 @@ MonoBehaviour:
   laserPrefab: {fileID: 1134949319946392262, guid: fa1a14234d85df048be4edf85d996aff, type: 3}
   crossHair: {fileID: 0}
   gun: {fileID: 1130768914832698018}
-  _walkClip: {fileID: 8300000, guid: 3672835786443e84990c24ee4af1a645, type: 3}
+  _walkClip: {fileID: 8300000, guid: 05f98342f29d85241ae5ec6a42b42d74, type: 3}
   baguetteIcon: {fileID: 0}
   PlayerIs: {fileID: 0}
 --- !u!95 &9029037128753843392

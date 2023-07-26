@@ -197,16 +197,16 @@ public class Boss : Unit
         ///
 
         float stunTimer = 0;
+        beDamaged = true;
+        stunned = true;
+        agent.speed = 0;
+        stunSprite.SetActive(true);
+        //play stunned animation
 
         while (stunTimer < stunInterval)
         {
-            stunned = true;
-            beDamaged = true;
             stunTimer += Time.deltaTime;
-            agent.speed = 0;
-            //play stunned animation
             yield return null;
-            stunSprite.SetActive(true);
         }
 
         stunned = false;
