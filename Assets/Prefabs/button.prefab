@@ -146,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 8819616576140782361}
   endOfPress: {fileID: 2707406787822823390}
+  AnimationSpeed: 0.3
   pressedInterval: 20
   events:
     m_PersistentCalls:

@@ -23,6 +23,9 @@ public class Interactable : MonoBehaviour
     private float timer;
 
     [SerializeField]
+    private float AnimationSpeed = 1f;
+
+    [SerializeField]
     private float pressedInterval = 20f;
 
     [SerializeField]
@@ -70,7 +73,7 @@ public class Interactable : MonoBehaviour
     private IEnumerator PressedAnimation()
     {
         float distance = Vector3.Distance(initialPosition, pressPosition);
-        float duration = distance /  2f;
+        float duration = distance / AnimationSpeed;
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -88,7 +91,7 @@ public class Interactable : MonoBehaviour
     private IEnumerator RetractAnimation()
     {
         float distance = Vector3.Distance(initialPosition, pressPosition);
-        float duration = distance / 2f;
+        float duration = distance / AnimationSpeed;
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
