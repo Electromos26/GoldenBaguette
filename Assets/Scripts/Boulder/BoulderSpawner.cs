@@ -7,9 +7,13 @@ using UnityEngine;
 public class BoulderSpawner : MonoBehaviour
 {
     private float respawnTimer;
-    [SerializeField]
-    private float respawnLimit;
 
+    [SerializeField]
+    private float maxRespawnInterval;
+
+    [SerializeField]
+    private float minRespawnInterval;
+    
     private Vector3 startPosition;
     private Quaternion startRotation;
 
@@ -34,7 +38,9 @@ public class BoulderSpawner : MonoBehaviour
 
         respawnTimer += Time.deltaTime;
 
-        if (respawnTimer > respawnLimit) //Respawn the boulder if the respawn time has passed
+        float respawnInterval = Random.Range(minRespawnInterval, maxRespawnInterval);
+
+        if (respawnTimer > respawnInterval) //Respawn the boulder if the respawn time has passed
         {
             Instantiate(boulder, startPosition, startRotation);
             respawnTimer = 0;
