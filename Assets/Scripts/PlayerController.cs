@@ -167,8 +167,10 @@ public class PlayerController : Unit
             //Adjusting player movement considering camera position
             if (inputDir != Vector2.zero)
             {
+
                 float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) + playerCam.transform.eulerAngles.y;
-                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+
+                transform.eulerAngles = new Vector3 (0 , Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime), 0);
             }
 
             controller.center = defaultCenterVector; //Centering the controller on the playyer to adjust collision
@@ -335,7 +337,7 @@ public class PlayerController : Unit
     private void AimingAndShooting() //Function to maike the player aim and be able to shoot
     {
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView / zoomIn, Time.deltaTime * zoomSmooth); //Reduces field of view for zoom
-        transform.eulerAngles = playerCam.transform.eulerAngles;
+        transform.eulerAngles = new Vector3 (0, playerCam.transform.eulerAngles.y,0);
         crossHair.SetActive(true); //Activate crosshair
 
         if (Input.GetButtonDown("Fire1"))

@@ -317,7 +317,10 @@ public class AIController : Unit
     {
         base.Die();
         currentSpot.currentValue = 0;
-        lastSpot.currentValue = 0;
+        if (lastSpot != null)
+        {
+            lastSpot.currentValue = 0;
+        }
 
         StopAllCoroutines();
         agent.ResetPath();

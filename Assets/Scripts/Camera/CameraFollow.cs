@@ -68,9 +68,10 @@ public class CameraFollow : MonoBehaviour
 
         //currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(rotX, rotY), ref rotationSmoothVelocity, rotationSmoothTime);
 
-        Vector3 targetRotation = new Vector3(rotX, rotY);
+        Vector3 targetRotation = new Vector3(rotX, rotY,0);
         transform.eulerAngles = targetRotation;
-
+                                       //= targetRotation;
+      
         transform.position = PlayerObj.position - transform.forward * camDistanceToPlayer;
         
 

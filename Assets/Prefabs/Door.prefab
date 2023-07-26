@@ -103,6 +103,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7647428944707678078, guid: 111ce1f2de2ec7b4397b96ef757849d6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7984442723263469449, guid: 111ce1f2de2ec7b4397b96ef757849d6, type: 3}
       propertyPath: reOpen
       value: 1
@@ -146,6 +150,10 @@ PrefabInstance:
     - target: {fileID: 7984442723263469454, guid: 111ce1f2de2ec7b4397b96ef757849d6, type: 3}
       propertyPath: m_Name
       value: 'closingDoor '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7984442723263469454, guid: 111ce1f2de2ec7b4397b96ef757849d6, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7984442723263469455, guid: 111ce1f2de2ec7b4397b96ef757849d6, type: 3}
       propertyPath: m_RootOrder
