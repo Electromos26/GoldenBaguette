@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
+
 
 public class Boss : Unit
 {
@@ -46,6 +48,10 @@ public class Boss : Unit
     private AudioClip _idleClip;
 
     private bool stunned;
+
+    [SerializeField]
+    private UnityEvent events;
+
 
     // Start is called before the first frame update
     protected override void Start()
@@ -253,8 +259,6 @@ public class Boss : Unit
             SetState(State.Chasing);
 
         }
-
-
     }
 
     public void GotStunned()
@@ -277,6 +281,8 @@ public class Boss : Unit
         agent.ResetPath();
         animator.SetBool("Running", false);
         currentEnemy = null;
+        stunned = false;
+        events.Invoke();
 
     }
 

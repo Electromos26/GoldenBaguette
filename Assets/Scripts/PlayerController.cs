@@ -131,9 +131,9 @@ public class PlayerController : Unit
 
     }
 
-    private Vector3 GetGunPosition()
+    private Vector3 GetCamPosition()
     {
-        return (gun.transform.position);//change from an array later line 12
+        return (playerCam.transform.position);//change from an array later line 12
 
     }
     void Update()
@@ -313,7 +313,6 @@ public class PlayerController : Unit
 
         if (other.gameObject.GetComponent<Collectable>()) // Check if the object collided is a collectible
         {
-            Debug.Log("Triggered");
             Collectable collectableObject = other.gameObject.GetComponent<Collectable>();
             //gameManager.IncreaseScore(collectableObject.GetNumPoints());
           //  pickedUp = true;
@@ -353,7 +352,7 @@ public class PlayerController : Unit
 
 
             //we are having to do some ray casting
-            Ray ray = new Ray(GetGunPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
+            Ray ray = new Ray(GetCamPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
             RaycastHit hit; //our hit is going to be used as an output of a Raycast
                             //so we need to use a layermask and a layermask is 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
@@ -366,7 +365,7 @@ public class PlayerController : Unit
             else
             {
                 //we now need to figure out a position we are firing
-                Vector3 targetPos = GetGunPosition() + playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
+                Vector3 targetPos = GetCamPosition() + playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
                 ShowLasers(targetPos);
             }
 
@@ -380,7 +379,6 @@ public class PlayerController : Unit
         animator.SetBool("AimCrouching", false);
         animator.SetBool("Running", false);
         animator.SetBool("Aiming", false);
-        Debug.Log("wow i died");
         base.Die();
         if (PlayerIs != null)
         {

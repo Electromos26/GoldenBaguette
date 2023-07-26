@@ -63,10 +63,8 @@ public class Unit : MonoBehaviour
 
     protected virtual void OnHit(Unit attacker)
     {
-        Debug.Log("GotHit");
         if (beDamaged)
         {
-            Debug.Log("GotHitifstate");
             health -= attacker.damage; //take some damage from the attacker
             if (_audioSource != null && isAlive)
             {
