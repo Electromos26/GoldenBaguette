@@ -14,6 +14,9 @@ public class Flashlight : MonoBehaviour
     [SerializeField]
     private GameObject flashlightIcon;
 
+    [SerializeField]
+    private GameObject gunLight;
+
     private AudioSource _audioSource;
 
     // Start is called before the first frame update
@@ -26,8 +29,7 @@ public class Flashlight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        flashLight.enabled = isOn;
-        if (Input.GetKeyDown(KeyCode.F)) 
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (_audioSource != null)
             {
@@ -35,8 +37,23 @@ public class Flashlight : MonoBehaviour
                 _audioSource.loop = false;
                 _audioSource.Play();
             }
+
             isOn = !isOn;
             flashlightIcon.gameObject.SetActive(isOn);
+
+            
+        }
+        if (Input.GetButton("Fire2"))
+        {
+
+            gunLight.gameObject.SetActive(isOn);
+            flashLight.enabled = false;
+
+        }
+        else
+        {
+            gunLight.gameObject.SetActive(false);
+            flashLight.enabled = isOn;
         }
     }
 
