@@ -718,6 +718,10 @@ PrefabInstance:
       propertyPath: m_Shadows.m_Type
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5223594949501132591, guid: 2d77f5d4d80014d48a1477889d920114, type: 3}
+      propertyPath: gunLight
+      value: 
+      objectReference: {fileID: 6409872821201060007}
     - target: {fileID: 7751128815998863732, guid: 2d77f5d4d80014d48a1477889d920114, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1

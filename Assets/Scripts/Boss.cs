@@ -282,6 +282,8 @@ public class Boss : Unit
         animator.SetBool("Running", false);
         currentEnemy = null;
         stunned = false;
+        stunSprite.SetActive(false);
+
         events.Invoke();
 
     }
