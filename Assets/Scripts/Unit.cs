@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// I think tha this class is good, but I also notice that the AI hovers above the ground sometimes and I am not sure why this is. You tend to have the characters floating when they are patrolling, but then they come down to the ground when they are moving towards you.
+/// </summary>
 public class Unit : MonoBehaviour
 {
 
