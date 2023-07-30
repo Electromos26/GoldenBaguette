@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
 using Unity.PlasticSCM.Editor;
 using Unity.VisualScripting;
-
+/// <summary>
+/// There is a lot of really good work here and I think you have done a good job; however, you need to break code into smaller chunks and smaller functions. You have some functions here that are hundreds of lines and they are extremely difficult to follow. For both your sake, and mine, break these into smaller more manageable pieces. Also, you should not be having the GameManager as a serializable field. A game manager should be a singleton that is accessible in all classes, and so the way you have done it you are specify a GameManager in ways that you do not need to. 
+/// </summary>
 public class PlayerController : Unit
 {
     [SerializeField]
@@ -103,6 +105,8 @@ public class PlayerController : Unit
     [SerializeField]
     private GameObject baguetteIcon;
 
+    private Gun gunScript;
+
     public DeathMenu PlayerIs;
     protected override void Start()
     {
@@ -110,6 +114,8 @@ public class PlayerController : Unit
         playerCam = GetComponentInChildren<Camera>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+
+        gunScript = gun.GetComponent<Gun>();
 
         respawnPos = this.transform.position; //Change this to the checkpoint mechanic
 
@@ -288,12 +294,11 @@ public class PlayerController : Unit
                 }
 
             }
-            else
+            else if (move.z == 0 && move.x == 0)
             {
                 _audioSource.loop = false;
-                //_audioSource.Stop();
+                _audioSource.Stop();
             }
-
 
         }
         else
@@ -333,7 +338,7 @@ public class PlayerController : Unit
 
     }
 
-    private void AimingAndShooting() //Function to maike the player aim and be able to shoot
+    private void AimingAndShooting() //Function to make the player aim and be able to shoot
     {
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView / zoomIn, Time.deltaTime * zoomSmooth); //Reduces field of view for zoom
         transform.eulerAngles = new Vector3 (0, playerCam.transform.eulerAngles.y,0);
@@ -341,12 +346,7 @@ public class PlayerController : Unit
 
         if (Input.GetButtonDown("Fire1"))
         {
-            if (_audioSource != null)
-            {
-                _audioSource.clip = _attackClip;
-                _audioSource.Play();
-            }
-
+            gunScript.PlayShootSound();
             //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
             LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
 
