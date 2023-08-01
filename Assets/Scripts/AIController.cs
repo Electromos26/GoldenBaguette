@@ -58,7 +58,7 @@ public class AIController : Unit
     {
         base.Start();
         agent = GetComponent<NavMeshAgent>();
-        respawnPos = this.transform.position; //Change this to the checkpoint mechanic
+        respawnPos = this.transform.position;
         SetState(State.Idle);
         defaultSpeed = agent.speed;
 
@@ -316,10 +316,11 @@ public class AIController : Unit
     protected override void Die()
     {
         base.Die();
-        currentSpot.currentValue = 0;
+        respawnPos = this.transform.position; //Respawned at the same place he died
+        currentSpot = null;
         if (lastSpot != null)
         {
-            lastSpot.currentValue = 0;
+            lastSpot = null;
         }
 
         StopAllCoroutines();

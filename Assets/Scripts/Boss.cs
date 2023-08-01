@@ -4,7 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-
+/// <summary>
+/// Make changes to the full health for the boss. It is down to the fact that the boss is setting the health bar value from fullHealth, but fullHealth is not a public variable and is 100 by default for units. the fullHealth variable should be something serializable in Unity (does not need to be public) so that you could specify the fullHealth for the boss in the prefab, and have it set to 1000.
+/// 
+/// I think the boss behaviour is good, but I would very much like them to have some different movement patterns rather than the base unit and to be a different size and style. It would also be nice if the boss could target and attempt to attack you as well.
+/// </summary>
 public class Boss : Unit
 {
     
