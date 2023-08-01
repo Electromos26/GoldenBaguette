@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class Boss : Unit
 {
+    
     private enum State
     {
         Idle,
@@ -21,8 +22,10 @@ public class Boss : Unit
     private Unit currentEnemy; //current enemy
     private AISpot currentSpot; //the current spot we are focused on
     private AISpot lastSpot; //the new spot selected by the AI
-
     public Vector3 aimOffset = new Vector3(0, 1.5f, 0);
+
+    [SerializeField]
+    private int BossMaxHealth;
 
     [SerializeField]
     private float timer; //this will keep track of the time within the outpost
@@ -63,6 +66,7 @@ public class Boss : Unit
         defaultSpeed = agent.speed;
         beDamaged = false;
 
+        BossHealth(BossMaxHealth);
         bossHealthBar.SetMaxHealth(fullHealth);
 
     }

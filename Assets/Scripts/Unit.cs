@@ -12,7 +12,7 @@ public class Unit : MonoBehaviour
     [SerializeField]
     protected int health; //the current health value of our unit 
 
-    [SerializeField]
+   [SerializeField]
     protected int team; //Variable to determine if the unit is AI or player
 
     [SerializeField]
@@ -172,5 +172,9 @@ public class Unit : MonoBehaviour
     void Update()
     {
 
+    }
+    public void BossHealth(int amount)
+    {
+            fullHealth = amount;
     }
 }
