@@ -201,6 +201,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fire
       objectReference: {fileID: 0}
+    - target: {fileID: 7085622536992764082, guid: c70babfa49cfede48918c1f00f5886fa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7477115385368638613, guid: c70babfa49cfede48918c1f00f5886fa, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 10
