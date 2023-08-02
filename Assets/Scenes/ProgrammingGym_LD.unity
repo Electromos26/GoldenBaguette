@@ -4110,7 +4110,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7111122721114924993, guid: 61464f7607d549d40a95c5e91153ac22, type: 3}
       propertyPath: BossMaxHealth
-      value: 5000
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: -7111122721114924993, guid: 61464f7607d549d40a95c5e91153ac22, type: 3}
       propertyPath: bossHealthBar

@@ -447,7 +447,6 @@ MonoBehaviour:
   _dieClip: {fileID: 8300000, guid: 132e489fb5ddb2b46adf12579faf8553, type: 3}
   _attackClip: {fileID: 8300000, guid: 66b61a67c1b398a48a1207dada32a6d4, type: 3}
   _runClip: {fileID: 8300000, guid: bd2cbb9bf1df51f44829b29c8ff0f832, type: 3}
-  gameManager: {fileID: 0}
   controller: {fileID: 7873517708216756990}
   controllerCenter: 0.95
   crouchCenterController: 0.85
@@ -469,6 +468,7 @@ MonoBehaviour:
   crossHair: {fileID: 0}
   gun: {fileID: 1130768914832698018}
   _walkClip: {fileID: 8300000, guid: 05f98342f29d85241ae5ec6a42b42d74, type: 3}
+  _crouchWalkClip: {fileID: 8300000, guid: b2c80993516eb1544b08958e4f6fdd60, type: 3}
   baguetteIcon: {fileID: 0}
   PlayerIs: {fileID: 0}
 --- !u!95 &9029037128753843392

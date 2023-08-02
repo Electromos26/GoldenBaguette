@@ -59,8 +59,9 @@ public class AIController : Unit
         base.Start();
         agent = GetComponent<NavMeshAgent>();
         respawnPos = this.transform.position;
-        SetState(State.Idle);
         defaultSpeed = agent.speed;
+
+        SetState(State.Idle);
 
     }
 
@@ -97,6 +98,7 @@ public class AIController : Unit
     {
         //when idling, we should probably do some work and look for an outpost
         animator.SetBool("Running", false);
+        agent.speed = defaultSpeed;
 
         if (_audioSource != null) //Play idle audio
         {
@@ -116,13 +118,15 @@ public class AIController : Unit
             if (isAlive)
                 LookForSpots(); //if we ever find an outpost, and the currentSpot changes, we will leave this loop
             yield return null;
+
         }
         SetState(State.Patrolling); //we found an outpost, we now need to move
-        //this will change
+
     }
     private IEnumerator OnPatrolling()
     {
         animator.SetBool("Running", false);
+        agent.speed = defaultSpeed;
         agent.SetDestination(currentSpot.transform.position);
 
         if (_audioSource != null) //Play idle audio
@@ -274,6 +278,7 @@ public class AIController : Unit
             }
         }
 
+
         if (checkTeam)
         {
             while (team != GameManager.Instance.currentSpot[arrayNum].team && GameManager.Instance.currentSpot[arrayNum] != lastSpot) //Check if the arrayNum picked is the same team as the AISpot
@@ -282,6 +287,8 @@ public class AIController : Unit
             }
 
             currentSpot = GameManager.Instance.currentSpot[arrayNum];
+            Debug.Log(currentSpot);
+
         }
         else
         {
@@ -315,7 +322,6 @@ public class AIController : Unit
 
     protected override void Die()
     {
-        base.Die();
         respawnPos = this.transform.position; //Respawned at the same place he died
         currentSpot = null;
         if (lastSpot != null)
@@ -327,6 +333,8 @@ public class AIController : Unit
         agent.ResetPath();
         animator.SetBool("Running", false);
         currentEnemy = null;
+        base.Die();
+
     }
 
     // Update is called once per frame
