@@ -15,6 +15,8 @@ public class PlayerController : Unit
 {
     GameManager gameManager;
 
+    RoomManager roomManager;
+
     #region CharacterControllerSettings
     [SerializeField]
     private CharacterController controller;
@@ -130,6 +132,7 @@ public class PlayerController : Unit
         base.Start();
         playerCam = GetComponentInChildren<Camera>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        roomManager = GameObject.Find("RoomManager").GetComponent<RoomManager>();
         healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
 
         gunScript = gun.GetComponent<Gun>();
@@ -411,6 +414,8 @@ public class PlayerController : Unit
         if (other.tag == "Checkpoint") //Checkpoint collision
         {
             respawnPos = transform.position; //Setting the respawnPos to the position of the checkpoint
+
+            roomManager.EnterRoom(other.GetComponentInParent<Room>());
             Destroy(other.gameObject);
         }
 
