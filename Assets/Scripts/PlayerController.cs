@@ -13,7 +13,6 @@ using Unity.VisualScripting;
 /// </summary>
 public class PlayerController : Unit
 {
-    [SerializeField]
     GameManager gameManager;
 
     #region CharacterControllerSettings
@@ -63,6 +62,9 @@ public class PlayerController : Unit
 
     [SerializeField]
     private float turnSmoothTime = 0.2f;
+
+    private Vector3 move;
+
     #endregion
 
     #region ZoomAim
@@ -99,6 +101,8 @@ public class PlayerController : Unit
 
     [SerializeField]
     private AudioClip _walkClip;
+    [SerializeField]
+    private AudioClip _crouchWalkClip;
 
     private HealthBar healthBar;
 
@@ -108,6 +112,19 @@ public class PlayerController : Unit
     private Gun gunScript;
 
     public DeathMenu PlayerIs;
+
+    private enum State
+    {
+        Running,
+        WalkCrouching,
+        AimCrouching,
+        AimWalking,
+        Walking
+    }
+
+    private State currentState; //this keeps track of the current state
+
+
     protected override void Start()
     {
         base.Start();
@@ -117,7 +134,7 @@ public class PlayerController : Unit
 
         gunScript = gun.GetComponent<Gun>();
 
-        respawnPos = this.transform.position; //Change this to the checkpoint mechanic
+        respawnPos = this.transform.position;
 
         AIScript = GameObject.FindObjectOfType<AIController>();
 
@@ -127,21 +144,51 @@ public class PlayerController : Unit
         AILookDistanceDefault = AIScript.lookDistance;
 
         healthBar.SetMaxHealth(fullHealth);
-
     }
     private void ShowLasers(Vector3 targetPosition) //the target position is what we are aiming for
     {
-
         Laser laser = Instantiate(laserPrefab) as Laser; //the "as Laser" casts the game object to a laser; this is a technique we can use if we know we are creating a game object of a specific type (in this case, we know the laserPrefab is going to be a Laser)
         laser.Init(Color.red, gun.transform.position, targetPosition);
-
     }
 
     private Vector3 GetCamPosition()
     {
         return (playerCam.transform.position);//change from an array later line 12
-
     }
+
+    private void SetState(State newState)
+    {
+        //what we want to do here is look at the newstater, compare it to the enumvalues, and then figure out what to do based on that.
+        //set state will only be called when a state changes
+        currentState = newState;
+        StopAllCoroutines();//stop the previous coroutines so they aren't operating at the same time
+        switch (currentState)
+        {
+            case State.Running:
+                StartCoroutine(OnRunning());
+                //do some work
+                break;
+            case State.WalkCrouching:
+                StartCoroutine(OnWalkCrouching());
+                //do some work
+                break;
+            case State.AimCrouching:
+                StartCoroutine(OnAimCrouching());
+                //do some work
+                break;
+            case State.AimWalking:
+                StartCoroutine(OnAimWalking());
+                break;
+            case State.Walking:
+                StartCoroutine(OnWalking());
+                break;
+            default:
+                break;
+        }
+        ///
+    }
+
+
     void Update()
     {
         healthBar.SetHealth(health);
@@ -168,7 +215,7 @@ public class PlayerController : Unit
             //}
 
             //Movement
-            Vector3 move = transform.right * x + transform.forward * z;
+            move = transform.right * x + transform.forward * z;
 
             //Adjusting player movement considering camera position
             if (inputDir != Vector2.zero)
@@ -188,76 +235,23 @@ public class PlayerController : Unit
             //Every movement and animation the player does
             if (Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && !Input.GetButton("Fire2")) //Logic for the player to run
             {
-                move *= runSpeed;
-                //Code for running animation
-                animator.SetBool("Crouching", false);
-                animator.SetBool("AimCrouching", false);
-                animator.SetBool("Running", true);
-                animator.SetBool("Aiming", false);
-
-                AIScript.lookDistance = AILookDistanceDefault;
-
-                controller.center = defaultCenterVector;
-                controller.height = defaultHeightController;
-                crossHair.SetActive(false);
-                playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
-
+                SetState(State.Running);
             }
             else if (Input.GetKey(KeyCode.LeftControl) && !Input.GetButton("Fire2")) //Logic for the player to crouch and walk around
             {
-                move *= crouchSpeed;
-
-                animator.SetBool("Crouching", true);
-                animator.SetBool("AimCrouching", false);
-                animator.SetBool("Running", false);
-                animator.SetBool("Aiming", false);
-
-                AIScript.lookDistance = AILookDistanceDefault / 2;
-
-                controller.center = crouchCenterVector;
-                controller.height = crouchHeightController;
-                crossHair.SetActive(false);
-                playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
+                SetState(State.WalkCrouching);
             }
             else if (Input.GetKey(KeyCode.LeftControl) && Input.GetButton("Fire2")) //Logic for crouching and shooting, player cant move around
             {
-                move *= 0;
-                animator.SetBool("Crouching", false);
-                animator.SetBool("AimCrouching", true);
-                animator.SetBool("Running", false);
-                animator.SetBool("Aiming", false);
-
-                AIScript.lookDistance = AILookDistanceDefault / 2;
-
-                controller.center = crouchCenterVector;
-                controller.height = crouchHeightController;
-                AimingAndShooting();
+                SetState(State.AimCrouching);
             }
             else if (Input.GetButton("Fire2"))//Logic for the aim on while walking
             {
-                move *= speed;
-                animator.SetBool("Crouching", false);
-                animator.SetBool("AimCrouching", false);
-                animator.SetBool("Running", false);
-                animator.SetBool("Aiming", true);
-                AIScript.lookDistance = AILookDistanceDefault;
-
-                AimingAndShooting();
+                SetState(State.AimWalking);
             }
             else if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl)) //Logic for the player to walk without the aim on
             {
-                move *= speed;
-                animator.SetBool("Crouching", false);
-                animator.SetBool("AimCrouching", false);
-                animator.SetBool("Running", false);
-                animator.SetBool("Aiming", false);
-
-                AIScript.lookDistance = AILookDistanceDefault;
-
-                controller.center = defaultCenterVector;
-                controller.height = defaultHeightController;
-                crossHair.SetActive(false);
-                playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
+                SetState(State.Walking);
             }
 
             controller.Move(move * Time.deltaTime);
@@ -272,41 +266,145 @@ public class PlayerController : Unit
 
             controller.Move(velocity * Time.deltaTime);
 
-            if (isGrounded && (move.z > 0 || move.x > 0) && !Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.LeftShift)) //Play walking sound when player is moving
-            {
-
-                if (_audioSource != null && !_audioSource.isPlaying)
-                {
-                    _audioSource.clip = _walkClip;
-                    _audioSource.loop = true;
-                    _audioSource.Play();
-                }
-
-            }
-            else if ((isGrounded && (move.z > 0 || move.x > 0) && !Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift)))
-            {
-                _audioSource.Stop();
-                if (_audioSource != null && !_audioSource.isPlaying)
-                {
-                    _audioSource.clip = _runClip;
-                    _audioSource.loop = true;
-                    _audioSource.Play();
-                }
-
-            }
-            else if (move.z == 0 && move.x == 0)
+            if (move.z == 0 && move.x == 0)
             {
                 _audioSource.loop = false;
                 _audioSource.Stop();
             }
-
         }
         else
         {
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
         }
-
     }
+
+
+    #region PlayerStates
+
+    private IEnumerator OnRunning()
+    {
+        move *= runSpeed;
+        //Code for running animation
+        DisableAllAnimations();
+        animator.SetBool("Running", true);
+
+        AIScript.lookDistance = AILookDistanceDefault;
+
+        if (isGrounded && (move.z > 0 || move.x > 0))
+        {
+            _audioSource.Stop();
+            if (_audioSource != null && !_audioSource.isPlaying)
+            {
+                _audioSource.clip = _runClip;
+                _audioSource.loop = true;
+                _audioSource.Play();
+            }
+        }
+
+        controller.center = defaultCenterVector;
+        controller.height = defaultHeightController;
+        crossHair.SetActive(false);
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
+
+        yield return null;
+    }
+
+    private IEnumerator OnWalking()
+    {
+        move *= speed;
+        DisableAllAnimations();
+        AIScript.lookDistance = AILookDistanceDefault;
+
+        if (isGrounded && (move.z > 0 || move.x > 0)) //Play walking sound when player is moving
+        {
+            _audioSource.Stop();
+            if (_audioSource != null && !_audioSource.isPlaying)
+            {
+                _audioSource.clip = _walkClip;
+                _audioSource.loop = true;
+                _audioSource.Play();
+            }
+        }
+
+        controller.center = defaultCenterVector;
+        controller.height = defaultHeightController;
+        crossHair.SetActive(false);
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
+        
+        yield return null;
+    }
+
+    private IEnumerator OnWalkCrouching()
+    {
+        move *= crouchSpeed;
+
+        DisableAllAnimations();
+        animator.SetBool("Crouching", true);
+
+        AIScript.lookDistance = AILookDistanceDefault / 2;
+
+        if (isGrounded && (move.z > 0 || move.x > 0))
+        {
+            _audioSource.Stop();
+            if (_audioSource != null && !_audioSource.isPlaying)
+            {
+                _audioSource.clip = _crouchWalkClip;
+                _audioSource.loop = true;
+                _audioSource.Play();
+            }
+        }
+
+        controller.center = crouchCenterVector;
+        controller.height = crouchHeightController;
+        crossHair.SetActive(false);
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, defaultView, Time.deltaTime * zoomSmooth); //Return camera to deafult view if the player dies
+
+        yield return null;
+    }
+
+    private IEnumerator OnAimCrouching()
+    {
+        move *= 0;
+
+        DisableAllAnimations();
+        animator.SetBool("AimCrouching", true);
+
+        AIScript.lookDistance = AILookDistanceDefault / 2;
+
+        controller.center = crouchCenterVector;
+        controller.height = crouchHeightController;
+        AimingAndShooting();
+
+        yield return null;
+    }
+
+    private IEnumerator OnAimWalking()
+    {
+        move *= speed;
+
+        DisableAllAnimations();
+        animator.SetBool("Aiming", true);
+        AIScript.lookDistance = AILookDistanceDefault;
+
+        if (isGrounded && (move.z > 0 || move.x > 0)) //Play walking sound when player is moving
+        {
+            _audioSource.Stop();
+            if (_audioSource != null && !_audioSource.isPlaying)
+            {
+                _audioSource.clip = _walkClip;
+                _audioSource.loop = true;
+                _audioSource.Play();
+            }
+        }
+
+        AimingAndShooting();
+
+        yield return null;
+    }
+
+
+    #endregion
+
 
     private void OnTriggerEnter(Collider other)//Checking triggers on player
     {
@@ -320,7 +418,7 @@ public class PlayerController : Unit
         {
             Collectable collectableObject = other.gameObject.GetComponent<Collectable>();
             //gameManager.IncreaseScore(collectableObject.GetNumPoints());
-          //  pickedUp = true;
+            //pickedUp = true;
             if (other.gameObject.name == "Golden_Baguette")
             {
                 baguetteIcon.SetActive(true);
@@ -332,7 +430,6 @@ public class PlayerController : Unit
             }
 
             other.gameObject.SetActive(false);
-
 
         }
 
@@ -349,7 +446,6 @@ public class PlayerController : Unit
             gunScript.PlayShootSound();
             //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something
             LayerMask mask = ~LayerMask.GetMask("AISpot", "JeanRaider", "Ground", "Interactables");
-
 
             //we are having to do some ray casting
             Ray ray = new Ray(GetCamPosition(), playerCam.transform.forward); //aim our ray in the direction that we are looking
@@ -368,24 +464,26 @@ public class PlayerController : Unit
                 Vector3 targetPos = GetCamPosition() + playerCam.transform.forward * DISTANCE_SHOT_IF_NO_HIT;
                 ShowLasers(targetPos);
             }
-
         }
-
     }
 
-    protected override void Die()
+    private void DisableAllAnimations()
     {
         animator.SetBool("Crouching", false);
         animator.SetBool("AimCrouching", false);
         animator.SetBool("Running", false);
         animator.SetBool("Aiming", false);
+    }
+
+    protected override void Die()
+    {
+        DisableAllAnimations();
         base.Die();
         if (PlayerIs != null)
         {
             // Start the coroutine to wait before setting isDead to true
             StartCoroutine(DelayBeforeDeath());
         }
-
     }
     private IEnumerator DelayBeforeDeath()
     {

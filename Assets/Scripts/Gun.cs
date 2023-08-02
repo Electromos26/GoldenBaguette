@@ -13,7 +13,6 @@ public class Gun : MonoBehaviour
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
-
     }
 
     // Update is called once per frame
@@ -24,6 +23,5 @@ public class Gun : MonoBehaviour
             _audioSource.clip = _shootClip;
             _audioSource.Play();
         }
-
     }
 }
