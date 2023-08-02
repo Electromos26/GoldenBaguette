@@ -287,7 +287,6 @@ public class AIController : Unit
             }
 
             currentSpot = GameManager.Instance.currentSpot[arrayNum];
-            Debug.Log(currentSpot);
 
         }
         else
@@ -337,9 +336,15 @@ public class AIController : Unit
 
     }
 
+    public void BackToIdle()
+    {
+        SetState(State.Idle);
+    }
+
     // Update is called once per frame
     void Update()
     {
         animator.SetFloat("VerticalSpeed", agent.velocity.magnitude);
+
     }
 }

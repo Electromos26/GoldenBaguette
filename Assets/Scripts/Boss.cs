@@ -274,6 +274,11 @@ public class Boss : Unit
         SetState(State.Stun);
     }
 
+    public void BackToIdle()
+    {
+        SetState(State.Idle);
+    }
+
     protected override void Respawn()
     {
 

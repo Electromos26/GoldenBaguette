@@ -65,7 +65,7 @@ public class Unit : MonoBehaviour
 
     protected virtual void OnHit(Unit attacker)
     {
-        if (beDamaged)
+        if (beDamaged && isAlive)
         {
             health -= attacker.damage; //take some damage from the attacker
             if (_audioSource != null && isAlive)
@@ -153,10 +153,13 @@ public class Unit : MonoBehaviour
     public void OnTrapHit(int trapDamage)
     {
         //Add Take hit animation
-        health -= trapDamage; //take some damage from the attacker
-        if (health <= 0)
+        if (isAlive)
         {
-            Die();
+            health -= trapDamage; //take some damage from the attacker
+            if (health <= 0)
+            {
+                Die();
+            }
         }
     }
 

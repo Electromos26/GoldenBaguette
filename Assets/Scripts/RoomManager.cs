@@ -28,6 +28,20 @@ public class RoomManager : MonoBehaviour
             if (loadRoom.IsNeighbour(room.GetComponent<Room>()))
             {
                 room.SetActive(true);
+                //Set AI to Idle
+                
+                if (room.GetComponentInChildren<AIController>() != null)
+                {
+                    foreach(AIController controller in room.GetComponentsInChildren<AIController>())
+                    {
+                        controller.BackToIdle();
+                    }
+                }
+                if (room.GetComponentInChildren<Boss>() != null)
+                {
+                    room.GetComponentInChildren<Boss>().BackToIdle();
+                }
+
             }
             else if (room != loadRoom.gameObject)
             {
