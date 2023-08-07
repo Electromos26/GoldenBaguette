@@ -147,6 +147,7 @@ public class Unit : MonoBehaviour
     }
     public void PublicDie()
     {
+        health = 0;
         Die();
     }
 

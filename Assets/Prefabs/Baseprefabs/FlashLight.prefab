@@ -78,10 +78,10 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
-  m_Intensity: 10
+  m_Intensity: 6
   m_Range: 15
-  m_SpotAngle: 45.24839
-  m_InnerSpotAngle: 21.80208
+  m_SpotAngle: 50
+  m_InnerSpotAngle: 5
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
@@ -142,6 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flashlightClip: {fileID: 8300000, guid: 8a5a37cf3ed294c4484ac11f39b4f50d, type: 3}
   flashlightIcon: {fileID: 0}
+  gunLight: {fileID: 0}
 --- !u!82 &6970547622154138284
 AudioSource:
   m_ObjectHideFlags: 0

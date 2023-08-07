@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b47a6357c791446bc4ae37d606e6ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clampAngle: 20
+  clampAngle: 35
   mouseSensitivity: 100
   PlayerObj: {fileID: 7136285905296537497}
   Invert: -1
@@ -157,10 +157,10 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 10
-  m_Range: 15
-  m_SpotAngle: 28.2
-  m_InnerSpotAngle: 21.80208
+  m_Intensity: 4.5
+  m_Range: 35
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 3
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -443,10 +443,22 @@ MonoBehaviour:
   beDamaged: 1
   viewAngle: 80
   respawnTime: 5
-  _gotHitClip: {fileID: 8300000, guid: 7e239c86e23230b4ab6357b6b0120f4d, type: 3}
-  _dieClip: {fileID: 8300000, guid: 132e489fb5ddb2b46adf12579faf8553, type: 3}
-  _attackClip: {fileID: 8300000, guid: 66b61a67c1b398a48a1207dada32a6d4, type: 3}
-  _runClip: {fileID: 8300000, guid: bd2cbb9bf1df51f44829b29c8ff0f832, type: 3}
+  _gotHitClip:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _dieClip:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _attackClip:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _runClip:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   controller: {fileID: 7873517708216756990}
   controllerCenter: 0.95
   crouchCenterController: 0.85
