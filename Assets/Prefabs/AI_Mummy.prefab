@@ -69,20 +69,31 @@ MonoBehaviour:
   damage: 20
   canRespawn: 1
   beDamaged: 1
-  viewAngle: 80
+  viewAngle: 360
   respawnTime: 5
-  _gotHitClip: {fileID: 8300000, guid: 036cbe1c7ab09d847837bf16d6b54e74, type: 3}
-  _dieClip: {fileID: 8300000, guid: 0ce0a695cb700ff4b9a5e185f7ab2420, type: 3}
-  _attackClip: {fileID: 8300000, guid: aa14ac81d3b310c448ac08def5d90edb, type: 3}
-  _runClip: {fileID: 8300000, guid: ec57772909725594985abbb1e252d0ad, type: 3}
+  _gotHitClip:
+  - {fileID: 8300000, guid: 1889d6881581e6b4b982aac559aafdd6, type: 3}
+  - {fileID: 8300000, guid: 10bc1984d0b1a8c4cab6b22b930a13d1, type: 3}
+  - {fileID: 8300000, guid: 5b2b6ac14d6eb0748a61f5b71026af3d, type: 3}
+  _dieClip:
+  - {fileID: 8300000, guid: f34be2e57d2f04f4993de33748e6c02f, type: 3}
+  - {fileID: 8300000, guid: c75f8898926667444bf3d43331a43538, type: 3}
+  _attackClip:
+  - {fileID: 8300000, guid: fc6cd5ba7f5d6ec43b040b8d8becda6a, type: 3}
+  - {fileID: 8300000, guid: bcad02035ec1f154298537edc02ba869, type: 3}
+  - {fileID: 8300000, guid: 753daa00a3dd44b4f8b385f3dfc49efa, type: 3}
+  _runClip:
+  - {fileID: 8300000, guid: 536cfd3c3f1e31249aeb50aa3eec433d, type: 3}
+  - {fileID: 8300000, guid: 34dbf8896f4393242b887bbceac31e26, type: 3}
+  - {fileID: 8300000, guid: 78a20ce739edab94c880a2f42dc4b457, type: 3}
   attackInterval: 0.5
-  lookDistance: 10
+  lookDistance: 15
   aimOffset: {x: 0, y: 1, z: 0}
   timer: 0
   attackDis: 2
   speedMultiplierChasing: 2
   stunInterval: 0.5
-  _idleClip: {fileID: 8300000, guid: e6d4832ed7727d944aea23494ad033ce, type: 3}
+  _idleClip: {fileID: 8300000, guid: e347707fe1ca301489ff45a441c333a3, type: 3}
 --- !u!195 &8204345679946276202
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -138,7 +149,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.49
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -147,7 +158,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 50
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

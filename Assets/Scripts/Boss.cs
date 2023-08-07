@@ -138,7 +138,7 @@ public class Boss : Unit
 
             if (_audioSource != null && !_audioSource.isPlaying) //Play attacking audio
             {
-                _audioSource.clip = _runClip;
+                _audioSource.clip = _runClip[Random.Range(0, _runClip.Length)];
                 _audioSource.loop = true;
                 _audioSource.Play();
             }
@@ -170,7 +170,7 @@ public class Boss : Unit
                     if (_audioSource != null) //Play attacking audio
                     {
                         _audioSource.Stop();
-                        _audioSource.clip = _attackClip;
+                        _audioSource.clip = _attackClip[Random.Range(0, _attackClip.Length)];
                         _audioSource.loop = false;
                         _audioSource.Play();
                     }

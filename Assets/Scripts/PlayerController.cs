@@ -293,12 +293,17 @@ public class PlayerController : Unit
 
         AIScript.lookDistance = AILookDistanceDefault;
 
+        int runClipArr = UnityEngine.Random.Range(0, _runClip.Length);
+
         if (isGrounded && (move.z > 0 || move.x > 0))
         {
-            _audioSource.Stop();
+            if (_audioSource.clip != _runClip[runClipArr])
+            {
+                _audioSource.Stop();
+            }
             if (_audioSource != null && !_audioSource.isPlaying)
             {
-                _audioSource.clip = _runClip;
+                _audioSource.clip = _runClip[runClipArr];
                 _audioSource.loop = true;
                 _audioSource.Play();
             }
@@ -320,7 +325,10 @@ public class PlayerController : Unit
 
         if (isGrounded && (move.z > 0 || move.x > 0)) //Play walking sound when player is moving
         {
-            _audioSource.Stop();
+            if (_audioSource.clip != _walkClip)
+            {
+                _audioSource.Stop();
+            }
             if (_audioSource != null && !_audioSource.isPlaying)
             {
                 _audioSource.clip = _walkClip;
@@ -348,7 +356,10 @@ public class PlayerController : Unit
 
         if (isGrounded && (move.z > 0 || move.x > 0))
         {
-            _audioSource.Stop();
+            if (_audioSource.clip != _crouchWalkClip)
+            {
+                _audioSource.Stop();
+            }
             if (_audioSource != null && !_audioSource.isPlaying)
             {
                 _audioSource.clip = _crouchWalkClip;
@@ -391,7 +402,10 @@ public class PlayerController : Unit
 
         if (isGrounded && (move.z > 0 || move.x > 0)) //Play walking sound when player is moving
         {
-            _audioSource.Stop();
+            if (_audioSource.clip != _walkClip)
+            {
+                _audioSource.Stop();
+            }
             if (_audioSource != null && !_audioSource.isPlaying)
             {
                 _audioSource.clip = _walkClip;

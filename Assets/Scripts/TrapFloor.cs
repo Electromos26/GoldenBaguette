@@ -13,17 +13,27 @@ public class TrapFloor : MonoBehaviour
     private float timeLimit;
     private float timer;
 
+    private PlayerController player;
+
+    private GameObject cubeChild;
+
     // Start is called before the first frame update
     void Start()
     {
         checkTrap = isTrap;
         timer = 0;
+        player = GameObject.FindObjectOfType<PlayerController>();
+
+        cubeChild = this.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!player.isAlive)
+        {
+            cubeChild.SetActive(true);
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -34,7 +44,7 @@ public class TrapFloor : MonoBehaviour
 
             if (timer > timeLimit)
             {
-                Destroy(gameObject);
+                cubeChild.SetActive(false);
                 timer = 0;
             }
 

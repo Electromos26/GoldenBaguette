@@ -40,13 +40,13 @@ public class Unit : MonoBehaviour
 
     #region AudioSettings
     [SerializeField]
-    protected AudioClip _gotHitClip;
+    protected AudioClip[] _gotHitClip;
     [SerializeField]
-    protected AudioClip _dieClip;
+    protected AudioClip[] _dieClip;
     [SerializeField]
-    protected AudioClip _attackClip;
+    protected AudioClip[] _attackClip;
     [SerializeField]
-    protected AudioClip _runClip;
+    protected AudioClip[] _runClip;
 
     protected AudioSource _audioSource;
     #endregion
@@ -70,7 +70,7 @@ public class Unit : MonoBehaviour
             health -= attacker.damage; //take some damage from the attacker
             if (_audioSource != null && isAlive)
             {
-                _audioSource.clip = _gotHitClip;
+                _audioSource.clip = _gotHitClip[Random.Range(0, _gotHitClip.Length)];
                 _audioSource.loop = false;
                 _audioSource.PlayDelayed(0.1f);
             }
@@ -136,7 +136,7 @@ public class Unit : MonoBehaviour
         if (_audioSource != null)
         {
             _audioSource.loop = false;
-            _audioSource.clip = _dieClip;
+            _audioSource.clip = _dieClip[Random.Range(0, _dieClip.Length)];
             _audioSource.PlayDelayed(0.5f);
         }
 
