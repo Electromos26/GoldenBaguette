@@ -45,6 +45,8 @@ public class Traps : MonoBehaviour
     [SerializeField]
     private float activeInterval = 20f;
 
+    private AudioSource _audioSource;
+
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +57,9 @@ public class Traps : MonoBehaviour
         boss = GameObject.FindObjectOfType<Boss>();
         timer = damageTimer;
         loopTimer = loopInterval;
+
+        _audioSource = GetComponent<AudioSource>();
+
 
         if (trapActive)
         {
@@ -145,6 +150,11 @@ public class Traps : MonoBehaviour
         float duration = distance / trapSpeed;
         float elapsedTime = 0f;
 
+        if (_audioSource != null)
+        {
+            _audioSource.Play();
+        }
+
 
         while (elapsedTime < duration)
         {
@@ -168,6 +178,11 @@ public class Traps : MonoBehaviour
         if (!player.isAlive)
         {
             yield return new WaitForSeconds(2f); // Wait for 5 seconds
+        }
+
+        if (_audioSource != null)
+        {
+            _audioSource.Play();
         }
 
         while (elapsedTime < duration)

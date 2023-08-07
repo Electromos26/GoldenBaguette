@@ -100,8 +100,9 @@ public class AIController : Unit
         animator.SetBool("Running", false);
         agent.speed = defaultSpeed;
 
-        if (_audioSource != null) //Play idle audio
+        if (_audioSource.clip != _idleClip && _audioSource != null) //Play idle audio
         {
+            _audioSource.Stop();
             _audioSource.clip = _idleClip;
             _audioSource.loop = true;
             _audioSource.Play();
@@ -128,8 +129,9 @@ public class AIController : Unit
         agent.speed = defaultSpeed;
         agent.SetDestination(currentSpot.transform.position);
 
-        if (_audioSource != null) //Play idle audio
+        if (_audioSource.clip != _idleClip && _audioSource != null) //Play idle audio
         {
+            _audioSource.Stop();
             _audioSource.clip = _idleClip;
             _audioSource.loop = true;
             _audioSource.Play();
@@ -150,6 +152,12 @@ public class AIController : Unit
         ////we have to reset the path of our agent
         agent.ResetPath();
         float attackTimer = attackInterval;
+
+        int audioRunArrIndex = Random.Range(0, _runClip.Length); //Selecting which runnind audio to play
+
+        int audioAttackArrIndex = Random.Range(0, _runClip.Length); //Selecting which attacking audio to play
+
+
         while (currentEnemy != null && currentEnemy.isAlive)
         {
             attackTimer += Time.deltaTime; //increment our shoot timer each time
@@ -161,19 +169,22 @@ public class AIController : Unit
 
             transform.LookAt(enemyPos);
 
-            if (_audioSource != null && !_audioSource.isPlaying) //Play attacking audio
-            {
-                _audioSource.clip = _runClip[Random.Range(0, _runClip.Length)];
-                _audioSource.loop = true;
-                _audioSource.Play();
-            }
-
 
             if (distanceToEnemy > attackDis || !CanSee(currentEnemy.transform, currentEnemy.transform.position + aimOffset))
             {
                 agent.SetDestination(currentEnemy.transform.position);
                 agent.speed = defaultSpeed * speedMultiplierChasing;
                 animator.SetBool("Running", true);
+
+
+                if (_audioSource.clip != _runClip[audioRunArrIndex] && _audioSource != null) //Play running audio
+                {
+                    _audioSource.Stop();
+                    _audioSource.clip = _runClip[audioRunArrIndex];
+                    _audioSource.loop = true;
+                    _audioSource.Play();
+                }
+
             }
             else if (attackTimer > attackInterval)
             {
@@ -192,13 +203,18 @@ public class AIController : Unit
                     animator.SetBool("Running", false);
                     animator.SetTrigger("Attack");
 
-                    if (_audioSource != null) //Play attacking audio
+                    if (_audioSource.clip != _attackClip[audioAttackArrIndex] && _audioSource != null)
                     {
-                        _audioSource.Stop();
-                        _audioSource.clip = _attackClip[Random.Range(0,_attackClip.Length)];
+                        //_audioSource.Stop();
+                    }
+
+                    if (_audioSource != null)
+                    {
+                        _audioSource.clip = _attackClip[audioAttackArrIndex];
                         _audioSource.loop = false;
                         _audioSource.Play();
                     }
+                    
 
                     yield return new WaitForSecondsRealtime(1f); //Wait for the animation to complete before actaully reducing life
                     Attack(hit);

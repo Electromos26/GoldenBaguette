@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 7c3b27f5c6675f14ebcb8f871f9cabe6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ProgrammingGym_Backup.unity
     guid: aef7e869177c37f43b716f58d11dc45c
   - enabled: 1

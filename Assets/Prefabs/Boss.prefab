@@ -71,10 +71,14 @@ MonoBehaviour:
   beDamaged: 0
   viewAngle: 100
   respawnTime: 2
-  _gotHitClip: {fileID: 0}
-  _dieClip: {fileID: 0}
-  _attackClip: {fileID: 0}
-  _runClip: {fileID: 0}
+  _gotHitClip:
+  - {fileID: 0}
+  _dieClip:
+  - {fileID: 0}
+  _attackClip:
+  - {fileID: 0}
+  _runClip:
+  - {fileID: 0}
   attackInterval: 1
   lookDistance: 20
   aimOffset: {x: 0, y: 1.5, z: 0}
@@ -153,7 +157,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 50
+  MaxDistance: 25
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

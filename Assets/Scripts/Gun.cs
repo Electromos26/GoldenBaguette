@@ -7,6 +7,10 @@ public class Gun : MonoBehaviour
     [SerializeField]
     private AudioClip _shootClip;
 
+    [SerializeField]
+    private AudioClip _reloadClip;
+
+
     private AudioSource _audioSource;
 
     // Start is called before the first frame update
@@ -24,4 +28,14 @@ public class Gun : MonoBehaviour
             _audioSource.Play();
         }
     }
+
+    public void ReloadSound()
+    {
+        if (_audioSource != null && !_audioSource.isPlaying)
+        {
+            _audioSource.clip = _reloadClip;
+            _audioSource.Play();
+        }
+    }
+
 }

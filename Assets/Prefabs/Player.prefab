@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 7873517708216756961}
   - component: {fileID: 9029037128753843392}
   - component: {fileID: 120979873528796238}
+  - component: {fileID: 5763349315595138175}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -441,24 +442,15 @@ MonoBehaviour:
   damage: 20
   canRespawn: 1
   beDamaged: 1
-  viewAngle: 80
+  viewAngle: 120
   respawnTime: 5
   _gotHitClip:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 7e239c86e23230b4ab6357b6b0120f4d, type: 3}
   _dieClip:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _attackClip:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 132e489fb5ddb2b46adf12579faf8553, type: 3}
+  _attackClip: []
   _runClip:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: bd2cbb9bf1df51f44829b29c8ff0f832, type: 3}
   controller: {fileID: 7873517708216756990}
   controllerCenter: 0.95
   crouchCenterController: 0.85
@@ -482,7 +474,11 @@ MonoBehaviour:
   _walkClip: {fileID: 8300000, guid: 05f98342f29d85241ae5ec6a42b42d74, type: 3}
   _crouchWalkClip: {fileID: 8300000, guid: b2c80993516eb1544b08958e4f6fdd60, type: 3}
   baguetteIcon: {fileID: 0}
+  reloadIcon: {fileID: 0}
+  ammoText: {fileID: 0}
   PlayerIs: {fileID: 0}
+  shotLimit: 6
+  reloadTime: 2.8
 --- !u!95 &9029037128753843392
 Animator:
   serializedVersion: 5
@@ -600,6 +596,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &5763349315595138175
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7873517708216756960}
+  m_Enabled: 1
 --- !u!1 &7873517708466245416
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,7 +614,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7873517708466245415}
   - component: {fileID: 7873517708466245414}
-  - component: {fileID: 7873517708466245417}
   - component: {fileID: 1223236995673922593}
   m_Layer: 9
   m_Name: Main Camera
@@ -678,14 +681,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7873517708466245417
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7873517708466245416}
-  m_Enabled: 1
 --- !u!114 &1223236995673922593
 MonoBehaviour:
   m_ObjectHideFlags: 0

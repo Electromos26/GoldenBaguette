@@ -24,10 +24,16 @@ public class ClosingDoor : MonoBehaviour
     [SerializeField]
     private bool CloseAfterOpening = false;
     BoxCollider boxCollider;
+
+    private AudioSource _audioSource;
+
     void Start()
     {
         openPositionY = 3f;
         closePositionY = -0.2f;
+
+        _audioSource = GetComponent<AudioSource>();
+
 
         if (ClosedDoor)
         {
@@ -71,15 +77,11 @@ public class ClosingDoor : MonoBehaviour
         float duration = distance / doorSpeed;
         float elapsedTime = 0f;
 
-        while (elapsedTime < duration)
+        if (_audioSource != null)
         {
-            elapsedTime += Time.deltaTime;
-            float normalizedTime = Mathf.Clamp01(elapsedTime / duration);
-
-            door.transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
-
-            yield return null;
+            _audioSource.Play();
         }
+
         if (!CloseAfterOpening)
         {
             // Disable the collider component of the door to allow walking through
@@ -90,6 +92,16 @@ public class ClosingDoor : MonoBehaviour
         else
         {
             doorCloser = true;
+        }
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float normalizedTime = Mathf.Clamp01(elapsedTime / duration);
+
+            door.transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, normalizedTime);
+
+            yield return null;
         }
 
 
@@ -104,6 +116,12 @@ public class ClosingDoor : MonoBehaviour
         float distance = Vector3.Distance(initialPosition, targetPosition);
         float duration = distance / doorSpeed;
         float elapsedTime = 0f;
+
+        if (_audioSource != null)
+        {
+            _audioSource.Play();
+        }
+
 
         while (elapsedTime < duration)
         {

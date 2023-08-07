@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootClip: {fileID: 8300000, guid: 66b61a67c1b398a48a1207dada32a6d4, type: 3}
+  _reloadClip: {fileID: 8300000, guid: fce4786721ca1f64ca34b74b9cedaa6e, type: 3}
 --- !u!82 &3800760525288713824
 AudioSource:
   m_ObjectHideFlags: 0

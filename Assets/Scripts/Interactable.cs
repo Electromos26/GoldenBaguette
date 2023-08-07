@@ -31,11 +31,14 @@ public class Interactable : MonoBehaviour
     [SerializeField]
     private UnityEvent events;
 
+    private AudioSource _audioSource;
+
     private void Start()
     {
         initialPosition = button.transform.position;
         pressPosition = endOfPress.transform.position;
         player = GameObject.FindObjectOfType<PlayerController>();
+        _audioSource = GetComponent<AudioSource>();
 
     }
 
@@ -48,6 +51,12 @@ public class Interactable : MonoBehaviour
             if (timer > pressedInterval || !player.isAlive)
             {
                 StartCoroutine(RetractAnimation());
+
+                if (_audioSource != null)
+                {
+                    _audioSource.Play();
+                }
+
                 timer = 0;
                 buttonPressed = false;
             }
@@ -61,6 +70,12 @@ public class Interactable : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 events.Invoke();
+
+                if (_audioSource != null)
+                {
+                    _audioSource.Play();
+                }
+
                 // Trigger the traps
                 StartCoroutine(PressedAnimation());
                 // StartCoroutine(TriggerTrapAnimation());
