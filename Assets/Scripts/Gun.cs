@@ -31,6 +31,11 @@ public class Gun : MonoBehaviour
 
     public void ReloadSound()
     {
+        if (_audioSource.isPlaying && _audioSource.clip == _shootClip)
+        {
+            _audioSource.Stop();
+        }
+
         if (_audioSource != null && !_audioSource.isPlaying)
         {
             _audioSource.clip = _reloadClip;

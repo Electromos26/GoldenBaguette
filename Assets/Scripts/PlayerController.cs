@@ -133,6 +133,8 @@ public class PlayerController : Unit
 
     private float timer;
 
+    private bool isReloading = false;
+
     private enum State
     {
         Running,
@@ -143,6 +145,8 @@ public class PlayerController : Unit
     }
 
     private State currentState; //this keeps track of the current state
+
+
 
 
     protected override void Start()
@@ -295,13 +299,16 @@ public class PlayerController : Unit
                 _audioSource.loop = false;
                 _audioSource.Stop();
             }
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                shotCount = shotLimit;
-            }
-            if (shotCount >= shotLimit)
+
+
+            if (Input.GetKeyDown(KeyCode.R) || (shotCount >= shotLimit && !isReloading))
             {
                 gunScript.ReloadSound();
+                isReloading = true;
+            }
+
+            if (isReloading)
+            {
 
                 if (timer < reloadTime)
                 {
@@ -313,6 +320,7 @@ public class PlayerController : Unit
                     timer = 0;
                     shotCount = 0;
                     reloadIcon.SetActive(false);
+                    isReloading = false;
                 }
 
             }
@@ -511,7 +519,7 @@ public class PlayerController : Unit
         transform.eulerAngles = new Vector3 (0, playerCam.transform.eulerAngles.y,0);
         crossHair.SetActive(true); //Activate crosshair
 
-        if (Input.GetButtonDown("Fire1") && shotCount < shotLimit)
+        if (Input.GetButtonDown("Fire1") && shotCount < shotLimit && !isReloading)
         {
 
             shotCount++;

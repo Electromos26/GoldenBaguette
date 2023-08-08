@@ -61,7 +61,10 @@ public class AIController : Unit
         respawnPos = this.transform.position;
         defaultSpeed = agent.speed;
 
-        SetState(State.Idle);
+        if (this != null)
+        {
+            SetState(State.Idle);
+        }
 
     }
 
@@ -71,6 +74,8 @@ public class AIController : Unit
         //set state will only be called when a state changes
         currentState = newState;
         StopAllCoroutines();//stop the previous coroutines so they aren't operating at the same time
+
+        
         switch (currentState)
         {
             case State.Idle:

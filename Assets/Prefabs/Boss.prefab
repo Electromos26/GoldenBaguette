@@ -72,13 +72,18 @@ MonoBehaviour:
   viewAngle: 100
   respawnTime: 2
   _gotHitClip:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 1889d6881581e6b4b982aac559aafdd6, type: 3}
+  - {fileID: 8300000, guid: 10bc1984d0b1a8c4cab6b22b930a13d1, type: 3}
+  - {fileID: 8300000, guid: 5b2b6ac14d6eb0748a61f5b71026af3d, type: 3}
   _dieClip:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: f34be2e57d2f04f4993de33748e6c02f, type: 3}
+  - {fileID: 8300000, guid: c75f8898926667444bf3d43331a43538, type: 3}
   _attackClip:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: fc6cd5ba7f5d6ec43b040b8d8becda6a, type: 3}
+  - {fileID: 8300000, guid: bcad02035ec1f154298537edc02ba869, type: 3}
+  - {fileID: 8300000, guid: 753daa00a3dd44b4f8b385f3dfc49efa, type: 3}
   _runClip:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 8f6357b18d2b6404bb6d5cbdab98737c, type: 3}
   attackInterval: 1
   lookDistance: 20
   aimOffset: {x: 0, y: 1.5, z: 0}
@@ -89,7 +94,7 @@ MonoBehaviour:
   stunInterval: 5
   bossHealthBar: {fileID: 0}
   stunSprite: {fileID: 4539257226231250755}
-  _idleClip: {fileID: 0}
+  _idleClip: {fileID: 8300000, guid: e347707fe1ca301489ff45a441c333a3, type: 3}
   events:
     m_PersistentCalls:
       m_Calls: []
@@ -495,6 +500,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Y Bot
       objectReference: {fileID: 0}
+    - target: {fileID: 5822821947120931875, guid: 804d52c8c71a4af4f8ba2890aa644b2f, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822821947120931875, guid: 804d52c8c71a4af4f8ba2890aa644b2f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b6ca2f6e0754a554ca5a5b4d16fdf912, type: 2}
+    - target: {fileID: 5822821947120931875, guid: 804d52c8c71a4af4f8ba2890aa644b2f, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: -4565884009001823619, guid: 804d52c8c71a4af4f8ba2890aa644b2f, type: 3}
     m_RemovedComponents:
     - {fileID: 5866666021909216657, guid: 804d52c8c71a4af4f8ba2890aa644b2f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 804d52c8c71a4af4f8ba2890aa644b2f, type: 3}
