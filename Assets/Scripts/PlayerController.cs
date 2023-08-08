@@ -295,7 +295,10 @@ public class PlayerController : Unit
                 _audioSource.loop = false;
                 _audioSource.Stop();
             }
-
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                shotCount = shotLimit;
+            }
             if (shotCount >= shotLimit)
             {
                 gunScript.ReloadSound();
