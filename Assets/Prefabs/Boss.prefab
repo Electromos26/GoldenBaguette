@@ -66,10 +66,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1000
   team: 1
-  damage: 50
+  damage: 25
   canRespawn: 0
   beDamaged: 0
-  viewAngle: 100
+  viewAngle: 360
   respawnTime: 2
   _gotHitClip:
   - {fileID: 8300000, guid: 1889d6881581e6b4b982aac559aafdd6, type: 3}
@@ -90,7 +90,7 @@ MonoBehaviour:
   BossMaxHealth: 1000
   timer: 0
   attackDis: 2
-  speedMultiplierChasing: 2
+  speedMultiplierChasing: 2.5
   stunInterval: 5
   bossHealthBar: {fileID: 0}
   stunSprite: {fileID: 4539257226231250755}

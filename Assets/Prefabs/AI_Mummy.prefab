@@ -66,11 +66,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   team: 0
-  damage: 20
+  damage: 10
   canRespawn: 1
   beDamaged: 1
   viewAngle: 360
-  respawnTime: 5
+  respawnTime: 40
   _gotHitClip:
   - {fileID: 8300000, guid: 1889d6881581e6b4b982aac559aafdd6, type: 3}
   - {fileID: 8300000, guid: 10bc1984d0b1a8c4cab6b22b930a13d1, type: 3}
@@ -91,8 +91,8 @@ MonoBehaviour:
   aimOffset: {x: 0, y: 1, z: 0}
   timer: 0
   attackDis: 2
-  speedMultiplierChasing: 2
-  stunInterval: 0.5
+  speedMultiplierChasing: 2.5
+  stunInterval: 0.8
   _idleClip: {fileID: 8300000, guid: e347707fe1ca301489ff45a441c333a3, type: 3}
 --- !u!195 &8204345679946276202
 NavMeshAgent:

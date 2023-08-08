@@ -61,7 +61,7 @@ public class AIController : Unit
         respawnPos = this.transform.position;
         defaultSpeed = agent.speed;
 
-        if (this != null)
+        if (this.gameObject != null)
         {
             SetState(State.Idle);
         }
@@ -75,26 +75,28 @@ public class AIController : Unit
         currentState = newState;
         StopAllCoroutines();//stop the previous coroutines so they aren't operating at the same time
 
-        
-        switch (currentState)
+        if (this.gameObject != null)
         {
-            case State.Idle:
-                StartCoroutine(OnIdle());
-                //do some work
-                break;
-            case State.Patrolling:
-                StartCoroutine(OnPatrolling());
-                //do some work
-                break;
-            case State.Chasing:
-                StartCoroutine(OnChasing());
-                //do some work
-                break;
-            case State.Hurt:
-                StartCoroutine(OnHurt());
-                break;
-            default:
-                break;
+            switch (currentState)
+            {
+                case State.Idle:
+                    StartCoroutine(OnIdle());
+                    //do some work
+                    break;
+                case State.Patrolling:
+                    StartCoroutine(OnPatrolling());
+                    //do some work
+                    break;
+                case State.Chasing:
+                    StartCoroutine(OnChasing());
+                    //do some work
+                    break;
+                case State.Hurt:
+                    StartCoroutine(OnHurt());
+                    break;
+                default:
+                    break;
+            }
         }
         ///
     }
@@ -336,7 +338,10 @@ public class AIController : Unit
     {
         
         base.Respawn();
-        SetState(State.Idle);
+        if (this.isActiveAndEnabled)
+        {
+            SetState(State.Idle);
+        }
     }
 
     protected override void Die()
@@ -358,7 +363,10 @@ public class AIController : Unit
 
     public void BackToIdle()
     {
-        SetState(State.Idle);
+        if (this.isActiveAndEnabled)
+        {
+            SetState(State.Idle);
+        }
     }
 
     // Update is called once per frame

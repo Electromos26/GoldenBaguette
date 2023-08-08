@@ -502,7 +502,7 @@ public class PlayerController : Unit
                 baguetteIcon.SetActive(true);
             }
 
-            if (other.gameObject.name == "Tape")
+            if (other.gameObject.tag == "Tape")
             {
                 collectableObject.PlayTrack();
             }
@@ -523,7 +523,6 @@ public class PlayerController : Unit
         {
 
             shotCount++;
-            Debug.Log(shotCount);
 
             gunScript.PlayShootSound();
             //before we can show lasers going out into the infinite distance, we need to see if we are going to hit something

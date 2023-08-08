@@ -10,6 +10,7 @@ TagManager:
   - Boulder
   - Collectable
   - Boss
+  - Tape
   layers:
   - Default
   - TransparentFX

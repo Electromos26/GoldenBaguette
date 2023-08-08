@@ -100,6 +100,11 @@ public class Traps : MonoBehaviour
             
         }
 
+        if (!player.isAlive)
+        {
+            _audioSource.Stop();
+        }
+
 
         if (loopTrap)
         {
@@ -150,7 +155,7 @@ public class Traps : MonoBehaviour
         float duration = distance / trapSpeed;
         float elapsedTime = 0f;
 
-        if (_audioSource != null)
+        if (_audioSource != null && player.isAlive)
         {
             _audioSource.Play();
         }
@@ -180,7 +185,7 @@ public class Traps : MonoBehaviour
             yield return new WaitForSeconds(2f); // Wait for 5 seconds
         }
 
-        if (_audioSource != null)
+        if (_audioSource != null && player.isAlive)
         {
             _audioSource.Play();
         }
