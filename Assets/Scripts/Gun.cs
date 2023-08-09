@@ -10,7 +10,9 @@ public class Gun : MonoBehaviour
     [SerializeField]
     private AudioClip _reloadClip;
 
-
+    [SerializeField]
+    private GameObject muzzleFlash;
+   
     private AudioSource _audioSource;
 
     // Start is called before the first frame update
@@ -22,11 +24,21 @@ public class Gun : MonoBehaviour
     // Update is called once per frame
     public void PlayShootSound()
     {
+        StartCoroutine(MuzzleFlashAndPlaySound());
         if (_audioSource != null)
         {
             _audioSource.clip = _shootClip;
             _audioSource.Play();
         }
+       
+    }
+    private IEnumerator MuzzleFlashAndPlaySound()
+    {
+        muzzleFlash.SetActive(true);
+
+        // Wait for a specified duration
+        yield return new WaitForSeconds(0.1f); // Change this value to your desired duration
+        muzzleFlash.SetActive(false);
     }
 
     public void ReloadSound()
