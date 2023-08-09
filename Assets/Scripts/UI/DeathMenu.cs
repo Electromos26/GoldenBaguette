@@ -19,15 +19,25 @@ public class DeathMenu : MonoBehaviour
         Application.Quit();//actual game
         UnityEditor.EditorApplication.isPlaying = false;//editor playMode
     }
+
+    public void Die()
+    {
+        Invoke("DisplayDeath", 4f);
+    }
+
+    private void DisplayDeath()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0f;
+        deathScreen.SetActive(true);
+
+    }
     // Update is called once per frame
     void Update()
     {
         if (isDead)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0f;
-            deathScreen.SetActive(true);
            
         }
 

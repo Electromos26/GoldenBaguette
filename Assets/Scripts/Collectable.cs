@@ -25,7 +25,7 @@ public class Collectable : MonoBehaviour
         if (_audioSource != null && !_audioSource.isPlaying)
         {
             _audioSource.clip = _collectableClip;
-            _audioSource.Play();
+            //_audioSource.Play();
         }
     }
 }

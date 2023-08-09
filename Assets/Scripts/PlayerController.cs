@@ -19,6 +19,8 @@ public class PlayerController : Unit
 
     RoomManager roomManager;
 
+    AudioManager audioManager;
+
     #region CharacterControllerSettings
     [SerializeField]
     private CharacterController controller;
@@ -155,6 +157,7 @@ public class PlayerController : Unit
         playerCam = GetComponentInChildren<Camera>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         roomManager = GameObject.Find("RoomManager").GetComponent<RoomManager>();
+        audioManager = GameObject.Find("GameManager").GetComponent<AudioManager>();
         healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
 
         gunScript = gun.GetComponent<Gun>();
@@ -505,6 +508,7 @@ public class PlayerController : Unit
             if (other.gameObject.tag == "Tape")
             {
                 collectableObject.PlayTrack();
+                audioManager.PlayFocusedAudio(collectableObject.GetComponent<AudioSource>());
             }
 
             other.gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -565,16 +569,17 @@ public class PlayerController : Unit
         if (PlayerIs != null)
         {
             // Start the coroutine to wait before setting isDead to true
-            StartCoroutine(DelayBeforeDeath());
+            //StartCoroutine(DelayBeforeDeath());
+            PlayerIs.Die();
         }
         shotCount = 0;
     }
-    private IEnumerator DelayBeforeDeath()
+/*    private IEnumerator DelayBeforeDeath()
     {
-        yield return new WaitForSeconds(4f); // Wait for 4 seconds
+        yield return new WaitForSeconds(0f); // Wait for 4 seconds
         PlayerIs.isDead = true;
     }
-
+*/
     //private void OnTriggerEnter(Collider other) // collectables
     //{
     //    if (other.gameObject.GetComponent<GoldCoin>())//special collectible with goldCoin script  
