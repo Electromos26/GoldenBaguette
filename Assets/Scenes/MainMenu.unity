@@ -739,7 +739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ea9e94fcb5ecc469119a555bf2238f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuClip: {fileID: 8300000, guid: a92fe8267ea51be4d9b64c63c61df98b, type: 3}
+  _menuClip: {fileID: 8300000, guid: 011b5fff237ed6e42ad75499374a9ec1, type: 3}
 --- !u!114 &1829997896
 MonoBehaviour:
   m_ObjectHideFlags: 0
