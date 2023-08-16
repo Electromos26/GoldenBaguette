@@ -1,18 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.XR;
 using UnityEngine.SceneManagement;
-using UnityEngine.Playables;
-using Unity.PlasticSCM.Editor;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 using TMPro;
-/// <summary>
-/// There is a lot of really good work here and I think you have done a good job; however, you need to break code into smaller chunks and smaller functions. You have some functions here that are hundreds of lines and they are extremely difficult to follow. For both your sake, and mine, break these into smaller more manageable pieces. Also, you should not be having the GameManager as a serializable field. A game manager should be a singleton that is accessible in all classes, and so the way you have done it you are specify a GameManager in ways that you do not need to. 
-/// </summary>
+
 public class PlayerController : Unit
 {
     GameManager gameManager;

@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     public void QuitLevel()
     {
         Application.Quit();//actual game
-        UnityEditor.EditorApplication.isPlaying = false;//editor playMode
+        //UnityEditor.EditorApplication.isPlaying = false;//editor playMode
     }
     public void RestartLevel()
     {

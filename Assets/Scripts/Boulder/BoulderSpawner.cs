@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using UnityEditor.Compilation;
 using UnityEngine;
 
 public class BoulderSpawner : MonoBehaviour
