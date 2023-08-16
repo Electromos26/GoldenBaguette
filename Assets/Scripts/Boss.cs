@@ -59,6 +59,9 @@ public class Boss : Unit
     [SerializeField]
     private UnityEvent events;
 
+    [SerializeField]
+    private AudioClip[] _stunClip;
+
 
     // Start is called before the first frame update
     protected override void Start()
@@ -216,6 +219,14 @@ public class Boss : Unit
         agent.speed = 0;
         stunSprite.SetActive(true);
         //play stunned animation
+
+        if (_audioSource != null) //Play stun audio
+        {
+            _audioSource.Stop();
+            _audioSource.clip = _stunClip[Random.Range(0, _stunClip.Length)];
+            _audioSource.loop = true;
+            _audioSource.Play();
+        }
 
         while (stunTimer < stunInterval)
         {

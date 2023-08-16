@@ -79,11 +79,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f34be2e57d2f04f4993de33748e6c02f, type: 3}
   - {fileID: 8300000, guid: c75f8898926667444bf3d43331a43538, type: 3}
   _attackClip:
-  - {fileID: 8300000, guid: fc6cd5ba7f5d6ec43b040b8d8becda6a, type: 3}
-  - {fileID: 8300000, guid: bcad02035ec1f154298537edc02ba869, type: 3}
-  - {fileID: 8300000, guid: 753daa00a3dd44b4f8b385f3dfc49efa, type: 3}
+  - {fileID: 8300000, guid: 12b234a567572a04392ff084e79df7fa, type: 3}
+  - {fileID: 8300000, guid: bbcec3b16b81fac44af0d642e41655f5, type: 3}
   _runClip:
   - {fileID: 8300000, guid: 8f6357b18d2b6404bb6d5cbdab98737c, type: 3}
+  - {fileID: 8300000, guid: e9303031cb4074b40a0082dd8554207a, type: 3}
   attackInterval: 1
   lookDistance: 20
   aimOffset: {x: 0, y: 1.5, z: 0}
@@ -98,6 +98,9 @@ MonoBehaviour:
   events:
     m_PersistentCalls:
       m_Calls: []
+  _stunClip:
+  - {fileID: 8300000, guid: 99bd92830a446eb4eab90dcbd626641d, type: 3}
+  - {fileID: 8300000, guid: 36fed931f26ac1f4ca752dda9d575710, type: 3}
 --- !u!195 &8204345679946276202
 NavMeshAgent:
   m_ObjectHideFlags: 0

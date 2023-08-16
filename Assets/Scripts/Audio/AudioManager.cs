@@ -8,6 +8,9 @@ public class AudioManager : MonoBehaviour
     AudioSource[] allFiles;
     List<SavedAudio> allSavedAudio = new List<SavedAudio>();
 
+    [SerializeField]
+    GameObject tape;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,7 @@ public class AudioManager : MonoBehaviour
             }
         }
         focusSound.Play();
+        tape.SetActive(true);
 
         Invoke("ResumeAudio" ,focusSound.clip.length);
 
@@ -37,6 +41,8 @@ public class AudioManager : MonoBehaviour
 
     private void ResumeAudio()
     {
+        tape.SetActive(false);
+
         foreach (SavedAudio savedAudio in allSavedAudio)
         {
             if (savedAudio.audioSource != null)
