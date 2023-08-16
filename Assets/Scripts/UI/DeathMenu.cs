@@ -16,8 +16,9 @@ public class DeathMenu : MonoBehaviour
     }
     public void ExitGame()
     {
-        Application.Quit();//actual game
-        UnityEditor.EditorApplication.isPlaying = false;//editor playMode
+        SceneManager.LoadScene("MainMenu"); // open level
+        Time.timeScale = 1f;
+
     }
 
     public void Die()
