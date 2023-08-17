@@ -99,31 +99,34 @@ public class AIController : Unit
 
     private IEnumerator OnIdle() //handles our idle state
     {
-        //when idling, we should probably do some work and look for an outpost
-        animator.SetBool("Running", false);
-        agent.speed = defaultSpeed;
-
-        if (_audioSource.clip != _idleClip && _audioSource != null) //Play idle audio
+        if (this.gameObject != null)
         {
-            _audioSource.Stop();
-            _audioSource.clip = _idleClip;
-            _audioSource.loop = true;
-            _audioSource.Play();
-        }
+            animator.SetBool("Running", false);
+            agent.speed = defaultSpeed;
 
-        if (currentSpot != null)
-        {
-            lastSpot = currentSpot;
-        }
-        currentSpot = null;
-        while (currentSpot == null)
-        {
-            if (isAlive)
-                LookForSpots(); //if we ever find an outpost, and the currentSpot changes, we will leave this loop
-            yield return null;
+            if (_audioSource.clip != _idleClip && _audioSource != null) //Play idle audio
+            {
+                _audioSource.Stop();
+                _audioSource.clip = _idleClip;
+                _audioSource.loop = true;
+                _audioSource.Play();
+            }
+
+            if (currentSpot != null)
+            {
+                lastSpot = currentSpot;
+            }
+            currentSpot = null;
+            while (currentSpot == null)
+            {
+                if (isAlive)
+                    LookForSpots(); //if we ever find an outpost, and the currentSpot changes, we will leave this loop
+                yield return null;
+
+            }
+            SetState(State.Patrolling); //we found an outpost, we now need to move
 
         }
-        SetState(State.Patrolling); //we found an outpost, we now need to move
 
     }
     private IEnumerator OnPatrolling()
@@ -361,7 +364,8 @@ public class AIController : Unit
     {
         if (this.isActiveAndEnabled)
         {
-            SetState(State.Idle);
+            Invoke("Start", 2f);
+            //SetState(State.Idle);
         }
     }
 

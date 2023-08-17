@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         mainMusic();
+        Cursor.visible = true;
+
     }
     private void mainMusic()
     {

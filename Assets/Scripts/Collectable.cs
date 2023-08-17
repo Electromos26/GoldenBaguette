@@ -22,6 +22,7 @@ public class Collectable : MonoBehaviour
     
     public void PlayTrack()
     {
+        events.Invoke();
         if (_audioSource != null && !_audioSource.isPlaying)
         {
 

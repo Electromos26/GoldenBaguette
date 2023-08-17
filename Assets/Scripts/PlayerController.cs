@@ -495,13 +495,11 @@ public class PlayerController : Unit
             if (other.gameObject.name == "Golden_Baguette")
             {
                 baguetteIcon.SetActive(true);
+
             }
 
-            if (other.gameObject.tag == "Tape")
-            {
                 collectableObject.PlayTrack();
                 audioManager.PlayFocusedAudio(collectableObject.GetComponent<AudioSource>());
-            }
 
             other.gameObject.GetComponent<MeshRenderer>().enabled = false;
 
