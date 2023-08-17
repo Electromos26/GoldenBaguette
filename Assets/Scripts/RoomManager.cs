@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
+    GameManager gameManager;
+
     [SerializeField]
     List <GameObject> allRooms;
+
     // Start is called before the first frame update
     void Start()
     {
         //Load room 1 and connection
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         foreach (GameObject room in allRooms)
         {
@@ -28,13 +32,15 @@ public class RoomManager : MonoBehaviour
             if (loadRoom.IsNeighbour(room.GetComponent<Room>()))
             {
                 room.SetActive(true);
+                gameManager.OnCreateInstance();
                 //Set AI to Idle
-                
+
                 if (room.GetComponentInChildren<AIController>() != null)
                 {
                     foreach(AIController controller in room.GetComponentsInChildren<AIController>())
                     {
                         controller.BackToIdle();
+                        Debug.Log("backToidle");
                     }
                 }
                 if (room.GetComponentInChildren<Boss>() != null)

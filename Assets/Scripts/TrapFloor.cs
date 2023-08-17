@@ -17,6 +17,8 @@ public class TrapFloor : MonoBehaviour
 
     private GameObject cubeChild;
 
+    private AudioSource _audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class TrapFloor : MonoBehaviour
         timer = 0;
         player = GameObject.FindObjectOfType<PlayerController>();
 
+        _audioSource = GetComponent<AudioSource>();
         cubeChild = this.transform.GetChild(0).gameObject;
     }
 
@@ -45,6 +48,7 @@ public class TrapFloor : MonoBehaviour
             if (timer > timeLimit)
             {
                 cubeChild.SetActive(false);
+                _audioSource.Play();
                 timer = 0;
             }
 

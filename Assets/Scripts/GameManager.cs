@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     //  public string TimerText;
     //  private float Timer;
 
+    [SerializeField]
     internal AISpot[] currentSpot;
 
     public static GameManager Instance
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
-    void OnCreateInstance()
+    public void OnCreateInstance()
     {
 
         currentSpot = GetComponentsInChildren<AISpot>();
@@ -38,16 +39,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //timer code
-
-        //if ()
-        //{
-        //    Timer += Time.deltaTime;
-        //    int minutes = Mathf.FloorToInt(Timer / 60F);
-        //    int seconds = Mathf.FloorToInt(Timer % 60F);
-        //    int milliseconds = Mathf.FloorToInt((Timer * 100F) % 100F);
-        //    TimerText = minutes.ToString("00") + ":" + seconds.ToString("00") + ":" + milliseconds.ToString("00");
-        //} 
 
     }
 

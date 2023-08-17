@@ -141,8 +141,6 @@ public class PlayerController : Unit
     private State currentState; //this keeps track of the current state
 
 
-
-
     protected override void Start()
     {
         base.Start();
@@ -495,13 +493,11 @@ public class PlayerController : Unit
             if (other.gameObject.name == "Golden_Baguette")
             {
                 baguetteIcon.SetActive(true);
+
             }
 
-            if (other.gameObject.tag == "Tape")
-            {
                 collectableObject.PlayTrack();
                 audioManager.PlayFocusedAudio(collectableObject.GetComponent<AudioSource>());
-            }
 
             other.gameObject.GetComponent<MeshRenderer>().enabled = false;
 

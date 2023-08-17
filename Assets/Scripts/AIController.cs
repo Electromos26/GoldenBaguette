@@ -48,6 +48,10 @@ public class AIController : Unit
     [SerializeField]
     private AudioClip _idleClip;
 
+    [SerializeField]
+    private GameObject reloadIcon;
+
+
 
     // Start is called before the first frame update
     protected override void Start()
@@ -71,8 +75,6 @@ public class AIController : Unit
         currentState = newState;
         StopAllCoroutines();//stop the previous coroutines so they aren't operating at the same time
 
-        if (this.gameObject != null)
-        {
             switch (currentState)
             {
                 case State.Idle:
@@ -93,13 +95,11 @@ public class AIController : Unit
                 default:
                     break;
             }
-        }
         ///
     }
 
     private IEnumerator OnIdle() //handles our idle state
     {
-        //when idling, we should probably do some work and look for an outpost
         animator.SetBool("Running", false);
         agent.speed = defaultSpeed;
 
@@ -115,6 +115,7 @@ public class AIController : Unit
         {
             lastSpot = currentSpot;
         }
+
         currentSpot = null;
         while (currentSpot == null)
         {
@@ -123,6 +124,8 @@ public class AIController : Unit
             yield return null;
 
         }
+
+
         SetState(State.Patrolling); //we found an outpost, we now need to move
 
     }
@@ -296,12 +299,18 @@ public class AIController : Unit
             }
         }
 
-
         if (checkTeam)
         {
-            while (team != GameManager.Instance.currentSpot[arrayNum].team && GameManager.Instance.currentSpot[arrayNum] != lastSpot) //Check if the arrayNum picked is the same team as the AISpot
+            while (team != GameManager.Instance.currentSpot[arrayNum].team && (GameManager.Instance.currentSpot[arrayNum] != lastSpot && lastSpot != null)) //Check if the arrayNum picked is the same team as the AISpot
             {
-                arrayNum = Random.Range(0, GameManager.Instance.currentSpot.Length);//finds a random spot for the AI to look for
+                if (arrayNum < GameManager.Instance.currentSpot.Length - 1)
+                {
+                    arrayNum++;
+                }
+                else
+                {
+                    arrayNum = 0;
+                }
             }
 
             currentSpot = GameManager.Instance.currentSpot[arrayNum];
@@ -310,6 +319,7 @@ public class AIController : Unit
         else
         {
             Debug.Log("No AISpots Found!");
+            SetState(State.Idle);
         }
 
     }
@@ -359,10 +369,8 @@ public class AIController : Unit
 
     public void BackToIdle()
     {
-        if (this.isActiveAndEnabled)
-        {
-            SetState(State.Idle);
-        }
+            Invoke("Start", 1f);
+            //SetState(State.Idle);
     }
 
     // Update is called once per frame
