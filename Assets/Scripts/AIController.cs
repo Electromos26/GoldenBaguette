@@ -105,11 +105,8 @@ public class AIController : Unit
 
         if (_audioSource.clip != _idleClip && _audioSource != null) //Play idle audio
         {
-            _audioSource.Stop();
-            _audioSource.clip = _idleClip;
-            _audioSource.loop = true;
-            _audioSource.Play();
-        }
+            animator.SetBool("Running", false);
+            agent.speed = defaultSpeed;
 
         if (currentSpot != null)
         {
@@ -122,6 +119,20 @@ public class AIController : Unit
             if (isAlive)
                 LookForSpots(); //if we ever find an outpost, and the currentSpot changes, we will leave this loop
             yield return null;
+
+            if (currentSpot != null)
+            {
+                lastSpot = currentSpot;
+            }
+            currentSpot = null;
+            while (currentSpot == null)
+            {
+                if (isAlive)
+                    LookForSpots(); //if we ever find an outpost, and the currentSpot changes, we will leave this loop
+                yield return null;
+
+            }
+            SetState(State.Patrolling); //we found an outpost, we now need to move
 
         }
 
